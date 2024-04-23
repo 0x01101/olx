@@ -20,7 +20,7 @@
   position : relative;
 }
 
-.css1u6y1sg
+.navbarContainer
 {
   max-width               : 1270px;
   height                  : 72px;
@@ -146,7 +146,7 @@
   text-decoration         : none;
   font-size               : 16px;
   font-weight             : 600;
-  color                   : #fff;
+  color                   : #ffffff;
 }
 
 .messagesIconContainer
@@ -178,7 +178,7 @@
 {
   height : 22px;
   width  : 22px;
-  color  : #fff;
+  color  : #ffffff;
 }
 
 .yoAccountContainer
@@ -201,7 +201,7 @@
   text-decoration         : none;
   font-size               : 16px;
   font-weight             : 600;
-  color                   : #fff;
+  color                   : #ffffff;
 }
 
 .yoAccountIcon
@@ -209,7 +209,7 @@
   height       : 24px;
   width        : 24px;
   margin-right : 12px;
-  color        : #fff;
+  color        : #ffffff;
   color        : inherit;
 }
 
@@ -222,7 +222,7 @@
   border                  : 0;
   border-radius           : 0;
   box-sizing              : border-box;
-  color                   : #fff;
+  color                   : #ffffff;
   cursor                  : pointer;
   display                 : -webkit-inline-box;
   display                 : -webkit-inline-flex;
@@ -242,8 +242,8 @@
   font-weight             : 700;
   font-size               : 16px;
   line-height             : 18px;
-  background-color        : #fff;
-  border                  : solid 5px #fff;
+  background-color        : #ffffff;
+  border                  : solid 5px #ffffff;
   border-radius           : 4px;
   color                   : #002f34;
   padding                 : 10px 43px 8px 43px;

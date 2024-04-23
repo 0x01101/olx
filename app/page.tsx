@@ -1,9 +1,9 @@
-import NavBar from "@/app/ui/elements/navbar";
+import styles from "@/app/ui/index.module.css"
 
-export default function Page() {
+export default function Page(): JSX.Element {
   return (
-    <>
-      <NavBar />
-    </>
+    <div id={"mainContent"} className={styles.mainContent}>
+    
+    </div>
   );
 }

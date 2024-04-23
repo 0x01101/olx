@@ -1,0 +1,76 @@
+.footerContent
+{
+  z-index    : 1001;
+  position   : relative;
+  background : #f2f4f5;
+  border-top : 1px solid #7f9799;
+}
+
+.actualFooter
+{
+  max-width : 1238px;
+  margin    : 0 auto;
+  padding   : 72px 0;
+}
+
+.main
+{
+  display : -webkit-box;
+  display : -webkit-flex;
+  display : -ms-flexbox;
+  display : flex;
+}
+
+/* Partners section */
+.partners
+{
+  margin : 24px 0;
+}
+
+.partnersLogosStrip
+{
+  display : -webkit-box;
+  display : -webkit-flex;
+  display : -ms-flexbox;
+  display : flex;
+}
+
+.partnerContainer
+{
+  margin-right            : 16px;
+  -webkit-text-decoration : none;
+  text-decoration         : none;
+}
+
+.partnerLogoContainer
+{
+  display : inline-block;
+}
+
+.partnerLogoContainer svg
+{
+  -webkit-filter : grayscale(1);
+  filter         : grayscale(1);
+}
+
+.partnerContainer:hover svg
+{
+  -webkit-filter : grayscale(0);
+  filter         : grayscale(0);
+}
+
+.partnerLogo
+{
+  height : 16px;
+  width  : 16px;
+  color  : #002f34;
+}
+
+.partnerName
+{
+  font-size   : 12px;
+  color       : #7f9799;
+  margin-left : 4px;
+}
+
+/* Partners section */
