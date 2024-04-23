@@ -13,14 +13,6 @@
   padding   : 72px 0;
 }
 
-.main
-{
-  display : -webkit-box;
-  display : -webkit-flex;
-  display : -ms-flexbox;
-  display : flex;
-}
-
 /* Partners section */
 .partners
 {
@@ -74,3 +66,91 @@
 }
 
 /* Partners section */
+
+.main
+{
+  display : -webkit-box;
+  display : -webkit-flex;
+  display : -ms-flexbox;
+  display : flex;
+}
+
+.section
+{
+  min-width              : 280px;
+  padding                : 0;
+  margin                 : 0 16px 0 0;
+  display                : -webkit-box;
+  display                : -webkit-flex;
+  display                : -ms-flexbox;
+  display                : flex;
+  -webkit-flex-direction : column;
+  -ms-flex-direction     : column;
+  flex-direction         : column;
+  -webkit-box-flex-wrap  : wrap;
+  -webkit-flex-wrap      : wrap;
+  -ms-flex-wrap          : wrap;
+  flex-wrap              : wrap;
+  line-height            : 1.88;
+  list-style             : none;
+}
+
+.section a
+{
+  -webkit-text-decoration : none;
+  text-decoration         : none;
+  white-space             : nowrap;
+  font-size               : 16px;
+  font-weight             : 600;
+  color                   : #002f34;
+}
+
+.section a:hover
+{
+  background : #002f34;
+  color      : #ffffff;
+}
+
+.appSection
+{
+  margin-left             : 16px;
+  display                 : -webkit-box;
+  display                 : -webkit-flex;
+  display                 : -ms-flexbox;
+  display                 : flex;
+  -webkit-box-pack        : start;
+  -ms-flex-pack           : start;
+  -webkit-justify-content : flex-start;
+  justify-content         : flex-start;
+  -webkit-flex-direction  : column;
+  -ms-flex-direction      : column;
+  flex-direction          : column;
+}
+
+.appSectionText
+{
+  webkit-align-items : center;
+  -webkit-box-align  : center;
+  -ms-flex-align     : center;
+  align-items        : center;
+  color              : #7f9799;
+  font-size          : 12px;
+  text-align         : center;
+}
+
+.appstoreButtonsContainer
+{
+  margin        : 0;
+  padding       : 0;
+  display       : -webkit-box;
+  display       : -webkit-flex;
+  display       : -ms-flexbox;
+  display       : flex;
+  margin-bottom : 8px;
+}
+
+.appstoreButton
+{
+  list-style   : none;
+  margin-right : 12px;
+}
