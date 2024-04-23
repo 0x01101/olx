@@ -1,12 +1,118 @@
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1030;
-    background: #002F34;
-    transition: top 0.4s ease-in-out;
-    -webkit-transition: top 0.4s ease-in-out;
-    width: 100vw;
-    height: 72px;
+.navbar
+{
+  position           : fixed;
+  top                : 0;
+  left               : 0;
+  right              : 0;
+  z-index            : 1030;
+  background         : #002f34;
+  transition         : top 0.4s ease-in-out;
+  -webkit-transition : top 0.4s ease-in-out;
+  width              : 100vw;
+  height             : 72px;
+}
+
+.logoContainer
+{
+  width    : 71px;
+  height   : 41px;
+  display  : block;
+  position : relative;
+}
+
+.css-1u6y1sg
+{
+  max-width               : 1270px;
+  height                  : 72px;
+  margin                  : 0 auto;
+  display                 : -webkit-box;
+  display                 : -webkit-flex;
+  display                 : -ms-flexbox;
+  display                 : flex;
+  -webkit-align-items     : center;
+  -webkit-box-align       : center;
+  -ms-flex-align          : center;
+  align-items             : center;
+  -webkit-box-pack        : justify;
+  -webkit-justify-content : space-between;
+  justify-content         : space-between;
+  padding                 : 0 16px;
+}
+
+.o
+{
+  width             : 34px;
+  height            : 34px;
+  border-radius     : 100%;
+  position          : absolute;
+  left              : -11px;
+  top               : -11px;
+  -webkit-transform : translate(12px, 15px);
+  -moz-transform    : translate(12px, 15px);
+  -ms-transform     : translate(12px, 15px);
+  transform         : translate(12px, 15px);
+  box-shadow        : 0 0 0 12px #23e5db inset;
+}
+
+.l
+{
+  width      : 10px;
+  position   : absolute;
+  top        : 0;
+  bottom     : 0;
+  left       : 38px;
+  background : #23e5db;
+}
+
+.x
+{
+  width             : 20px;
+  height            : 20px;
+  overflow          : hidden;
+  display           : block;
+  position          : absolute;
+  left              : 1px;
+  top               : 0;
+  -webkit-transform : translate(51px, 10px);
+  -moz-transform    : translate(51px, 10px);
+  -ms-transform     : translate(51px, 10px);
+  transform         : translate(51px, 10px);
+}
+
+.x:before
+{
+  -webkit-transform : skewX(45deg) translate(-50%, 0);
+  -moz-transform    : skewX(45deg) translate(-50%, 0);
+  -ms-transform     : skewX(45deg) translate(-50%, 0);
+  transform         : skewX(45deg) translate(-50%, 0);
+}
+
+.x:before, .x:after
+{
+  content    : "";
+  position   : absolute;
+  top        : 0;
+  left       : 50%;
+  width      : 65%;
+  height     : 100%;
+  background : #23e5db;
+}
+
+.x:after
+{
+  -webkit-transform : skewX(-45deg) translate(-50%, 0);
+  -moz-transform    : skewX(-45deg) translate(-50%, 0);
+  -ms-transform     : skewX(-45deg) translate(-50%, 0);
+  transform         : skewX(-45deg) translate(-50%, 0);
+}
+
+.x:before, .x:after
+{
+  content    : "";
+  position   : absolute;
+  top        : 0;
+  left       : 50%;
+  width      : 65%;
+  height     : 100%;
+  background : #23e5db;
 }

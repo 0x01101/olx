@@ -2,3 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+*
+{
+  box-sizing : border-box;
+}
+
+*, *::before, *::after
+{
+  -webkit-box-sizing : inherit;
+  -moz-box-sizing    : inherit;
+  box-sizing         : inherit;
+}
+
+*::selection
+{
+  background  : #c7e5f1;
+  text-shadow : none;
+}
+
+a
+{
+  color                       : #0198d0;
+  cursor                      : pointer;
+  -webkit-text-decoration     : underline;
+  text-decoration             : underline;
+  -webkit-tap-highlight-color : transparent;
+}
