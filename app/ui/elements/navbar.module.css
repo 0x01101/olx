@@ -20,7 +20,7 @@
   position : relative;
 }
 
-.css-1u6y1sg
+.css1u6y1sg
 {
   max-width               : 1270px;
   height                  : 72px;
@@ -115,4 +115,138 @@
   width      : 65%;
   height     : 100%;
   background : #23e5db;
+}
+
+.navContainer
+{
+  display             : -webkit-box;
+  display             : -webkit-flex;
+  display             : -ms-flexbox;
+  display             : flex;
+  -webkit-align-items : center;
+  -webkit-box-align   : center;
+  -ms-flex-align      : center;
+  align-items         : center;
+}
+
+.messages
+{
+  margin-right            : 40px;
+  position                : relative;
+  display                 : -webkit-box;
+  display                 : -webkit-flex;
+  display                 : -ms-flexbox;
+  display                 : flex;
+  -webkit-align-items     : center;
+  -webkit-box-align       : center;
+  -ms-flex-align          : center;
+  align-items             : center;
+  cursor                  : pointer;
+  -webkit-text-decoration : none;
+  text-decoration         : none;
+  font-size               : 16px;
+  font-weight             : 600;
+  color                   : #fff;
+}
+
+.messagesIconContainer
+{
+  position : relative;
+}
+
+.messagesIcon
+{
+  height : 22px;
+  width  : 22px;
+  color  : #002f34;
+  color  : inherit;
+}
+
+.messagesMessage
+{
+  margin-top  : 1px;
+  margin-left : 18px;
+}
+
+.watched
+{
+  margin-right : 40px;
+  position     : relative;
+}
+
+.watchedIcon
+{
+  height : 22px;
+  width  : 22px;
+  color  : #fff;
+}
+
+.yoAccountContainer
+{
+  margin-right : 40px;
+  position     : relative;
+}
+
+.yoAccount
+{
+  display                 : -webkit-box;
+  display                 : -webkit-flex;
+  display                 : -ms-flexbox;
+  display                 : flex;
+  -webkit-align-items     : center;
+  -webkit-box-align       : center;
+  -ms-flex-align          : center;
+  align-items             : center;
+  -webkit-text-decoration : none;
+  text-decoration         : none;
+  font-size               : 16px;
+  font-weight             : 600;
+  color                   : #fff;
+}
+
+.yoAccountIcon
+{
+  height       : 24px;
+  width        : 24px;
+  margin-right : 12px;
+  color        : #fff;
+  color        : inherit;
+}
+
+.postAdButton
+{
+  webkit-align-items      : center;
+  -webkit-box-align       : center;
+  -ms-flex-align          : center;
+  align-items             : center;
+  border                  : 0;
+  border-radius           : 0;
+  box-sizing              : border-box;
+  color                   : #fff;
+  cursor                  : pointer;
+  display                 : -webkit-inline-box;
+  display                 : -webkit-inline-flex;
+  display                 : -ms-inline-flexbox;
+  display                 : inline-flex;
+  -webkit-box-pack        : center;
+  -ms-flex-pack           : center;
+  -webkit-justify-content : center;
+  justify-content         : center;
+  margin                  : 0;
+  min-height              : 40px;
+  padding                 : 13px 48px 15px;
+  position                : relative;
+  -webkit-text-decoration : none;
+  text-decoration         : none;
+  background-color        : #002f34;
+  font-weight             : 700;
+  font-size               : 16px;
+  line-height             : 18px;
+  background-color        : #fff;
+  border                  : solid 5px #fff;
+  border-radius           : 4px;
+  color                   : #002f34;
+  padding                 : 10px 43px 8px 43px;
+  padding-left            : 22px;
+  padding-right           : 22px;
 }
