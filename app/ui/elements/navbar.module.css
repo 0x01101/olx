@@ -1,0 +1,12 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    background: #002F34;
+    transition: top 0.4s ease-in-out;
+    -webkit-transition: top 0.4s ease-in-out;
+    width: 100vw;
+    height: 72px;
+}
