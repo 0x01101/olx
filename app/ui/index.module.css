@@ -4,3 +4,16 @@
   min-height       : 80vh;
   background-color : #f2f4f5;
 }
+
+.homePage
+{
+  padding:          24px;
+  margin-bottom:    24px;
+  background-color: #F2F4F5;
+  border-radius:    4px;
+  overflow:         hidden;
+  padding:          0;
+  margin-bottom:    0;
+  border-radius:    0;
+  position:         relative;
+}

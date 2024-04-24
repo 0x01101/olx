@@ -72,3 +72,13 @@ ul
   padding-inline-start : 40px;
   unicode-bidi         : isolate;
 }
+
+input, button, select, optgroup, textarea
+{
+  font-family: inherit;
+  font-size:   inherit;
+  line-height: inherit;
+  font-weight: inherit;
+  color:       inherit;
+  margin:      0;
+}

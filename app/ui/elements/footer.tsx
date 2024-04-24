@@ -1,4 +1,4 @@
-import styles from "@/app/ui/elements/footer.module.css";
+import styles from "@/app/ui/elements/css/footer.module.css";
 import { Fixlypl, Obidopl, OLXbg, OLXpt, OLXro, OLXua, Otodompl, Otomotopl } from "@/app/ui/elements/partnerIcons";
 import Image from "next/image";
 

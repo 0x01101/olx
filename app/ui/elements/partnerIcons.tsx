@@ -1,4 +1,4 @@
-import styles from "@/app/ui/elements/footer.module.css";
+import styles from "@/app/ui/elements/css/footer.module.css";
 
 export function OLXbg (): JSX.Element
 {
