@@ -1,8 +1,37 @@
-import styles from "@/app/ui/elements/navbar.module.css";
+"use client";
 
-export default function NavBar(): JSX.Element {
+import styles from "@/app/ui/elements/navbar.module.css";
+import { useEffect, useState } from "react";
+
+export default function NavBar (): JSX.Element
+{
+  const [ prevScrollPos, setPrevScrollPos ] = useState( window.pageYOffset );
+  const [ visible, setVisible ] = useState( true );
+  
+  useEffect( () =>
+  {
+    const handleScroll = (): void =>
+    {
+      const currentScrollPos: number = window.pageYOffset;
+      const isVisible: boolean = prevScrollPos > currentScrollPos;
+      
+      setPrevScrollPos( currentScrollPos );
+      setVisible( isVisible );
+    };
+    
+    if ( typeof window !== "undefined" )
+    {
+      window.addEventListener( "scroll", handleScroll );
+      
+      return (): void =>
+      {
+        window.removeEventListener( "scroll", handleScroll );
+      };
+    }
+  }, [ prevScrollPos ] );
+  
   return (
-    <header className={styles.navbar}>
+    <header className={styles.navbar} style={visible ? {} : { top: "-72px" }}>
       <div className={styles.navbarContainer}>
         <span className={styles.logoContainer}>
           <a href={"/"}>
@@ -43,7 +72,8 @@ export default function NavBar(): JSX.Element {
               Your Account
             </a>
           </div>
-          <a type="button" data-cy="post-new-ad-button" className={styles.postAdButton} href="/adding?bs=homepage_adding">Add advertisement</a>
+          <a type="button" data-cy="post-new-ad-button" className={styles.postAdButton}
+             href="/adding?bs=homepage_adding">Add advertisement</a>
         </div>
       </div>
     </header>
