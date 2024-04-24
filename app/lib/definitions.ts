@@ -6,6 +6,18 @@ export enum Role
   USER = "user"
 }
 
+export type RawUser = Omit<User, "email" | "role"> & { email: string, role: string }
+export type JoinedProduct = Omit<Product, "category" | "seller"> & {
+  category_id: number,
+  category_name: string,
+  category_created_at: Date
+} & {
+  user_id: number,
+  user_username: string,
+  user_email: string,
+  user_password: string
+}
+
 export interface User
 {
   id: number;
@@ -26,6 +38,7 @@ export interface Category
 export interface Product
 {
   id: number;
+  seller: User;
   name: string;
   description: string;
   price: number;

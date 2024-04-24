@@ -6,8 +6,8 @@ use olx;
 create table users
 (
     id         int primary key auto_increment,
-    username   varchar(255)           not null,
-    email      varchar(255)           not null,
+    username   varchar(255)           not null unique,
+    email      varchar(255)           not null unique,
     password   varchar(255)           not null,
     role       enum ('admin', 'user') not null,
     created_at timestamp default current_timestamp
@@ -16,19 +16,21 @@ create table users
 create table categories
 (
     id         int primary key auto_increment,
-    name       varchar(255) not null,
+    name       varchar(255) not null unique,
     created_at timestamp default current_timestamp
 );
 
 create table products
 (
     id          int primary key auto_increment,
+    user_id     int,
     name        varchar(255)   not null,
     description text,
     price       decimal(10, 2) not null,
     category_id int,
     created_at  timestamp default current_timestamp,
-    foreign key (category_id) references categories (id)
+    foreign key (category_id) references categories (id),
+    foreign key (user_id) references users (id)
 );
 
 create table bids
