@@ -65,7 +65,7 @@ export function OLXro (): JSX.Element
         </filter>
       </defs>
       <g
-        fill="none" fill-rule="evenodd" filter="url(#romaniaFlag_svg__a)" transform="translate(0 3)">
+        fill="none" fillRule="evenodd" filter="url(#romaniaFlag_svg__a)" transform="translate(0 3)">
         <path
           fill="#FCDD0E" d="M0 .01h16v10.666H0z"></path>
         <path fill="#040677" d="M0 .01h5.333v10.667H0z"></path>

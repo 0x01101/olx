@@ -5,14 +5,14 @@ import { useEffect, useState } from "react";
 
 export default function NavBar (): JSX.Element
 {
-  const [ prevScrollPos, setPrevScrollPos ] = useState( window.pageYOffset );
+  const [ prevScrollPos, setPrevScrollPos ] = useState( window.scrollY );
   const [ visible, setVisible ] = useState( true );
   
   useEffect( () =>
   {
     const handleScroll = (): void =>
     {
-      const currentScrollPos: number = window.pageYOffset;
+      const currentScrollPos: number = window.scrollY;
       const isVisible: boolean = prevScrollPos > currentScrollPos;
       
       setPrevScrollPos( currentScrollPos );

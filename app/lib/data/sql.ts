@@ -13,11 +13,12 @@ import {
 } from "@/app/lib/definitions";
 
 const pool: Pool = mariadb.createPool( {
-  host:     config.MySQLHost,
-  port:     config.MySQLPort,
-  user:     config.MySQLUser,
-  password: config.MySQLPass,
-  database: config.MySQLDB,
+  host:            config.MySQLHost,
+  port:            config.MySQLPort,
+  user:            config.MySQLUser,
+  password:        config.MySQLPass,
+  database:        config.MySQLDB,
+  connectionLimit: 1000,
 } );
 
 async function execQuery ( sql: string | QueryOptions, values?: any ): Promise<any[]>
@@ -30,11 +31,19 @@ async function execQuery ( sql: string | QueryOptions, values?: any ): Promise<a
   }
   catch ( e: any )
   {
+    await conn?.release();
     throw e;
   }
   finally
   {
-    if ( conn ) await conn.end();
+    try
+    {
+      await conn?.release();
+    }
+    catch ( e )
+    {
+      console.error( "Error releasing connection:", e );
+    }
   }
 }
 
