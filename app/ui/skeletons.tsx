@@ -4,12 +4,11 @@ const shimmer: string = "before:absolute before:inset-0 before:-translate-x-full
 
 export function CategoriesSkeleton (): JSX.Element {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${shimmer}`}>
       <div className={styles.innerContainer}>
         <div className={styles.categories}>
           <div>
-            <div className="h-5 w-5 rounded-md bg-gray-200"/>
-            <div className="ml-2 h-6 w-16 rounded-md bg-gray-200 text-sm font-medium"/>
+            <div className="mr-2 h-20 w-20 rounded-full bg-gray-200"/>
           </div>
         </div>
       </div>

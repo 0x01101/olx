@@ -19,7 +19,7 @@ export default async function Categories (): Promise<JSX.Element>
                    data-check={c.id} data-path={c.name.toLowerCase()} href={`/${c.name.toLowerCase()}/`}>
                 <Image src={`${c.logo_path}`}
                        alt={`${c.name} category image`} className={styles.categoryImage} width={88} height={88} />
-                <span className={styles.categoryName}>{c.name}</span>
+                <span className={styles.categoryName}>{c.name.trim()}</span>
               </a> ) )
             }
           </div>
