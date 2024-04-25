@@ -13,7 +13,8 @@ export default async function Categories (): Promise<JSX.Element>
         <div data-testid="home-categories-menu" data-cy="home-categories-menu">
           <h2 data-testid="home-categories-title" data-cy="home-categories-title"
               className={styles.text}>Main Categories</h2>
-          <div data-testid="home-categories-menu-row" data-cy="home-categories-menu-row" className={styles.categories}>
+          <div data-testid="home-categories-menu-row" data-cy="home-categories-menu-row"
+               className={styles.categories}>
             {categories.map( ( c: Category, i: number ) =>
               ( <a className={styles.category} key={i} data-testid={`cat-${c.id}`} data-cy={`cat-${c.id}`}
                    data-check={c.id} data-path={c.name.toLowerCase()} href={`/${c.name.toLowerCase()}/`}>
@@ -24,6 +25,17 @@ export default async function Categories (): Promise<JSX.Element>
             }
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+export function CategoriesFallback (): JSX.Element
+{
+  return (
+    <div className={styles.loaderContainer}>
+      <div className={styles.loaderOuterContainer}>
+        <div className={styles.loader} />
       </div>
     </div>
   );
