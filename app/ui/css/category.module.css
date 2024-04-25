@@ -1,0 +1,121 @@
+.container
+{
+  width            : 100%;
+  margin           : 0 auto;
+  background-color : #f2f4f5;
+  padding-top      : 40px;
+  padding-bottom   : 80px;
+  padding-left     : 16px;
+  padding-right    : 16px;
+  padding-top      : 20px;
+  position         : relative;
+  z-index          : 1;
+  background       : #f2f4f5;
+  padding-left     : 16px;
+  padding-right    : 16px;
+}
+
+@media screen and (max-width : 1440px)
+{
+  .container
+  {
+    width : 100%;
+  }
+}
+
+@media screen and (min-width : 992px)
+{
+  .container
+  {
+    max-width : 1238px;
+  }
+}
+
+.searchbarPartsContainer
+{
+  display               : grid;
+  width                 : 100%;
+  background-color      : inherit;
+  grid-template-columns : repeat(12, 1fr);
+  grid-column-gap       : 16px;
+  grid-column-gap       : 1px;
+  -webkit-align-items   : stretch;
+  -webkit-box-align     : stretch;
+  -ms-flex-align        : stretch;
+  align-items           : stretch;
+}
+
+.actualSearchbarContainer
+{
+  margin        : 0;
+  padding       : 0;
+  margin-bottom : 24px;
+  grid-column   : span 6;
+  position      : relative;
+  width         : 100%;
+  margin-bottom : 20px;
+}
+
+.idk1
+{
+
+}
+
+.actualSearchbarInnerContainer
+{
+  background-color : transparent;
+  position         : relative;
+}
+
+.actualSearchbar
+{
+  font-size           : 16px;
+  color               : #002f34;
+  background-color    : #f2f4f5;
+  border              : none;
+  border-bottom-color : #f2f4f5;
+  border-bottom-style : solid;
+  border-bottom-width : 2px;
+  border-radius       : 4px;
+  line-height         : 20px;
+  outline             : 0;
+  padding             : 14px 48px 14px 16px;
+  width               : 100%;
+  border-radius       : 4px 0 0 4px;
+  border-color        : #ffffff;
+  background-color    : #ffffff;
+  height              : 72px;
+  margin-bottom       : 4px;
+}
+
+.miscOptionsContainer
+{
+  display               : -webkit-box;
+  display               : -webkit-flex;
+  display               : -ms-flexbox;
+  display               : flex;
+  margin-bottom         : 32px;
+  -webkit-align-content : center;
+  -ms-flex-line-pack    : center;
+  align-content         : center;
+}
+
+.onlyWithPhoto
+{
+  display             : -webkit-box;
+  display             : -webkit-flex;
+  display             : -ms-flexbox;
+  display             : flex;
+  -webkit-align-items : center;
+  -webkit-box-align   : center;
+  -ms-flex-align      : center;
+  align-items         : center;
+  margin-bottom       : 16px;
+  margin-bottom       : 32px;
+}
+
+.onlyWithPhoto > div
+{
+  margin-right  : 16px;
+  margin-bottom : 0;
+}
