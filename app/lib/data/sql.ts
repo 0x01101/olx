@@ -46,6 +46,7 @@ export async function fetchCategories (): Promise<Category[]>
       SELECT id, name, created_at, logo_path
       FROM categories;
   `;
+  await new Promise((resolve) => setTimeout(resolve, 5000));
   return await execQuery( query );
 }
 
