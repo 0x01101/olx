@@ -12,18 +12,40 @@ import {
   User,
 } from "@/app/lib/definitions";
 
-const pool: Pool = mariadb.createPool( {
-  host:            config.MySQLHost,
-  port:            config.MySQLPort,
-  user:            config.MySQLUser,
-  password:        config.MySQLPass,
-  database:        config.MySQLDB,
-  connectionLimit: 1000,
-} );
+declare global
+{
+  var mariadbPool: mariadb.Pool | undefined; // "var" is needed due to `TS2339: Property  mariadbPool  does not exist on type  typeof globalThis` error (fuck)
+}
+
+function connectOnceToDatabase (): Pool
+{
+  if ( !global.mariadbPool )
+  {
+    global.mariadbPool = mariadb.createPool( {
+      host:            config.MySQLHost,
+      port:            config.MySQLPort,
+      user:            config.MySQLUser,
+      password:        config.MySQLPass,
+      database:        config.MySQLDB,
+      connectionLimit: 1000,
+    } );
+  }
+  return global.mariadbPool;
+}
+
+const pool: Pool = connectOnceToDatabase();
 
 async function execQuery ( sql: string | QueryOptions, values?: any ): Promise<any[]>
 {
   return await pool.query( sql, values );
+}
+
+export async function closePool (): Promise<void>
+{
+  if ( global.mariadbPool )
+  {
+    await global.mariadbPool.end();
+  }
 }
 
 // Fetching entire table worth of things
@@ -46,7 +68,7 @@ export async function fetchCategories (): Promise<Category[]>
       SELECT id, name, created_at, logo_path
       FROM categories;
   `;
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  await new Promise( ( resolve ) => setTimeout( resolve, 5000 ) );
   return await execQuery( query );
 }
 
@@ -60,7 +82,7 @@ export async function fetchProducts (): Promise<Product[]>
              products.created_at,
              categories.id         as category_id,
              categories.name       as category_name,
-             categories.logo_path       as category_logo_path,
+             categories.logo_path  as category_logo_path,
              categories.created_at as category_created_at,
              users.id              as seller_id,
              users.username        as seller_username,
@@ -82,7 +104,7 @@ export async function fetchProducts (): Promise<Product[]>
     category:    {
       id:         row.category_id,
       name:       row.category_name,
-      logo_path: row.category_logo_path,
+      logo_path:  row.category_logo_path,
       created_at: row.category_created_at,
     },
     seller:      {
@@ -115,7 +137,7 @@ export async function fetchBids (): Promise<Bid[]>
              products.created_at   as product_created_at,
              categories.id         as category_id,
              categories.name       as category_name,
-             categories.logo_path       as category_logo_path,
+             categories.logo_path  as category_logo_path,
              categories.created_at as category_created_at,
              sellers.id            as seller_id,
              sellers.username      as seller_username,
@@ -151,7 +173,7 @@ export async function fetchBids (): Promise<Bid[]>
       category:    {
         id:         row.category_id,
         name:       row.category_name,
-        logo_path: row.category_logo_path,
+        logo_path:  row.category_logo_path,
         created_at: row.category_created_at,
       },
       seller:      {
@@ -191,7 +213,7 @@ export async function fetchTransactions (): Promise<Transaction[]>
              products.created_at   as product_created_at,
              categories.id         as category_id,
              categories.name       as category_name,
-             categories.logo_path       as category_logo_path,
+             categories.logo_path  as category_logo_path,
              categories.created_at as category_created_at
       FROM transactions
                INNER JOIN users AS bidders ON transactions.bidder_id = bidders.id
@@ -229,7 +251,7 @@ export async function fetchTransactions (): Promise<Transaction[]>
       category:    {
         id:         row.category_id,
         name:       row.category_name,
-        logo_path: row.category_logo_path,
+        logo_path:  row.category_logo_path,
         created_at: row.category_created_at,
       },
       seller:      {
@@ -279,7 +301,7 @@ export async function fetchProductsByProperty ( propertyName: string, propertyVa
              products.created_at,
              categories.id         as category_id,
              categories.name       as category_name,
-             categories.logo_path       as category_logo_path,
+             categories.logo_path  as category_logo_path,
              categories.created_at as category_created_at,
              users.id              as seller_id,
              users.username        as seller_username,
@@ -302,7 +324,7 @@ export async function fetchProductsByProperty ( propertyName: string, propertyVa
     category:    {
       id:         row.category_id,
       name:       row.category_name,
-      logo_path: row.category_logo_path,
+      logo_path:  row.category_logo_path,
       created_at: row.category_created_at,
     },
     seller:      {
@@ -322,27 +344,25 @@ export async function fetchBidsByProperty ( propertyName: string, propertyValue:
       SELECT bids.id,
              bids.amount,
              bids.created_at,
-             users.id              as user_id,
+             users.id             as user_id,
              users.username,
              users.email,
              users.password,
              users.role,
-             users.created_at      as user_created_at,
-             products.id           as product_id,
-             products.name         as product_name,
-             products.description  as product_description,
-             products.price        as product_price,
-             products.created_at   as product_created_at,
-             categories.id         as category_id,
-             categories.name       as category_name,
-             categories.logo_path as category_logo_path
-             categories.created_at as category_created_at,
-             sellers.id            as seller_id,
-             sellers.username      as seller_username,
-             sellers.email         as seller_email,
-             sellers.password      as seller_password,
-             sellers.role          as seller_role,
-             sellers.created_at    as seller_created_at
+             users.created_at     as user_created_at,
+             products.id          as product_id,
+             products.name        as product_name,
+             products.description as product_description,
+             products.price       as product_price,
+             products.created_at  as product_created_at,
+             categories.id        as category_id,
+             categories.name      as category_name,
+             categories.logo_path as category_logo_path categories.created_at as category_created_at, sellers.id as seller_id,
+             sellers.username     as seller_username,
+             sellers.email        as seller_email,
+             sellers.password     as seller_password,
+             sellers.role         as seller_role,
+             sellers.created_at   as seller_created_at
       FROM bids
                INNER JOIN users ON bids.user_id = users.id
                INNER JOIN products ON bids.product_id = products.id
@@ -372,7 +392,7 @@ export async function fetchBidsByProperty ( propertyName: string, propertyValue:
       category:    {
         id:         row.category_id,
         name:       row.category_name,
-        logo_path: row.category_logo_path,
+        logo_path:  row.category_logo_path,
         created_at: row.category_created_at,
       },
       seller:      {
@@ -412,7 +432,7 @@ export async function fetchTransactionsByProperty ( propertyName: string, proper
              products.created_at   as product_created_at,
              categories.id         as category_id,
              categories.name       as category_name,
-             categories.logo_path       as category_logo_path,
+             categories.logo_path  as category_logo_path,
              categories.created_at as category_created_at
       FROM transactions
                INNER JOIN users AS bidders ON transactions.bidder_id = bidders.id
@@ -459,14 +479,9 @@ export async function fetchTransactionsByProperty ( propertyName: string, proper
       category:    {
         id:         row.category_id,
         name:       row.category_name,
-        logo_path: row.category_logo_path,
+        logo_path:  row.category_logo_path,
         created_at: row.category_created_at,
       },
     },
   } ) );
-}
-
-export async function closePool (): Promise<void>
-{
-  await pool.end();
 }
