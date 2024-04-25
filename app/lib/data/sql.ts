@@ -1,5 +1,5 @@
 import * as mariadb from "mariadb";
-import { Pool, PoolConnection, QueryOptions } from "mariadb";
+import { Pool, QueryOptions } from "mariadb";
 import config from "@/config.json";
 import {
   Bid,
@@ -23,28 +23,7 @@ const pool: Pool = mariadb.createPool( {
 
 async function execQuery ( sql: string | QueryOptions, values?: any ): Promise<any[]>
 {
-  let conn: PoolConnection | undefined = undefined;
-  try
-  {
-    conn = await pool.getConnection();
-    return await conn.query( sql, values );
-  }
-  catch ( e: any )
-  {
-    await conn?.release();
-    throw e;
-  }
-  finally
-  {
-    try
-    {
-      await conn?.release();
-    }
-    catch ( e )
-    {
-      console.error( "Error releasing connection:", e );
-    }
-  }
+  return await pool.query( sql, values );
 }
 
 // Fetching entire table worth of things
@@ -64,7 +43,7 @@ export async function fetchUsers (): Promise<User[]>
 export async function fetchCategories (): Promise<Category[]>
 {
   const query: string = `
-      SELECT id, name, created_at
+      SELECT id, name, created_at, logo_path
       FROM categories;
   `;
   return await execQuery( query );
@@ -80,6 +59,7 @@ export async function fetchProducts (): Promise<Product[]>
              products.created_at,
              categories.id         as category_id,
              categories.name       as category_name,
+             categories.logo_path       as category_logo_path,
              categories.created_at as category_created_at,
              users.id              as seller_id,
              users.username        as seller_username,
@@ -101,6 +81,7 @@ export async function fetchProducts (): Promise<Product[]>
     category:    {
       id:         row.category_id,
       name:       row.category_name,
+      logo_path: row.category_logo_path,
       created_at: row.category_created_at,
     },
     seller:      {
@@ -133,6 +114,7 @@ export async function fetchBids (): Promise<Bid[]>
              products.created_at   as product_created_at,
              categories.id         as category_id,
              categories.name       as category_name,
+             categories.logo_path       as category_logo_path,
              categories.created_at as category_created_at,
              sellers.id            as seller_id,
              sellers.username      as seller_username,
@@ -168,6 +150,7 @@ export async function fetchBids (): Promise<Bid[]>
       category:    {
         id:         row.category_id,
         name:       row.category_name,
+        logo_path: row.category_logo_path,
         created_at: row.category_created_at,
       },
       seller:      {
@@ -207,6 +190,7 @@ export async function fetchTransactions (): Promise<Transaction[]>
              products.created_at   as product_created_at,
              categories.id         as category_id,
              categories.name       as category_name,
+             categories.logo_path       as category_logo_path,
              categories.created_at as category_created_at
       FROM transactions
                INNER JOIN users AS bidders ON transactions.bidder_id = bidders.id
@@ -244,6 +228,7 @@ export async function fetchTransactions (): Promise<Transaction[]>
       category:    {
         id:         row.category_id,
         name:       row.category_name,
+        logo_path: row.category_logo_path,
         created_at: row.category_created_at,
       },
       seller:      {
@@ -276,7 +261,7 @@ export async function fetchUsersByProperty ( propertyName: string, propertyValue
 export async function fetchCategoriesByProperty ( propertyName: string, propertyValue: any ): Promise<Category[]>
 {
   const query: string = `
-      SELECT id, name, created_at
+      SELECT id, name, created_at, logo_path
       FROM categories
       WHERE ${propertyName} = ?;
   `;
@@ -293,6 +278,7 @@ export async function fetchProductsByProperty ( propertyName: string, propertyVa
              products.created_at,
              categories.id         as category_id,
              categories.name       as category_name,
+             categories.logo_path       as category_logo_path,
              categories.created_at as category_created_at,
              users.id              as seller_id,
              users.username        as seller_username,
@@ -315,6 +301,7 @@ export async function fetchProductsByProperty ( propertyName: string, propertyVa
     category:    {
       id:         row.category_id,
       name:       row.category_name,
+      logo_path: row.category_logo_path,
       created_at: row.category_created_at,
     },
     seller:      {
@@ -347,6 +334,7 @@ export async function fetchBidsByProperty ( propertyName: string, propertyValue:
              products.created_at   as product_created_at,
              categories.id         as category_id,
              categories.name       as category_name,
+             categories.logo_path as category_logo_path
              categories.created_at as category_created_at,
              sellers.id            as seller_id,
              sellers.username      as seller_username,
@@ -383,6 +371,7 @@ export async function fetchBidsByProperty ( propertyName: string, propertyValue:
       category:    {
         id:         row.category_id,
         name:       row.category_name,
+        logo_path: row.category_logo_path,
         created_at: row.category_created_at,
       },
       seller:      {
@@ -422,6 +411,7 @@ export async function fetchTransactionsByProperty ( propertyName: string, proper
              products.created_at   as product_created_at,
              categories.id         as category_id,
              categories.name       as category_name,
+             categories.logo_path       as category_logo_path,
              categories.created_at as category_created_at
       FROM transactions
                INNER JOIN users AS bidders ON transactions.bidder_id = bidders.id
@@ -468,8 +458,14 @@ export async function fetchTransactionsByProperty ( propertyName: string, proper
       category:    {
         id:         row.category_id,
         name:       row.category_name,
+        logo_path: row.category_logo_path,
         created_at: row.category_created_at,
       },
     },
   } ) );
+}
+
+export async function closePool (): Promise<void>
+{
+  await pool.end();
 }

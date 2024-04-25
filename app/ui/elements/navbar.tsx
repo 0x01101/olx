@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function NavBar (): JSX.Element
 {
-  const [ prevScrollPos, setPrevScrollPos ] = useState( window.scrollY );
+  const [ prevScrollPos, setPrevScrollPos ] = useState( 0 );
   const [ visible, setVisible ] = useState( true );
   
   useEffect( () =>

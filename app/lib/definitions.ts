@@ -1,7 +1,8 @@
 export enum Role
 {
   ADMIN = "admin",
-  USER = "user"
+  USER = "user",
+  MODERATOR = "moderator"
 }
 
 export interface JoinedSeller
@@ -28,6 +29,7 @@ export interface JoinedCategory
 {
   category_id: number,
   category_name: string,
+  category_logo_path: string,
   category_created_at: Date,
 }
 
@@ -65,6 +67,7 @@ export interface Category
 {
   id: number;
   name: string;
+  logo_path: string;
   created_at: Date;
 }
 

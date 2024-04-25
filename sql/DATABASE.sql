@@ -6,10 +6,10 @@ use olx;
 create table users
 (
     id         int primary key auto_increment,
-    username   varchar(255)           not null unique,
-    email      varchar(255)           not null unique,
-    password   varchar(255)           not null,
-    role       enum ('admin', 'user') not null,
+    username   varchar(255)                        not null unique,
+    email      varchar(255)                        not null unique,
+    password   varchar(255)                        not null,
+    role       enum ('admin', 'user', 'moderator') not null,
     created_at timestamp default current_timestamp
 );
 
@@ -17,7 +17,8 @@ create table categories
 (
     id         int primary key auto_increment,
     name       varchar(255) not null unique,
-    created_at timestamp default current_timestamp
+    created_at timestamp    default current_timestamp,
+    logo_path  varchar(255)
 );
 
 create table products
