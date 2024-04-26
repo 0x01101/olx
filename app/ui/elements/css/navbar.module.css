@@ -158,7 +158,6 @@
 {
   height : 22px;
   width  : 22px;
-  color  : #002f34;
   color  : inherit;
 }
 
@@ -209,7 +208,6 @@
   height       : 24px;
   width        : 24px;
   margin-right : 12px;
-  color        : #ffffff;
   color        : inherit;
 }
 
@@ -219,10 +217,7 @@
   -webkit-box-align       : center;
   -ms-flex-align          : center;
   align-items             : center;
-  border                  : 0;
-  border-radius           : 0;
   box-sizing              : border-box;
-  color                   : #ffffff;
   cursor                  : pointer;
   display                 : -webkit-inline-box;
   display                 : -webkit-inline-flex;
@@ -234,11 +229,9 @@
   justify-content         : center;
   margin                  : 0;
   min-height              : 40px;
-  padding                 : 13px 48px 15px;
   position                : relative;
   -webkit-text-decoration : none;
   text-decoration         : none;
-  background-color        : #002f34;
   font-weight             : 700;
   font-size               : 16px;
   line-height             : 18px;
@@ -246,9 +239,7 @@
   border                  : solid 5px #ffffff;
   border-radius           : 4px;
   color                   : #002f34;
-  padding                 : 10px 43px 8px 43px;
-  padding-left            : 22px;
-  padding-right           : 22px;
+  padding: 10px 22px 8px;
 }
 
 /* Example media query for tablet and mobile devices */

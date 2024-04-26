@@ -2,17 +2,10 @@
 {
   width            : 100%;
   margin           : 0 auto;
-  background-color : #f2f4f5;
-  padding-top      : 40px;
-  padding-bottom   : 80px;
-  padding-left     : 16px;
-  padding-right    : 16px;
-  padding-top      : 20px;
+  padding:           20px 16px 80px;
   position         : relative;
   z-index          : 1;
   background       : #f2f4f5;
-  padding-left     : 16px;
-  padding-right    : 16px;
 }
 
 @media screen and (max-width : 1440px)
@@ -37,7 +30,6 @@
   width                 : 100%;
   background-color      : inherit;
   grid-template-columns : repeat(12, 1fr);
-  grid-column-gap       : 16px;
   grid-column-gap       : 1px;
   -webkit-align-items   : stretch;
   -webkit-box-align     : stretch;
@@ -47,13 +39,11 @@
 
 .actualSearchbarContainer
 {
-  margin        : 0;
   padding       : 0;
-  margin-bottom : 24px;
   grid-column   : span 6;
   position      : relative;
   width         : 100%;
-  margin-bottom : 20px;
+  margin:         0 0 20px;
 }
 
 .idk1
@@ -71,18 +61,13 @@
 {
   font-size           : 16px;
   color               : #002f34;
-  background-color    : #f2f4f5;
-  border              : none;
-  border-bottom-color : #f2f4f5;
-  border-bottom-style : solid;
-  border-bottom-width : 2px;
-  border-radius       : 4px;
   line-height         : 20px;
   outline             : 0;
   padding             : 14px 48px 14px 16px;
   width               : 100%;
   border-radius       : 4px 0 0 4px;
-  border-color        : #ffffff;
+  border:               none #ffffff;
+  border-bottom:        2px solid;
   background-color    : #ffffff;
   height              : 72px;
   margin-bottom       : 4px;
@@ -110,7 +95,6 @@
   -webkit-box-align   : center;
   -ms-flex-align      : center;
   align-items         : center;
-  margin-bottom       : 16px;
   margin-bottom       : 32px;
 }
 
@@ -140,11 +124,8 @@
 
 .miscOptionTextLabel
 {
-  font-size:   16px;
   line-height: 20px;
-  color:       #002F34;
-  margin:      0;
-  margin-left: 16px;
+  margin:      0 0 0 16px;
   font-size:   14px;
   color:       #7F9799;
 }
@@ -195,53 +176,52 @@
   height: 24px;
   width:  24px;
   color:  #FFFFFF;
-  color:  #FFFFFF;
 }
 
 .watchSearch
 {
-  -webkit-align-items:     center;
-  -webkit-box-align:       center;
-  -ms-flex-align:          center;
-  align-items:             center;
-  border:                  0;
-  border-radius:           0;
-  box-sizing:              border-box;
-  color:                   #FFFFFF;
-  cursor:                  pointer;
-  display:                 -webkit-inline-box;
-  display:                 -webkit-inline-flex;
-  display:                 -ms-inline-flexbox;
-  display:                 inline-flex;
-  -webkit-box-pack:        center;
-  -ms-flex-pack:           center;
+  -webkit-align-items: center;
+  -webkit-box-align:   center;
+  -ms-flex-align:      center;
+  align-items:         center;
+  box-sizing:          border-box;
+  cursor:              pointer;
+  display:             -webkit-inline-box;
+  display:             -webkit-inline-flex;
+  display:             -ms-inline-flexbox;
+  display:             inline-flex;
+  -webkit-box-pack:    center;
+  -ms-flex-pack:       center;
   -webkit-justify-content: center;
-  justify-content:         center;
-  margin:                  0;
-  min-height:              40px;
-  padding:                 13px 48px 15px;
-  position:                relative;
+  justify-content:     center;
+  margin:              0;
+  min-height:          40px;
+  position:            relative;
   -webkit-text-decoration: none;
-  text-decoration:         none;
-  background-color:        #002F34;
-  font-weight:             700;
-  font-size:               16px;
-  line-height:             18px;
-  background-color:        transparent;
-  border:                  2px solid #002F34;
-  border-radius:           4px;
-  color:                   #002F34;
-  padding:                 12px 46px;
-  -webkit-transition:      0.2s ease all;
-  transition:              0.2s ease all;
-  padding:                 0 16px;
-  border-radius:           4px;
-  font-size:               14px;
-  float:                   right;
+  text-decoration:     none;
+  font-weight:         700;
+  line-height:         18px;
+  background-color:    transparent;
+  border:              2px solid #002F34;
+  border-radius:       4px;
+  color:               #002F34;
+  -webkit-transition:  0.2s ease all;
+  transition:          0.2s ease all;
+  padding:             0 16px;
+  font-size:           14px;
+  float:               right;
 }
 
 .watchSearch > button
 {
   margin-left: auto;
-  height:      40px;
+  height:      20px;
+}
+
+.watchSearchIcon
+{
+  height:       16px;
+  width:        16px;
+  margin-right: 8px;
+  color:        #002F34;
 }

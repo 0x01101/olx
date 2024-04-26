@@ -3,10 +3,6 @@
   width:            100%;
   margin:           0 auto;
   background-color: #F2F4F5;
-  padding-top:      40px;
-  padding-bottom:   80px;
-  padding-left:     16px;
-  padding-right:    16px;
   padding:          0;
 }
 
@@ -28,11 +24,9 @@
 {
   margin:        0;
   padding:       0;
-  margin-bottom: 24px;
   grid-column:   span 12;
   position:      relative;
   width:         100%;
-  margin-bottom: 0;
 }
 
 .formContainer {
@@ -67,7 +61,6 @@
   width:                 100%;
   background-color:      inherit;
   grid-template-columns: repeat(12, 1fr);
-  grid-column-gap:       16px;
   grid-column-gap:       1px;
   -webkit-align-items:   stretch;
   -webkit-box-align:     stretch;
@@ -79,11 +72,9 @@
 {
   margin:        0;
   padding:       0;
-  margin-bottom: 24px;
   grid-column:   span 8;
   position:      relative;
   width:         100%;
-  margin-bottom: 0;
 }
 
 .searchInputOuterContainer
@@ -116,7 +107,6 @@
   width:      24px;
   color:      #002F34;
   margin-top: 8px;
-  color:      #002F34;
 }
 
 .actualSearchBar
@@ -131,25 +121,19 @@
   border-radius:       4px;
   line-height:         20px;
   outline:             0;
-  padding:             14px 48px 14px 16px;
-  padding-left:        48px;
+  padding:             14px 48px;
   width:               100%;
-  border-radius:       4px 0 0 4px;
-  border-color:        #FFFFFF;
-  background-color:    #FFFFFF;
   height:              72px;
   margin-bottom:       4px;
 }
 
 .localisationOuterOuterOuterOuterOuterContainer
 {
-  margin:        0;
   padding:       0;
-  margin-bottom: 24px;
   grid-column:   span 3;
   position:      relative;
   width:         100%;
-  margin-bottom: 0;
+  margin:        0;
 }
 
 .localisationOuterOuterOuterOuterContainer
@@ -199,41 +183,32 @@
 {
   height:     24px;
   width:      24px;
-  color:      #7F9799;
   margin-top: 10px;
   color:      #002F34;
 }
 
 .localisationInput
 {
-  font-size:           16px;
-  color:               #002F34;
-  background-color:    #F2F4F5;
-  border:              none;
-  border-bottom-color: #F2F4F5;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-radius:       4px;
-  line-height:         20px;
-  outline:             0;
-  padding:             14px 48px 14px 16px;
-  padding-left:        48px;
-  width:               100%;
-  border-radius:       0;
-  border-color:        #FFFFFF;
-  background-color:    #FFFFFF;
-  height:              72px;
+  font-size:        16px;
+  color:            #002F34;
+  line-height:      20px;
+  outline:          0;
+  padding:          14px 48px;
+  width:            100%;
+  border-radius:    0;
+  border:           none #FFFFFF;
+  border-bottom:    2px solid;
+  background-color: #FFFFFF;
+  height:           72px;
 }
 
 .buttonContainer
 {
   margin:        0;
   padding:       0;
-  margin-bottom: 24px;
   grid-column:   span 1;
   position:      relative;
   width:         100%;
-  margin-bottom: 0;
 }
 
 .button
@@ -242,8 +217,6 @@
   -webkit-box-align:          center;
   -ms-flex-align:             center;
   align-items:                center;
-  border:                     0;
-  border-radius:              0;
   box-sizing:                 border-box;
   color:                      #FFFFFF;
   cursor:                     pointer;
@@ -257,7 +230,6 @@
   justify-content:            center;
   margin:                     0;
   min-height:                 40px;
-  padding:                    13px 48px 15px;
   position:                   relative;
   -webkit-text-decoration:    none;
   text-decoration:            none;
@@ -265,16 +237,10 @@
   font-weight:                700;
   font-size:                  16px;
   line-height:                18px;
-  background-color:           #002F34;
   border:                     5px solid #002F34;
-  border-radius:              4px;
-  color:                      #FFFFFF;
   padding:                    10px 30px 8px 30px;
   height:                     72px;
-  border-top-right-radius:    4px;
-  border-bottom-right-radius: 4px;
-  border-top-left-radius:     0;
-  border-bottom-left-radius:  0;
+  border-radius:              0 4px 4px 0;
   white-space:                nowrap;
 }
 
@@ -293,7 +259,6 @@
 {
   height: 24px;
   width:  24px;
-  color:  #002F34;
   size:   24px;
   margin: -2px 2px;
   color:  #FFFFFF;
