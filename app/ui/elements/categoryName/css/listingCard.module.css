@@ -1,0 +1,117 @@
+.outerContainer
+{
+  height: 100%;
+}
+
+.outerContainer > div
+{
+  grid-row: auto;
+}
+
+.container
+{
+  height:     168px;
+  padding:    8px;
+  background: #FFFFFF;
+}
+
+.elementsContainer
+{
+  display:                    -webkit-box;
+  display:                    -webkit-flex;
+  display:                    -ms-flexbox;
+  display:                    flex;
+  height:                     100%;
+  -webkit-flex-direction:     row;
+  -ms-flex-direction:         row;
+  flex-direction:             row;
+  overflow:                   hidden;
+  border-top-right-radius:    4px;
+  border-bottom-right-radius: 4px;
+}
+
+.imageContainer
+{
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative:   0;
+  flex-shrink:         0;
+  max-width:           45%;
+  width:               216px;
+  position:            relative;
+}
+
+.infoContainer
+{
+  background-color:       #FFFFFF;
+  display:                -webkit-box;
+  display:                -webkit-flex;
+  display:                -ms-flexbox;
+  display:                flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction:     column;
+  flex-direction:         column;
+  position:               relative;
+  word-break:             break-word;
+  -webkit-flex:           1;
+  -ms-flex:               1;
+  flex:                   1;
+  min-height:             128px;
+  overflow:               hidden;
+  padding-left:           10px;
+}
+
+.imageLinkElement
+{
+  -webkit-text-decoration: none;
+  text-decoration:         none;
+  height:                  100%;
+  -webkit-box-flex:        1;
+  -webkit-flex-grow:       1;
+  -ms-flex-positive:       1;
+  flex-grow:               1;
+  color:                   unset;
+}
+
+.imagesContainer
+{
+  background-color:          #ECEEEF;
+  box-sizing:                border-box;
+  overflow:                  hidden;
+  position:                  relative;
+  height:                    100%;
+  padding-top:               0;
+  border-top-left-radius:    4px;
+  border-bottom-left-radius: 4px;
+}
+
+.images
+{
+  -webkit-align-items:     center;
+  -webkit-box-align:       center;
+  -ms-flex-align:          center;
+  align-items:             center;
+  bottom:                  0;
+  display:                 -webkit-box;
+  display:                 -webkit-flex;
+  display:                 -ms-flexbox;
+  display:                 flex;
+  -webkit-box-pack:        center;
+  -ms-flex-pack:           center;
+  -webkit-justify-content: center;
+  justify-content:         center;
+  left:                    0;
+  position:                absolute;
+  right:                   0;
+  top:                     0;
+}
+
+.image
+{
+  object-fit:         cover;
+  /* Should be `undefinedms` BTW */
+  -webkit-transition: opacity 100ms ease-in-out;
+  transition:         opacity 100ms ease-in-out;
+  opacity:            1;
+  width:              100%;
+  height:             100%;
+}

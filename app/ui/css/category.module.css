@@ -425,3 +425,50 @@
   background-color:    #FFFFFF;
   cursor:              pointer;
 }
+
+.listingsOuterContainer
+{
+  display:               grid;
+  width:                 100%;
+  background-color:      inherit;
+  grid-template-columns: repeat(12, 1fr);
+  grid-column-gap:       16px;
+  -webkit-align-items:   stretch;
+  -webkit-box-align:     stretch;
+  -ms-flex-align:        stretch;
+  align-items:           stretch;
+}
+
+.listingsGridContainer
+{
+  padding:     0;
+  margin:      0 0 24px;
+  grid-column: span 12;
+  position:    relative;
+  width:       100%;
+}
+
+.listingsMarginOrSmth
+{
+  position:     absolute;
+  top:          0;
+  height:       100%;
+  right:        100%;
+  margin-right: 20px;
+}
+
+.listingsGrid
+{
+  display:               grid;
+  grid-gap:              8px;
+  grid-template-columns: 100%;
+  width:                 100%;
+}
+
+@media screen and (min-width: 992px)
+{
+  .listingsGrid
+  {
+    grid-template-rows: minmax(0, 3fr);
+  }
+}

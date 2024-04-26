@@ -106,9 +106,14 @@ export default async function Page ( { params }: { params: { categoryName: strin
             </div>
           </div>
         </div>
-        {/* TODO: Add rest of the filters, make those ones work */}
+        {/* TODO: Add rest of the filters & make current ones work */}
+        <div className={styles.listingsOuterContainer}>
+          <div className={styles.listingsGridContainer} style={{ width: "100%" }}>
+            <div className={styles.listingsMarginOrSmth} />
+            {/* TODO: listing cards here !! */}
+          </div>
+        </div>
       </form>
-      
     </div>
   );
 }
