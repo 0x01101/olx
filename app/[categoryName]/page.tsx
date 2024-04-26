@@ -38,6 +38,7 @@ export default async function Page ( { params }: { params: { categoryName: strin
         </div>
         <div className={styles.miscOptionsContainer}>
           <MiscOption name={"photos"} text={"With photos only"} checked={withPhotosOnly}/>
+          <button type={"button"} data-testid="fav-search-btn" className={styles.watchSearch}></button>
         </div>
       </form>
     </div>

@@ -17,14 +17,14 @@ create table categories
 (
     id         int primary key auto_increment,
     name       varchar(255) not null unique,
-    created_at timestamp    default current_timestamp,
+    created_at timestamp default current_timestamp,
     logo_path  varchar(255)
 );
 
 create table products
 (
     id          int primary key auto_increment,
-    user_id     int,
+    user_id     int            not null,
     name        varchar(255)   not null,
     description text,
     price       decimal(10, 2) not null,
@@ -37,8 +37,8 @@ create table products
 create table bids
 (
     id         int primary key auto_increment,
-    user_id    int,
-    product_id int,
+    user_id    int            not null,
+    product_id int            not null,
     amount     decimal(10, 2) not null,
     created_at timestamp default current_timestamp,
     foreign key (user_id) references users (id),
@@ -48,12 +48,22 @@ create table bids
 create table transactions
 (
     id         int primary key auto_increment,
-    bidder_id  int,
-    seller_id  int,
-    product_id int,
+    bidder_id  int            not null,
+    seller_id  int            not null,
+    product_id int            not null,
     amount     decimal(10, 2) not null,
     created_at timestamp default current_timestamp,
     foreign key (bidder_id) references users (id),
     foreign key (seller_id) references users (id),
     foreign key (product_id) references products (id)
 );
+
+create table notifications
+(
+    id         int primary key auto_increment,
+    source     enum ("system", "message", "notification", "watched") not null, -- System: new login notification, etc.., Message: new message in conversation, Notification: Someone bought product, etc.., Watched: update in watched product / category
+    user_id    int                                                   not null,
+    title      varchar(255)                                          not null,
+    content    text                                                  not null,
+    created_at timestamp default current_timestamp
+)
