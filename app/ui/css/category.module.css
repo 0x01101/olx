@@ -194,7 +194,6 @@
   -ms-flex-pack:       center;
   -webkit-justify-content: center;
   justify-content:     center;
-  margin:              0;
   min-height:          40px;
   position:            relative;
   -webkit-text-decoration: none;
@@ -210,13 +209,34 @@
   padding:             0 16px;
   font-size:           14px;
   float:               right;
-}
-
-.watchSearch > button
-{
   margin-left: auto;
   height:      20px;
 }
+
+.watchSearch:not(:disabled):hover
+{
+  padding: 0 16px;
+}
+
+@media (hover)
+{
+  .watchSearch:not(:disabled):hover
+  {
+    border-width: 5px;
+    padding:      9px 16px;
+  }
+}
+
+@media (hover)
+{
+  .watchSearch:not(:disabled):active
+  {
+    background-color: #7F9799;
+    border-color:     #7F9799;
+    color:            #FFFFFF;
+  }
+}
+
 
 .watchSearchIcon
 {
