@@ -237,11 +237,191 @@
   }
 }
 
-
 .watchSearchIcon
 {
   height:       16px;
   width:        16px;
   margin-right: 8px;
   color:        #002F34;
+}
+
+.filtersContainer
+{
+  display:               grid;
+  width:                 100%;
+  background-color:      inherit;
+  grid-template-columns: repeat(12, 1fr);
+  grid-column-gap:       16px;
+  -webkit-align-items:   stretch;
+  -webkit-box-align:     stretch;
+  -ms-flex-align:        stretch;
+  align-items:           stretch;
+}
+
+.filtersTitle
+{
+  font-size:   24px;
+  line-height: 26px;
+  font-weight: 500;
+  color:       #002F34;
+  margin:      0 0 16px;
+}
+
+.filtersMainContainer
+{
+  padding:     0;
+  grid-column: span 12;
+  position:    relative;
+  width:       100%;
+  margin:      0;
+}
+
+@media screen and (max-width: 992px)
+{
+  .filtersMainContainer
+  {
+    grid-column: span 12;
+  }
+}
+
+.filtersMainInnerContainer
+{
+  display:               grid;
+  width:                 100%;
+  background-color:      inherit;
+  grid-column-gap:       16px;
+  grid-template-columns: repeat(10, 1fr);
+  grid-row-gap:          16px;
+  -webkit-align-items:   stretch;
+  -webkit-box-align:     stretch;
+  -ms-flex-align:        stretch;
+  align-items:           stretch;
+}
+
+.categoryFilterOuterContainer
+{
+  padding:     0;
+  grid-column: span 2;
+  position:    relative;
+  width:       100%;
+  margin:      0;
+}
+
+@media screen and (max-width: 992px)
+{
+  .categoryFilterOuterContainer
+  {
+    grid-column: span 12;
+  }
+}
+
+.categoryFilterContainer
+{
+  width:     100%;
+  font-size: 14px;
+}
+
+.categoryFilterTitle
+{
+  font-size:   14px;
+  line-height: 18px;
+  color:       #002F34;
+  margin:      0 0 6px;
+}
+
+.categoryFilterInnerContainer
+{
+  background:              #fff;
+  margin-right:            0;
+  width:                   100%;
+  font-weight:             inherit;
+  display:                 -webkit-box;
+  display:                 -webkit-flex;
+  display:                 -ms-flexbox;
+  display:                 flex;
+  -webkit-align-items:     center;
+  -webkit-box-align:       center;
+  -ms-flex-align:          center;
+  align-items:             center;
+  -webkit-box-pack:        justify;
+  -webkit-justify-content: space-between;
+  justify-content:         space-between;
+  cursor:                  pointer;
+  border-radius:           4px;
+  height:                  48px;
+  line-height:             48px;
+  padding:                 0 16px;
+  font-size:               16px;
+  color:                   #002F34;
+}
+
+.categoryFilterSelectedText
+{
+  white-space:   nowrap;
+  text-overflow: ellipsis;
+  overflow:      hidden;
+}
+
+.dropdownIcon
+{
+  height:      24px;
+  width:       24px;
+  margin-left: 8px;
+  color:       #002F34;
+}
+
+.priceRangeFilterContainer
+{
+  padding:     0;
+  grid-column: span 2;
+  position:    relative;
+  width:       100%;
+  margin:      0 0 8px;
+}
+
+.priceRangeFilterTitle
+{
+  font-size:     14px;
+  line-height:   18px;
+  color:         #002F34;
+  margin:        0 0 6px;
+  text-overflow: ellipsis;
+  overflow:      hidden;
+  white-space:   nowrap;
+  display:       block;
+}
+
+.priceRangeFilterInnerContainer
+{
+  display:        -webkit-box;
+  display:        -webkit-flex;
+  display:        -ms-flexbox;
+  display:        flex;
+  grid-auto-flow: row;
+  grid-gap:       8px;
+  padding-bottom: 10px;
+  height:         48px;
+}
+
+.priceRangeFilterInputContainer
+{
+  background-color: transparent;
+  position:         relative;
+}
+
+.priceRangeFilterInput
+{
+  font-size:           16px;
+  color:               #002F34;
+  border:              none;
+  border-bottom-color: #F2F4F5;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-radius:       4px;
+  line-height:         20px;
+  outline:             0;
+  width:               100%;
+  padding:             14px 32px 14px 10px;
+  background-color:    #FFFFFF;
+  cursor:              pointer;
 }

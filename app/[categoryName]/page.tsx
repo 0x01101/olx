@@ -2,6 +2,7 @@ import { Category, Product } from "@/app/lib/definitions";
 import { fetchCategoriesByProperty, fetchProductsByProperty } from "@/app/lib/data/fetch";
 import { notFound } from "next/navigation";
 import styles from "@/app/ui/css/category.module.css";
+import { capitalize } from "@/app/lib/text";
 
 export default async function Page ( { params }: { params: { categoryName: string } } ): Promise<JSX.Element>
 {
@@ -9,7 +10,7 @@ export default async function Page ( { params }: { params: { categoryName: strin
   const watchingSearch: boolean = false; // TODO: Add logic
   
   const categoryName: string = params.categoryName;
-  const category: Category = ( await fetchCategoriesByProperty( "name", categoryName ) )[ 0 ];
+  const category: Category = ( await fetchCategoriesByProperty( "name", categoryName ) )[ 0 ]; // TODO: Make so you can change it via category dropdown
   if ( !category ) notFound();
   const products: Product[] = await fetchProductsByProperty( "category_id", category.id );
   
@@ -52,7 +53,62 @@ export default async function Page ( { params }: { params: { categoryName: strin
             Watch Search
           </button>
         </div>
+        <div data-testid="listing-filters" className={styles.filtersContainer}>
+          <h4 className={styles.filtersTitle}>Filters</h4>
+          <div className={styles.filtersMainContainer}>
+            <div className={styles.filtersMainInnerContainer}>
+              <div className={styles.categoryFilterOuterContainer}>
+                <div className={styles.categoryFilterContainer}>
+                  <p className={styles.categoryFilterTitle}>Category</p>
+                  <div style={{ position: "relative" }}>
+                    <div data-cy="category-dropdown" data-testid="category-dropdown"
+                         className={styles.categoryFilterInnerContainer}>
+                      <div className={styles.categoryFilterSelectedText}>
+                        {capitalize( category.name )}
+                      </div>
+                      <DropdownIcon/>
+                    </div>
+                    {/* <div></div> TODO: Dropdown menu here */}
+                  </div>
+                </div>
+              </div>
+              <div className={styles.priceRangeFilterContainer}>
+                <p className={styles.priceRangeFilterTitle}>Price</p>
+                <div className={styles.priceRangeFilterInnerContainer}>
+                  <div>
+                    <div data-testid="flyout-wrapper" style={{ position: "relative" }}>
+                      <div role={"button"} data-testid="flyout-toggle" aria-label="toggle flyout">
+                        <div className={styles.priceRangeFilterInputContainer}>
+                          <input autoComplete="off" type="tel" inputMode="numeric" pattern="\d*"
+                                 data-testid="range-from-input" placeholder="From" className={styles.priceRangeFilterInput}
+                                 name="range-from-input"
+                                 color="#002F34" aria-invalid="false"
+                                 aria-labelledby="range-from-input-label" value={""}/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div data-testid="flyout-wrapper" style={{ position: "relative" }}>
+                      <div role={"button"} data-testid="flyout-toggle" aria-label="toggle flyout">
+                        <div className={styles.priceRangeFilterInputContainer}>
+                          <input autoComplete="off" type="tel" inputMode="numeric" pattern="\d*"
+                                 data-testid="range-to-input" placeholder="To" className={styles.priceRangeFilterInput}
+                                 name="range-to-input"
+                                 color="#002F34" aria-invalid="false"
+                                 aria-labelledby="range-to-input-label" value={""}/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* TODO: Add rest of the filters, make those ones work */}
       </form>
+      
     </div>
   );
 }
@@ -75,5 +131,16 @@ function MiscOption ( { name, text, checked }: { name: string, text: string, che
       </label>
       <label htmlFor={"photos"} className={styles.miscOptionTextLabel}>{text}</label>
     </div>
+  );
+}
+
+function DropdownIcon (): JSX.Element
+{
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"
+         className={styles.dropdownIcon}>
+      <path fill="currentColor" fillRule="evenodd"
+            d="M2.001 6.5h1.414l1.27 1.271 7.316 7.315 7.315-7.315L20.587 6.5h1.414v1.414l-1.27 1.27-7.316 7.316-1 1h-.827l-3.942-3.942-4.374-4.374-1.27-1.27z"></path>
+    </svg>
   );
 }
