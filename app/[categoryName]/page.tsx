@@ -1,5 +1,5 @@
 import { Category, Product } from "@/app/lib/definitions";
-import { fetchCategoriesByProperty, fetchProductsByProperty } from "@/app/lib/data/sql";
+import { fetchCategoriesByProperty, fetchNotifications, fetchProductsByProperty } from "@/app/lib/data/sql";
 import { notFound } from "next/navigation";
 import styles from "@/app/ui/css/category.module.css";
 

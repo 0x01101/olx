@@ -4,6 +4,7 @@ import config from "@/config.json";
 import {
   Bid,
   Category,
+  Notification,
   Product,
   RawBidRecord,
   RawProductRecord,
@@ -263,6 +264,14 @@ export async function fetchTransactions (): Promise<Transaction[]>
       },
     },
   } ) );
+}
+
+export async function fetchNotifications (): Promise<Notification[]>
+{
+  const query: string = `
+  SELECT id, source, user_id, title, content, created_at FROM notifications
+  `;
+  return await execQuery( query );
 }
 
 // Fetching with limitations
