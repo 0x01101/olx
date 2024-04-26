@@ -1,4 +1,4 @@
-import { closePool } from "./data/sql";
+import { closePool } from "@/app/lib/data/sql";
 
 const handleExit = async ( signal: string ): Promise<void> =>
 {
