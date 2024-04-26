@@ -100,7 +100,7 @@
   align-content         : center;
 }
 
-.onlyWithPhoto
+.miscOption
 {
   display             : -webkit-box;
   display             : -webkit-flex;
@@ -114,8 +114,134 @@
   margin-bottom       : 32px;
 }
 
-.onlyWithPhoto > div
+.miscOption > div
 {
   margin-right  : 16px;
   margin-bottom : 0;
+}
+
+.miscOptionCheckboxLabel
+{
+  -webkit-align-items: center;
+  -webkit-box-align:   center;
+  -ms-flex-align:      center;
+  align-items:         center;
+  display:             -webkit-box;
+  display:             -webkit-flex;
+  display:             -ms-flexbox;
+  display:             flex;
+}
+
+.miscOptionCheckboxLabel input[type='checkbox']
+{
+  opacity:  0;
+  position: absolute;
+}
+
+.miscOptionTextLabel
+{
+  font-size:   16px;
+  line-height: 20px;
+  color:       #002F34;
+  margin:      0;
+  margin-left: 16px;
+  font-size:   14px;
+  color:       #7F9799;
+}
+
+.miscOptionCheckboxContainerUnchecked
+{
+  -webkit-align-items:     center;
+  -webkit-box-align:       center;
+  -ms-flex-align:          center;
+  align-items:             center;
+  border-radius:           4px;
+  border-style:            solid;
+  border-color:            #002F34;
+  border-width:            2px;
+  box-sizing:              border-box;
+  background-color:        transparent;
+  display:                 -webkit-box;
+  display:                 -webkit-flex;
+  display:                 -ms-flexbox;
+  display:                 flex;
+  height:                  24px;
+  -webkit-box-pack:        center;
+  -ms-flex-pack:           center;
+  -webkit-justify-content: center;
+  justify-content:         center;
+  width:                   24px;
+}
+
+.miscOptionCheckboxContainerChecked
+{
+  -webkit-box-align: center;
+  align-items:       center;
+  border-radius:     4px;
+  border-style:      solid;
+  border-color:      rgb(0, 47, 52);
+  border-width:      0px;
+  box-sizing:        border-box;
+  background-color:  rgb(0, 47, 52);
+  display:           flex;
+  height:            24px;
+  -webkit-box-pack:  center;
+  justify-content:   center;
+  width:             24px;
+}
+
+.miscOptionCheckboxIcon
+{
+  height: 24px;
+  width:  24px;
+  color:  #FFFFFF;
+  color:  #FFFFFF;
+}
+
+.watchSearch
+{
+  -webkit-align-items:     center;
+  -webkit-box-align:       center;
+  -ms-flex-align:          center;
+  align-items:             center;
+  border:                  0;
+  border-radius:           0;
+  box-sizing:              border-box;
+  color:                   #FFFFFF;
+  cursor:                  pointer;
+  display:                 -webkit-inline-box;
+  display:                 -webkit-inline-flex;
+  display:                 -ms-inline-flexbox;
+  display:                 inline-flex;
+  -webkit-box-pack:        center;
+  -ms-flex-pack:           center;
+  -webkit-justify-content: center;
+  justify-content:         center;
+  margin:                  0;
+  min-height:              40px;
+  padding:                 13px 48px 15px;
+  position:                relative;
+  -webkit-text-decoration: none;
+  text-decoration:         none;
+  background-color:        #002F34;
+  font-weight:             700;
+  font-size:               16px;
+  line-height:             18px;
+  background-color:        transparent;
+  border:                  2px solid #002F34;
+  border-radius:           4px;
+  color:                   #002F34;
+  padding:                 12px 46px;
+  -webkit-transition:      0.2s ease all;
+  transition:              0.2s ease all;
+  padding:                 0 16px;
+  border-radius:           4px;
+  font-size:               14px;
+  float:                   right;
+}
+
+.watchSearch > button
+{
+  margin-left: auto;
+  height:      40px;
 }
