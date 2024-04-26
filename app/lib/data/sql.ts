@@ -269,7 +269,7 @@ export async function fetchTransactions (): Promise<Transaction[]>
 export async function fetchNotifications (): Promise<Notification[]>
 {
   const query: string = `
-  SELECT id, source, user_id, title, content, created_at FROM notifications
+  SELECT id, source, user_id, title, content, created_at FROM notifications;
   `;
   return await execQuery( query );
 }
@@ -492,4 +492,12 @@ export async function fetchTransactionsByProperty ( propertyName: string, proper
       },
     },
   } ) );
+}
+
+export async function fetchNotificationsByProperty ( propertyName: string, propertyValue: any ): Promise<Notification[]>
+{
+  const query: string = `
+  SELECT id, source, user_id, title, content, created_at FROM notifications WHERE ${propertyName} = ?;
+  `;
+  return await execQuery( query, [ propertyValue ] );
 }
