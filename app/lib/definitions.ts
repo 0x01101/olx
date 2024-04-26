@@ -5,6 +5,14 @@ export enum Role
   MODERATOR = "moderator"
 }
 
+export enum Source
+{
+  SYSTEM = "system",
+  MESSAGE = "message",
+  NOTIFICATION = "notification",
+  WATCHED = "watched"
+}
+
 export interface JoinedSeller
 {
   seller_id: number,
@@ -98,5 +106,15 @@ export interface Transaction
   seller: User;
   product: Product;
   amount: number;
+  created_at: Date;
+}
+
+export interface Notification
+{
+  id: number;
+  source: Source | string;
+  user_id: number;
+  title: string;
+  content: string;
   created_at: Date;
 }
