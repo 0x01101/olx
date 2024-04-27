@@ -8,7 +8,7 @@ declare global
 }
 
 function connectOnceToDatabase (): Pool
-{1
+{
   if ( !global.mariadbPool )
   {
     global.mariadbPool = mariadb.createPool( {
