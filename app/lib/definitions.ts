@@ -19,6 +19,10 @@ export enum Condition
   USED = "used"
 }
 
+export type JoinedUser = {
+  [K in keyof User as `user_${string & K}`]: User[K];
+};
+
 export type JoinedSeller = {
   [K in keyof User as `seller_${string & K}`]: User[K];
 };
@@ -26,6 +30,8 @@ export type JoinedSeller = {
 export type JoinedBidder = {
   [K in keyof User as `bidder_${string & K}`]: User[K];
 };
+
+export type AnyJoinedUserOrSmth = JoinedUser | JoinedSeller | JoinedBidder;
 
 export type JoinedCategory = {
   [K in keyof Category as `category_${string & K}`]: Category[K];
@@ -42,8 +48,7 @@ export type RawBidRecord =
   & JoinedCategory
   & JoinedProduct
   & JoinedSeller
-  & Omit<User, "id" | "created_at">
-  & { user_created_at: Date, user_id: number }
+  & JoinedUser
 export type RawTransactionRecord = Transaction & JoinedProduct & JoinedSeller & JoinedCategory & JoinedBidder
 
 export interface User

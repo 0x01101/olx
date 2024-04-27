@@ -34,7 +34,7 @@ export const products: string = `
 export const bids: string = `
   select
     ${bidKeys.map( ( k: string ): string => `bids.${k}` ).join( "," )},
-    ${userKeys.map( ( k: string ): string => `users.${k}${[ "id", "created_at" ].includes( k ) ? ` as user_${k}` : ""}` ).join( "," )},
+    ${userKeys.map( ( k: string ): string => `users.${k} as user_${k}` ).join( "," )},
     ${productKeys.map( ( k: string ): string => `products.${k} as product_${k}` ).join( "," )},
     ${categoryKeys.map( ( k: string ): string => `categories.${k} as category_${k}` ).join( "," )},
     ${userKeys.map( ( k: string ): string => `sellers.${k} as seller_${k}` ).join( "," )}
