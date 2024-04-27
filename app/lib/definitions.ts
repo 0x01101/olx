@@ -13,42 +13,21 @@ export enum Source
   WATCHED = "watched"
 }
 
-export interface JoinedSeller
-{
-  seller_id: number,
-  seller_username: string,
-  seller_email: string,
-  seller_password: string,
-  seller_role: Role & string,
-  seller_created_at: Date
-}
+export type JoinedSeller = {
+  [K in keyof User as `seller_${string & K}`]: User[K];
+};
 
-export interface JoinedBidder
-{
-  bidder_id: number,
-  bidder_username: string,
-  bidder_email: string,
-  bidder_password: string,
-  bidder_role: Role & string,
-  bidder_created_at: Date
-}
+export type JoinedBidder = {
+  [K in keyof User as `bidder_${string & K}`]: User[K];
+};
 
-export interface JoinedCategory
-{
-  category_id: number,
-  category_name: string,
-  category_logo_path: string,
-  category_created_at: Date,
-}
+export type JoinedCategory = {
+  [K in keyof Category as `category_${string & K}`]: Category[K];
+};
 
-export interface JoinedProduct
-{
-  product_id: number;
-  product_name: string;
-  product_description: string;
-  product_price: number;
-  product_created_at: Date;
-}
+export type JoinedProduct = {
+  [K in keyof Product as `product_${string & K}`]: Product[K];
+};
 
 export type RawProductRecord = Product & JoinedSeller & JoinedCategory
 export type RawBidRecord =
@@ -64,6 +43,7 @@ export type RawTransactionRecord = Transaction & JoinedProduct & JoinedSeller & 
 export interface User
 {
   id: number;
+  uuid: string;
   username: string;
   email: string;
   password: string;
@@ -75,18 +55,19 @@ export interface Category
 {
   id: number;
   name: string;
-  logo_path: string;
+  logo_path: string | undefined | null;
   created_at: Date;
 }
 
 export interface Product
 {
   id: number;
+  uuid: string
   seller: User;
   name: string;
-  description: string;
+  description: string | undefined | null;
   price: number;
-  category: Category;
+  category: Category | null | undefined;
   created_at: Date;
 }
 
