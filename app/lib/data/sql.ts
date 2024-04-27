@@ -37,3 +37,9 @@ export async function closePool (): Promise<void>
     await global.mariadbPool.end();
   }
 }
+
+export function mergeQuery ( baseQuery: string, toMerge: string ): string
+{
+  if ( baseQuery.endsWith( ";" ) ) return baseQuery.replace( /;\n?$/im, toMerge );
+  else return `${baseQuery} ${toMerge}`;
+}

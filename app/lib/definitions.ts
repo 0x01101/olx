@@ -13,6 +13,12 @@ export enum Source
   WATCHED = "watched"
 }
 
+export enum Condition
+{
+  NEW = "new",
+  USED = "used"
+}
+
 export type JoinedSeller = {
   [K in keyof User as `seller_${string & K}`]: User[K];
 };
@@ -62,12 +68,15 @@ export interface Category
 export interface Product
 {
   id: number;
-  uuid: string
+  uuid: string;
   seller: User;
+  condition: Condition | string;
   name: string;
   description: string | undefined | null;
   price: number;
+  negotiable: boolean;
   category: Category | null | undefined;
+  active: boolean;
   created_at: Date;
 }
 
