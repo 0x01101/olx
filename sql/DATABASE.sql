@@ -24,10 +24,11 @@ create table categories
 create table products
 (
     id          int primary key auto_increment,
-    user_id     int            not null,
-    name        varchar(255)   not null,
+    uuid        varchar(100) unique not null,
+    user_id     int                 not null,
+    name        varchar(255)        not null,
     description text,
-    price       decimal(10, 2) not null,
+    price       decimal(10, 2)      not null,
     category_id int,
     created_at  timestamp default current_timestamp,
     foreign key (category_id) references categories (id),
