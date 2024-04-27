@@ -3,5 +3,6 @@
   "MySQLPort": 3306,
   "MySQLUser": "root",
   "MySQLPass": "P@55w0rd",
-  "MySQLDB": "olx"
+  "MySQLDB": "olx",
+  "currency": "$"
 }
