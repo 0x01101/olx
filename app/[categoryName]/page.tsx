@@ -1,18 +1,19 @@
 import { Category, Product } from "@/app/lib/definitions";
-import { fetchCategoriesByProperty, fetchProductsByProperty } from "@/app/lib/data/fetch";
 import { notFound } from "next/navigation";
 import styles from "@/app/ui/css/category.module.css";
 import { capitalize } from "@/app/lib/text";
+import { fetchCategoryByName, fetchProductsInCategory } from "@/app/lib/data/fetch";
+import ListingCard from "@/app/ui/elements/categoryName/listingCard";
 
 export default async function Page ( { params }: { params: { categoryName: string } } ): Promise<JSX.Element>
 {
   const withPhotosOnly: boolean = false; // TODO: Add logic to actually change it's value
   const watchingSearch: boolean = false; // TODO: Add logic
   
-  const categoryName: string = params.categoryName;
-  const category: Category = ( await fetchCategoriesByProperty( "name", categoryName ) )[ 0 ]; // TODO: Make so you can change it via category dropdown
+  const categoryName: string = params.categoryName.trim();
+  let category: Category = await fetchCategoryByName( categoryName ); // TODO: Make so you can change it via category dropdown
   if ( !category ) notFound();
-  const products: Product[] = await fetchProductsByProperty( "category_id", category.id );
+  const products: Product[] = await fetchProductsInCategory( category );
   
   return (
     <div className={styles.container}>
@@ -39,7 +40,7 @@ export default async function Page ( { params }: { params: { categoryName: strin
           <div></div>
         </div>
         <div className={styles.miscOptionsContainer}>
-          <MiscOption name={"photos"} text={"With photos only"} checked={withPhotosOnly}/>
+          <MiscOption name={"photos"} text={"With photos only"} checked={withPhotosOnly} />
           <button type={"button"} data-testid="fav-search-btn" className={styles.watchSearch}>
             {watchingSearch ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"
                                    className={styles.watchSearchIcon} style={{ color: "rgb(255, 86, 54)" }}>
@@ -66,7 +67,7 @@ export default async function Page ( { params }: { params: { categoryName: strin
                       <div className={styles.categoryFilterSelectedText}>
                         {capitalize( category.name )}
                       </div>
-                      <DropdownIcon/>
+                      <DropdownIcon />
                     </div>
                     {/* <div></div> TODO: Dropdown menu here */}
                   </div>
@@ -80,10 +81,11 @@ export default async function Page ( { params }: { params: { categoryName: strin
                       <div role={"button"} data-testid="flyout-toggle" aria-label="toggle flyout">
                         <div className={styles.priceRangeFilterInputContainer}>
                           <input autoComplete="off" type="tel" inputMode="numeric" pattern="\d*"
-                                 data-testid="range-from-input" placeholder="From" className={styles.priceRangeFilterInput}
+                                 data-testid="range-from-input" placeholder="From"
+                                 className={styles.priceRangeFilterInput}
                                  name="range-from-input"
                                  color="#002F34" aria-invalid="false"
-                                 aria-labelledby="range-from-input-label" value={""}/>
+                                 aria-labelledby="range-from-input-label" value={""} />
                         </div>
                       </div>
                     </div>
@@ -96,7 +98,7 @@ export default async function Page ( { params }: { params: { categoryName: strin
                                  data-testid="range-to-input" placeholder="To" className={styles.priceRangeFilterInput}
                                  name="range-to-input"
                                  color="#002F34" aria-invalid="false"
-                                 aria-labelledby="range-to-input-label" value={""}/>
+                                 aria-labelledby="range-to-input-label" value={""} />
                         </div>
                       </div>
                     </div>
@@ -109,8 +111,9 @@ export default async function Page ( { params }: { params: { categoryName: strin
         {/* TODO: Add rest of the filters & make current ones work */}
         <div className={styles.listingsOuterContainer}>
           <div className={styles.listingsGridContainer} style={{ width: "100%" }}>
-            <div className={styles.listingsMarginOrSmth} />
-            {/* TODO: listing cards here !! */}
+            <div className={styles.listingsGrid}>
+              {products.map( ( p: Product, i: number ): JSX.Element => ( <ListingCard key={i} product={p} /> ) )}
+            </div>
           </div>
         </div>
       </form>
@@ -132,7 +135,7 @@ function MiscOption ( { name, text, checked }: { name: string, text: string, che
                   d="m20.586 5-1.271 1.296L8 17.836l-3.315-3.38-1.271-1.297H2v1.443l1.271 1.296L7.293 20h1.414L20.73 7.738 22 6.442V5z"></path>
           </svg>
         </div>
-        <input name={name} data-testid="checkbox-field" id={name} type="checkbox"/>
+        <input name={name} data-testid="checkbox-field" id={name} type="checkbox" />
       </label>
       <label htmlFor={"photos"} className={styles.miscOptionTextLabel}>{text}</label>
     </div>

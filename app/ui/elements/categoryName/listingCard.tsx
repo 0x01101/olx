@@ -51,12 +51,12 @@ export default function ListingCard ( { product }: { product: Product } ): JSX.E
               <div typeof={"list"} className={styles.imagesContainer}>
                 <div className={styles.images}>
                   <Image src={`/app/static/media/images/products/${product.uuid}/main`}
-                         alt={`${product.name} (${product.id})`} className={styles.imageElement} />
+                         alt={`${product.name} (${product.id})`} className={styles.imageElement} width={216} height={152} />
                 </div>
               </div>
             </a>
           </div>
-          <div typeof={"list"} className={styles.infoContainer}>
+          <div typeof={"list"} className={styles.infoOuterContainer}>
             <div className={styles.infoContainer}>
               <a className={styles.nameAElement} href={URL}>
                 <h6 className={styles.nameText}>{product.name}</h6>

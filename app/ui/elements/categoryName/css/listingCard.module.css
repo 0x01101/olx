@@ -1,6 +1,7 @@
 .outerContainer
 {
   height : 100%;
+  grid-row : auto;
 }
 
 .outerContainer > div
@@ -40,7 +41,7 @@
   position            : relative;
 }
 
-.infoContainer
+.infoOuterContainer
 {
   background-color       : #ffffff;
   display                : -webkit-box;

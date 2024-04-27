@@ -40,6 +40,6 @@ export async function closePool (): Promise<void>
 
 export function mergeQuery ( baseQuery: string, toMerge: string ): string
 {
-  if ( baseQuery.endsWith( ";" ) ) return baseQuery.replace( /;\n?$/im, toMerge );
+  if ( baseQuery.trim().endsWith( ";" ) ) return baseQuery.replace( /;\s*$/im, ` ${toMerge};` );
   else return `${baseQuery} ${toMerge}`;
 }

@@ -9,11 +9,10 @@ import {
   Transaction,
   User,
 } from "@/app/lib/definitions";
-import { execQuery } from "@/app/lib/data/sql";
+import { execQuery, mergeQuery } from "@/app/lib/data/sql";
 import { bids, categories, notifications, products, transactions, users } from "@/app/lib/constants/queries";
-import { assembleBid, assembleProduct, assembleTransaction } from "@/app/lib/data/assemble";
+import { assembleBid, assembleCategory, assembleProduct, assembleTransaction } from "@/app/lib/data/assemble";
 
-// Fetching entire table worth of things
 export async function fetchUsers (): Promise<User[]>
 {
   return await execQuery( users );
@@ -45,4 +44,15 @@ export async function fetchTransactions (): Promise<Transaction[]>
 export async function fetchNotifications (): Promise<Notification[]>
 {
   return await execQuery( notifications );
+}
+
+export async function fetchCategoryByName ( name: string ): Promise<Category>
+{
+  return ( await execQuery( mergeQuery( categories, `WHERE LOWER(name) = ?` ), name.toLowerCase() ) )[ 0 ];
+}
+
+export async function fetchProductsInCategory ( category: Category ): Promise<Product[]>
+{
+  const rows: RawProductRecord[] = await execQuery( mergeQuery( products, `WHERE category_id = ?` ), [ category.id ] );
+  return rows.map( ( row: RawProductRecord ): Product => assembleProduct( row ) );
 }
