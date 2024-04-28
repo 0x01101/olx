@@ -2,10 +2,10 @@
 
 import styles from "@/app/ui/css/category.module.css";
 
-export default function WatchCategoryButton ( { watching, callback }: { watching: boolean, callback: () => void } ): JSX.Element
+export default function WatchCategoryButton ( { watching }: {watching: boolean} ): JSX.Element
 {
   return (
-    <button type={"button"} data-testid="fav-search-btn" className={styles.watchSearch} onClick={callback}>
+    <button type={"button"} data-testid="fav-search-btn" className={styles.watchSearch}>
       {watching ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"
                        className={styles.watchSearchIcon} style={{ color: "rgb(255, 86, 54)" }}>
         <path fill="currentColor" fillRule="evenodd"
