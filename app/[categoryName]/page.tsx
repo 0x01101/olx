@@ -4,7 +4,6 @@ import styles from "@/app/ui/css/category.module.css";
 import { capitalize } from "@/app/lib/text";
 import { fetchCategoryByName, fetchProductsInCategory } from "@/app/lib/data/fetch";
 import ListingCard from "@/app/ui/elements/categoryName/listingCard";
-import { revalidatePath } from "next/cache";
 import WatchCategoryButton from "@/app/ui/elements/categoryName/watchCategoryButton";
 
 export default async function Page ( { params }: { params: { categoryName: string } } ): Promise<JSX.Element>

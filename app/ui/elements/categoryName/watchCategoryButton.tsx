@@ -2,7 +2,7 @@
 
 import styles from "@/app/ui/css/category.module.css";
 
-export default function WatchCategoryButton ( { watching }: {watching: boolean} ): JSX.Element
+export default function WatchCategoryButton ( { watching }: { watching: boolean } ): JSX.Element
 {
   return (
     <button type={"button"} data-testid="fav-search-btn" className={styles.watchSearch}>
