@@ -4,23 +4,17 @@ import styles from "@/app/ui/css/category.module.css";
 import { capitalize } from "@/app/lib/text";
 import { fetchCategoryByName, fetchProductsInCategory } from "@/app/lib/data/fetch";
 import ListingCard from "@/app/ui/elements/categoryName/listingCard";
-import WatchCategoryButton from "@/app/ui/elements/categoryName/watchCategoryButton";
+import WatchSearchButton from "@/app/ui/elements/categoryName/watchSearchButton";
 
 export default async function Page ( { params }: { params: { categoryName: string } } ): Promise<JSX.Element>
 {
   let withPhotosOnly: boolean = false; // TODO: Add logic to actually change it's value
-  let watchingSearch: boolean = false; // TODO: Add logic
+  let watchingSearch: boolean = true; // TODO: Add logic
   
   const categoryName: string = params.categoryName.trim();
   let category: Category = await fetchCategoryByName( categoryName ); // TODO: Make so you can change it via category dropdown
   if ( !category ) notFound();
   const products: Product[] = await fetchProductsInCategory( category );
-  
-  const handle = async () =>
-  {
-    "use server";
-    watchingSearch = true;
-  };
   
   return (
     <div className={styles.container}>
@@ -48,7 +42,7 @@ export default async function Page ( { params }: { params: { categoryName: strin
         </div>
         <div className={styles.miscOptionsContainer}>
           <MiscOption name={"photos"} text={"With photos only"} checked={withPhotosOnly} />
-          <WatchCategoryButton watching={watchingSearch} callback={handle} />
+          <WatchSearchButton initial={watchingSearch} />
         </div>
         <div data-testid="listing-filters" className={styles.filtersContainer}>
           <h4 className={styles.filtersTitle}>Filters</h4>

@@ -1,13 +1,24 @@
 "use client";
 
-import styles from "@/app/ui/css/category.module.css";
+import { useState } from "react";
+import styles from "@/app/ui/elements/categoryName/css/watchSearchButton.module.css";
+import { setWatchingAction } from "@/app/lib/actions";
 
-export default function WatchCategoryButton ( { watching }: { watching: boolean } ): JSX.Element
+export default function WatchSearchButton ( { initial }: { initial: boolean } ): JSX.Element
 {
+  const [ watchingSearch, setWatchingSearch ] = useState( initial );
+  
+  const handleClick = async (): Promise<void> =>
+  {
+    setWatchingSearch( !watchingSearch );
+    await setWatchingAction( watchingSearch );
+  };
+  
   return (
-    <button type={"button"} data-testid="fav-search-btn" className={styles.watchSearch}>
-      {watching ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"
-                       className={styles.watchSearchIcon} style={{ color: "rgb(255, 86, 54)" }}>
+    <button type={"button"} data-testid="fav-search-btn" className={styles.watchSearch}
+            onClick={handleClick}>
+      {watchingSearch ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"
+                             className={styles.watchSearchIcon} style={{ color: "rgb(255, 86, 54)" }}>
         <path fill="currentColor" fillRule="evenodd"
               d="M17 2a6 6 0 0 0-5 2.686A6 6 0 0 0 7 2C3.692 2 1 4.691 1 8a5.97 5.97 0 0 0 1.233 3.633L10.709 22h2.583l8.5-10.399A5.942 5.942 0 0 0 23 8c0-3.309-2.691-6-6-6"></path>
       </svg> : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"
