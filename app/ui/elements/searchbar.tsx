@@ -3,15 +3,16 @@
 import styles from "@/app/ui/elements/css/searchbar.module.css";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export default function SearchBar (): JSX.Element
 {
-  const router = useRouter();
+  const router: AppRouterInstance = useRouter();
   
-  const handleSubmit = ( event: React.FormEvent<HTMLFormElement> ) =>
+  const handleSubmit: ( event: React.FormEvent<HTMLFormElement> ) => void = ( event: React.FormEvent<HTMLFormElement> ): void =>
   {
     event.preventDefault();
-    const searchInput = ( event.target as HTMLFormElement ).elements.namedItem(
+    const searchInput: HTMLInputElement = ( event.target as HTMLFormElement ).elements.namedItem(
       "search",
     ) as HTMLInputElement;
     
@@ -23,7 +24,7 @@ export default function SearchBar (): JSX.Element
       <div className={styles.searchBarInnerContainer}>
         <div className={styles.searchBar}>
           <div className={styles.formContainer}>
-            <form action={"#"} noValidate data-testid="search-form" onSubmit={handleSubmit}>
+            <form action={"#"} noValidate={true} data-testid="search-form" onSubmit={handleSubmit}>
               <div className={styles.searchElementsContainer}>
                 <div className={styles.searchInputContainer}>
                   <div data-test-id="search-autosuggestions" className={styles.searchInputOuterContainer}>
@@ -41,7 +42,7 @@ export default function SearchBar (): JSX.Element
                           <input autoComplete="off" type="text" id="search" data-testid="search-input"
                                  data-cy="search-bar-input" placeholder="Search" className={styles.actualSearchBar}
                                  aria-describedby="" color="#002F34" aria-invalid="false"
-                                 aria-labelledby="undefined-label" value=""/>
+                                 aria-labelledby="undefined-label"/>
                         </div>
                       </div>
                     </div>
@@ -66,7 +67,7 @@ export default function SearchBar (): JSX.Element
                                    aria-label={"Entire Country"} placeholder={"Entire Country"}
                                    className={styles.localisationInput}
                                    aria-describedby="" name="location-Field" color="#002F34" aria-invalid="false"
-                                   aria-labelledby="location-Field-label" value=""/>
+                                   aria-labelledby="location-Field-label"/>
                           </div>
                         </div>
                       </div>
