@@ -1,7 +1,7 @@
 {
   "MySQLHost": "100.100.14.204",
   "MySQLPort": 3306,
-  "MySQLUser": "root",
+  "MySQLUser": "funnyuser",
   "MySQLPass": "P@55w0rd",
   "MySQLDB": "olx",
   "currency": "$"

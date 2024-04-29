@@ -3,6 +3,10 @@ create database olx;
 
 use olx;
 
+drop user if exists funnyuser@'%';
+create user funnyuser@'%' identified by 'P@55w0rd';
+grant select, insert, update, delete on olx.* to funnyuser@'%';
+
 create table users
 (
   id                     int primary key auto_increment,
@@ -68,9 +72,9 @@ create table transactions
 create table notifications
 (
   id         int primary key auto_increment,
-  source     enum ("system", "message", "notification", "watched") not null,
-  user_id    int                                             not null,
-  title      varchar(255)                                    not null,
-  content    text                                            not null,
+  source     enum ('system', 'message', 'notification', 'watched') not null,
+  user_id    int                                                   not null,
+  title      varchar(255)                                          not null,
+  content    text                                                  not null,
   created_at timestamp default current_timestamp
 )
