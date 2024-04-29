@@ -11,11 +11,15 @@ import {
 } from "@/app/lib/definitions";
 import { execQuery, mergeQuery } from "@/app/lib/data/sql";
 import { bids, categories, notifications, products, transactions, users } from "@/app/lib/constants/queries";
-import { assembleBid, assembleCategory, assembleProduct, assembleTransaction } from "@/app/lib/data/assemble";
+import { assembleBid, assembleCategory, assembleProduct, assembleTransaction } from "@/app/lib/assemble";
 
 export async function fetchUsers (): Promise<User[]>
 {
-  return await execQuery( users );
+  const rows: ( Omit<User, "watched_category_ids"> & { watched_category_ids: string } )[] = await execQuery( users );
+  return rows.map( row => ( {
+    ...row,
+    watched_category_ids: row.watched_category_ids.split( "," ).map( ( str: string ): number => parseInt( str ) ),
+  } ) );
 }
 
 export async function fetchCategories (): Promise<Category[]>

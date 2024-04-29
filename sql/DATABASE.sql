@@ -12,7 +12,8 @@ create table users
   password               varchar(255)                        not null,
   role                   enum ('admin', 'user', 'moderator') not null,
   watched_categories_ids varchar(255) default '',
-  created_at             timestamp    default current_timestamp
+  created_at             timestamp    default current_timestamp,
+  constraint isvalid check (watched_categories_ids regexp '^[0-9,]+$')
 );
 
 create table categories
@@ -67,7 +68,7 @@ create table transactions
 create table notifications
 (
   id         int primary key auto_increment,
-  source     enum ("system", message, notification, watched) not null, -- System: new login notification, etc.., Message: new message in conversation, Notification: Someone bought product, etc.., Watched: update in watched product / category
+  source     enum ("system", "message", "notification", "watched") not null,
   user_id    int                                             not null,
   title      varchar(255)                                    not null,
   content    text                                            not null,

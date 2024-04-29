@@ -3,15 +3,19 @@
 import { useState } from "react";
 import styles from "@/app/ui/elements/categoryName/css/watchSearchButton.module.css";
 import { setWatchingAction } from "@/app/lib/actions";
+import { Category } from "@/app/lib/definitions";
 
-export default function WatchSearchButton ( { initial }: { initial: boolean } ): JSX.Element
+export default function WatchSearchButton ( { initial, category }: {
+  initial: boolean,
+  category: Category
+} ): JSX.Element
 {
   const [ watchingSearch, setWatchingSearch ] = useState( initial );
   
   const handleClick = async (): Promise<void> =>
   {
     setWatchingSearch( !watchingSearch );
-    await setWatchingAction( watchingSearch );
+    await setWatchingAction( !watchingSearch, category );
   };
   
   return (

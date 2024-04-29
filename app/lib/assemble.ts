@@ -1,7 +1,7 @@
 import {
   AnyJoinedUserOrSmth,
-  Bid, Category, JoinedBidder,
-  JoinedCategory, JoinedProduct, JoinedSeller, JoinedUser,
+  Bid, Category,
+  JoinedCategory, JoinedProduct, JoinedSeller,
   Product,
   RawBidRecord,
   RawProductRecord,
@@ -25,13 +25,14 @@ export const assembleUser = ( rawData: AnyJoinedUserOrSmth ): User =>
   }
   
   return {
-    id:         rawData[ `${prefix}_id` as keyof AnyJoinedUserOrSmth ],
-    uuid:       rawData[ `${prefix}_uuid` as keyof AnyJoinedUserOrSmth ],
-    username:   rawData[ `${prefix}_username` as keyof AnyJoinedUserOrSmth ],
-    email:      rawData[ `${prefix}_email` as keyof AnyJoinedUserOrSmth ],
-    password:   rawData[ `${prefix}_password` as keyof AnyJoinedUserOrSmth ],
-    role:       rawData[ `${prefix}_role` as keyof AnyJoinedUserOrSmth ],
-    created_at: rawData[ `${prefix}_created_at` as keyof AnyJoinedUserOrSmth ],
+    id:                   parseInt( rawData[ `${prefix}_id` as keyof AnyJoinedUserOrSmth ] ),
+    uuid:                 rawData[ `${prefix}_uuid` as keyof AnyJoinedUserOrSmth ],
+    username:             rawData[ `${prefix}_username` as keyof AnyJoinedUserOrSmth ],
+    email:                rawData[ `${prefix}_email` as keyof AnyJoinedUserOrSmth ],
+    password:             rawData[ `${prefix}_password` as keyof AnyJoinedUserOrSmth ],
+    role:                 rawData[ `${prefix}_role` as keyof AnyJoinedUserOrSmth ],
+    watched_category_ids: rawData[ `${prefix}_role` as keyof AnyJoinedUserOrSmth ].split( "," ).map( ( str: string ): number => parseInt( str ) ),
+    created_at:           new Date( rawData[ `${prefix}_created_at` as keyof AnyJoinedUserOrSmth ] ),
   };
 };
 

@@ -1,5 +1,5 @@
 /* Exclude references (foreign keys) */
-const userKeys: string[] = [ "id", "uuid", "username", "email", "password", "role", "created_at" ];
+const userKeys: string[] = [ "id", "uuid", "username", "email", "password", "role", "watched_categories_ids", "created_at" ];
 const categoryKeys: string[] = [ "id", "name", "logo_path", "created_at" ];
 const productKeys: string[] = [ "id", "uuid", "condition", "name", "description", "price", "negotiable", "active", "created_at" ];
 const bidKeys: string[] = [ "id", "amount", "created_at" ];

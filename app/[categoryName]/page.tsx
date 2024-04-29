@@ -6,16 +6,18 @@ import { fetchCategoryByName, fetchProductsInCategory } from "@/app/lib/data/fet
 import ListingCard from "@/app/ui/elements/categoryName/listingCard";
 import WatchSearchButton from "@/app/ui/elements/categoryName/watchSearchButton";
 import Image from "next/image";
+import isWatching from "@/app/lib/user/watching";
+import { getUser } from "@/app/lib/user/user";
 
 export default async function Page ( { params }: { params: { categoryName: string } } ): Promise<JSX.Element>
 {
-  let withPhotosOnly: boolean = false; // TODO: Add logic to actually change it's value
-  let watchingSearch: boolean = true; // TODO: Add logic
-  
   const categoryName: string = params.categoryName.trim();
   let category: Category = await fetchCategoryByName( categoryName ); // TODO: Make so you can change it via category dropdown
   if ( !category ) notFound();
   const products: Product[] = await fetchProductsInCategory( category );
+  
+  let withPhotosOnly: boolean = false; // TODO: Add logic to actually change it's value
+  let watchingSearch: boolean = await isWatching( category ); // TODO: Add logic
   
   return (
     <div className={styles.container}>
@@ -31,7 +33,7 @@ export default async function Page ( { params }: { params: { categoryName: strin
                       <input autoComplete="off" type="text" id="search" data-testid="search-input"
                              data-cy="search-bar-input" placeholder="Search" className={styles.actualSearchbar}
                              aria-describedby="" color="#002F34" aria-invalid="false"
-                             aria-labelledby="undefined-label" value=""/>
+                             aria-labelledby="undefined-label" value="" />
                     </div>
                   </div>
                 </div>
@@ -42,8 +44,8 @@ export default async function Page ( { params }: { params: { categoryName: strin
           <div></div>
         </div>
         <div className={styles.miscOptionsContainer}>
-          <MiscOption name={"photos"} text={"With photos only"} checked={withPhotosOnly}/>
-          <WatchSearchButton initial={watchingSearch}/>
+          <MiscOption name={"photos"} text={"With photos only"} checked={withPhotosOnly} />
+          <WatchSearchButton initial={watchingSearch} category={category} />
         </div>
         <div data-testid="listing-filters" className={styles.filtersContainer}>
           <h4 className={styles.filtersTitle}>Filters</h4>
@@ -58,7 +60,7 @@ export default async function Page ( { params }: { params: { categoryName: strin
                       <div className={styles.categoryFilterSelectedText}>
                         {capitalize( category.name )}
                       </div>
-                      <Image src={"/app/static/media/dropdownIcon.svg"} alt={"Dropdown icon"} width={22} height={22}/>
+                      <Image src={"/app/static/media/dropdownIcon.svg"} alt={"Dropdown icon"} width={22} height={22} />
                     </div>
                     {/* <div></div> TODO: Dropdown menu here */}
                   </div>
