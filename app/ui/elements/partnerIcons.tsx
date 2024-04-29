@@ -26,7 +26,7 @@ export function OLXbg (): JSX.Element
           </feMerge>
         </filter>
       </defs>
-      <g fill="none" fill-rule="evenodd"
+      <g fill="none" fillRule="evenodd"
          filter="url(#bulgariaFlag_svg__a)"
          transform="translate(0 3)">
         <path
@@ -102,7 +102,7 @@ export function OLXua (): JSX.Element
           </feMerge>
         </filter>
       </defs>
-      <g fill="none" fill-rule="evenodd"
+      <g fill="none" fillRule="evenodd"
          filter="url(#ukraineFlag_svg__a)"
          transform="translate(0 3)">
         <path
@@ -140,7 +140,7 @@ export function OLXpt (): JSX.Element
           </feMerge>
         </filter>
       </defs>
-      <g fill="none" fill-rule="evenodd"
+      <g fill="none" fillRule="evenodd"
          filter="url(#portugalFlag_svg__a)"
          transform="translate(0 3)">
         <path
@@ -152,7 +152,7 @@ export function OLXpt (): JSX.Element
         <path fill="#F71111"
               d="M5.02 4.344v1.25a1.125 1.125 0 0 0 2.25 0v-1.25H5.02z"></path>
         <path
-          fill="#F0F0F0" fill-rule="nonzero"
+          fill="#F0F0F0" fillRule="nonzero"
           d="M6.145 5.969a.375.375 0 0 1-.375-.375v-.5h.75v.5a.375.375 0 0 1-.375.375z"></path>
       </g>
     </svg>
@@ -164,7 +164,7 @@ export function Fixlypl (): JSX.Element
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"
          className={styles.partnerLogo}>
-      <g fill="none" fill-rule="evenodd">
+      <g fill="none" fillRule="evenodd">
         <path fill="#E7CB05"
               d="M0 0h16v16H0z"></path>
         <path
@@ -201,7 +201,7 @@ export function Otomotopl (): JSX.Element
               d="M8 2a6 6 0 1 1 0 12A6 6 0 0 1 8 2zm0 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"></path>
       </defs>
       <g
-        fill="none" fill-rule="evenodd">
+        fill="none" fillRule="evenodd">
         <path fill="#D8D8D8"
               d="M8 2a6 6 0 1 1 0 12A6 6 0 0 1 8 2zm0 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"></path>
         <mask
