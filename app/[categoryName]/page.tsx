@@ -31,7 +31,7 @@ export default async function Page ( { params }: { params: { categoryName: strin
                       <input autoComplete="off" type="text" id="search" data-testid="search-input"
                              data-cy="search-bar-input" placeholder="Search" className={styles.actualSearchbar}
                              aria-describedby="" color="#002F34" aria-invalid="false"
-                             aria-labelledby="undefined-label" value="" />
+                             aria-labelledby="undefined-label" value=""/>
                     </div>
                   </div>
                 </div>
@@ -42,8 +42,8 @@ export default async function Page ( { params }: { params: { categoryName: strin
           <div></div>
         </div>
         <div className={styles.miscOptionsContainer}>
-          <MiscOption name={"photos"} text={"With photos only"} checked={withPhotosOnly} />
-          <WatchSearchButton initial={watchingSearch} />
+          <MiscOption name={"photos"} text={"With photos only"} checked={withPhotosOnly}/>
+          <WatchSearchButton initial={watchingSearch}/>
         </div>
         <div data-testid="listing-filters" className={styles.filtersContainer}>
           <h4 className={styles.filtersTitle}>Filters</h4>

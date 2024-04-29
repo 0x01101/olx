@@ -1,13 +1,29 @@
+"use client";
+
 import styles from "@/app/ui/elements/css/searchbar.module.css";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 export default function SearchBar (): JSX.Element
 {
+  const router = useRouter();
+  
+  const handleSubmit = ( event: React.FormEvent<HTMLFormElement> ) =>
+  {
+    event.preventDefault();
+    const searchInput = ( event.target as HTMLFormElement ).elements.namedItem(
+      "search",
+    ) as HTMLInputElement;
+    
+    router.push( `/offer/${searchInput.value.replace( /\s/g, "-" )}/` );
+  };
+  
   return (
     <div className={styles.searchBarContainer}>
       <div className={styles.searchBarInnerContainer}>
         <div className={styles.searchBar}>
           <div className={styles.formContainer}>
-            <form action={"#"} noValidate data-testid="search-form">
+            <form action={"#"} noValidate data-testid="search-form" onSubmit={handleSubmit}>
               <div className={styles.searchElementsContainer}>
                 <div className={styles.searchInputContainer}>
                   <div data-test-id="search-autosuggestions" className={styles.searchInputOuterContainer}>
