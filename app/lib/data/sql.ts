@@ -1,6 +1,8 @@
 import * as mariadb from "mariadb";
 import { Pool, QueryOptions } from "mariadb";
 import config from "@/config.json";
+import * as fs from "fs";
+import path from "path";
 
 declare global
 {
