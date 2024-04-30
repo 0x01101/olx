@@ -1,5 +1,3 @@
-import { Table } from "@/app/lib/data/sql";
-
 export enum Role
 {
   ADMIN = "admin",

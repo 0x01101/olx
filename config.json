@@ -4,5 +4,6 @@
   "MySQLUser": "funnyuser",
   "MySQLPass": "P@55w0rd",
   "MySQLDB": "olx",
-  "currency": "$"
+  "currency": "$",
+  "authSecret": "JJZq84KJR+LGsbG6d053Ky+3v5BsM2urImXoxj5h8bg="
 }
