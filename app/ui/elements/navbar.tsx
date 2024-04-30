@@ -73,8 +73,8 @@ export default function NavBar (): JSX.Element
               Your Account
             </Link>
           </div>
-          <a type="button" data-cy="post-new-ad-button" className={styles.postAdButton}
-             href="/adding?bs=homepage_adding">Add advertisement</a>
+          <Link type="button" data-cy="post-new-ad-button" className={styles.postAdButton}
+             href="/adding?bs=homepage_adding">Add advertisement</Link>
         </div>
       </div>
     </header>
