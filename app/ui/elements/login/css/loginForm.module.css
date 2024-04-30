@@ -1,0 +1,35 @@
+@media only screen and (min-width : 768px)
+{
+  .loginBox
+  {
+    max-width           : 400px;
+    display             : inline-block;
+    width               : 100vw;
+    -webkit-align-self  : center;
+    -ms-flex-item-align : center;
+    align-self          : center;
+    margin-bottom       : 26px;
+    z-index             : 1;
+    background-color    : #ffffff;
+    border-radius       : 4px;
+  }
+}
+
+.withUsernameAndPassword
+{
+  display                : -webkit-box;
+  display                : -webkit-flex;
+  display                : -ms-flexbox;
+  display                : flex;
+  -webkit-flex-direction : column;
+  -ms-flex-direction     : column;
+  flex-direction         : column;
+}
+
+@media only screen and (min-width : 768px)
+{
+  .withUsernameAndPassword
+  {
+    padding : 0 32px;
+  }
+}

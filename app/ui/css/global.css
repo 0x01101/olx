@@ -93,9 +93,17 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6
 
 button
 {
-  overflow:    visible;
-  border:      none;
-  padding:     0;
-  outline:     none;
-  font-weight: inherit;
+  overflow    : visible;
+  border      : none;
+  padding     : 0;
+  outline     : none;
+  font-weight : inherit;
+}
+
+@media only screen and (max-width : 768px)
+{
+  body > div, body > div > div, body > div > div > div, body > div > div > div > div
+  {
+    height : 100%;
+  }
 }

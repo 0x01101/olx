@@ -1,0 +1,113 @@
+.coreLayout
+{
+  height                 : 100%;
+  display                : -webkit-box;
+  display                : -webkit-flex;
+  display                : -ms-flexbox;
+  display                : flex;
+  -webkit-flex-direction : column;
+  -ms-flex-direction     : column;
+  flex-direction         : column;
+  background-color       : #ffffff;
+}
+
+.grid
+{
+  display               : grid;
+  grid-template-columns : 100%;
+  grid-template-rows    : auto;
+  min-height            : 100vh;
+}
+
+.outerContainer
+{
+  display                : -webkit-box;
+  display                : -webkit-flex;
+  display                : -ms-flexbox;
+  display                : flex;
+  -webkit-flex-direction : column;
+  -ms-flex-direction     : column;
+  flex-direction         : column;
+}
+
+.container
+{
+  --base           : 12;
+  --gap            : 16px;
+  --containerWidth : 1280px;
+  margin           : auto;
+  max-width        : 100%;
+  overflow         : hidden;
+  height           : 100%;
+  width            : 100%;
+  background-color : #ffffff;
+}
+
+@media only screen and (min-width : 768px)
+{
+  .container
+  {
+    overflow                : hidden;
+    position                : relative;
+    background-color        : #3a77ff;
+    display                 : -webkit-box;
+    display                 : -webkit-flex;
+    display                 : -ms-flexbox;
+    display                 : flex;
+    -webkit-flex-direction  : column;
+    -ms-flex-direction      : column;
+    flex-direction          : column;
+    -webkit-align-items     : center;
+    -webkit-box-align       : center;
+    -ms-flex-align          : center;
+    align-items             : center;
+    -webkit-box-pack        : start;
+    -ms-flex-pack           : start;
+    -webkit-justify-content : flex-start;
+    justify-content         : flex-start;
+    padding-top             : 96px;
+  }
+}
+
+@media (max-width : 767px)
+{
+  .container
+  {
+    margin-bottom : 16px;
+    padding       : 16px 16px 0 16px;
+  }
+}
+
+.container:before
+{
+  -webkit-animation-name            : animation-7bi3ul;
+  animation-name                    : animation-7bi3ul;
+  -webkit-animation-duration        : 1.6s;
+  animation-duration                : 1.6s;
+  -webkit-animation-fill-mode       : both;
+  animation-fill-mode               : both;
+  -webkit-animation-timing-function : ease-in-out;
+  animation-timing-function         : ease-in-out;
+  -webkit-animation-iteration-count : 1;
+  animation-iteration-count         : 1;
+}
+
+@media only screen and (min-width : 768px)
+{
+  .container::before
+  {
+    content       : "";
+    position      : absolute;
+    top           : 0;
+    bottom        : 0;
+    margin        : auto 0;
+    width         : 90vw;
+    height        : 90vw;
+    min-height    : 768px;
+    min-width     : 768px;
+    max-width     : 1236px;
+    max-height    : 1236px;
+    border        : 150px solid #ceddff;
+    border-radius : 50%;
+  }
+}
