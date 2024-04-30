@@ -1,3 +1,5 @@
+import { Table } from "@/app/lib/data/sql";
+
 export enum Role
 {
   ADMIN = "admin",
@@ -17,6 +19,41 @@ export enum Condition
 {
   NEW = "new",
   USED = "used"
+}
+
+export class DataType
+{
+  static readonly CHAR = ( size?: number ): SQLType => ( { name: "CHAR", size: size } );
+  static readonly VARCHAR = ( size: number ): SQLType => ( { name: "VARCHAR", size: size } );
+  static readonly BINARY = ( size?: number ): SQLType => ( { name: "BINARY", size: size } );
+  static readonly VARBINARY = ( size: number ): SQLType => ( { name: "VARBINARY", size: size } );
+  static readonly TINYBLOB: SQLType = { name: "TINYBLOB" };
+  static readonly TINYTEXT: SQLType = { name: "TINYTEXT" };
+  static readonly TEXT = ( size: number ): SQLType => ( { name: "TEXT", size: size } );
+  static readonly BLOB = ( size: number ): SQLType => ( { name: "BLOB", size: size } );
+  static readonly MEDIUMTEXT: SQLType = { name: "MEDIUMTEXT" };
+  static readonly MEDIUMBLOB: SQLType = { name: "MEDIUMBLOB" };
+  static readonly LONGTEXT: SQLType = { name: "LONGTEXT" };
+  static readonly LONGBLOB: SQLType = { name: "LONGBLOB" };
+  static readonly ENUM = ( ...values: string[] ): SQLType => ( { name: "ENUM", values: values } );
+  static readonly SET = ( ...values: string[] ): SQLType => ( { name: "SET", values: values } );
+  
+  static readonly BIT = ( size?: number ): SQLType => ( { name: "BIT", size: size } );
+  static readonly TINYINT = ( size: number ): SQLType => ( { name: "TINYINT", size: size } );
+  static readonly BOOL: SQLType = { name: "BOOL" };
+  static readonly BOOLEAN: SQLType = DataType.BOOL;
+  static readonly SMALLINT = ( size: number ): SQLType => ( { name: "SMALLINT", size: size } );
+  static readonly MEDIUMINT = ( size: number ): SQLType => ( { name: "MEDIUMINT", size: size } );
+  static readonly INT = ( size: number ): SQLType => ( { name: "INT", size: size } );
+  static readonly INTEGER = DataType.INT;
+  static readonly BIGINT = ( size: number ): SQLType => ( { name: "BIGINT", size: size } );
+  static readonly FLOAT = ( precision: number ): SQLType => ( { name: "FLOAT", precision: precision } );
+  static readonly DOUBLE = ( size: number, precision: number ): SQLType => ( { name: "DOUBLE", size: size, precision: precision } );
+  static readonly DECIMAL = ( size: number, precision: number ): SQLType => ( { name: "DECIMAL", size: size, precision: precision } );
+  static readonly DEC = DataType.DECIMAL;
+  
+  static readonly DATE: SQLType = { name: "DATE" };
+  static readonly YEAR: SQLType = { name: "YEAR" };
 }
 
 type UniqForJoinedUserTypes = { watched_category_ids: string }
@@ -115,4 +152,28 @@ export interface Notification
   title: string;
   content: string;
   created_at: Date;
+}
+
+export interface TableConfig
+{
+  name: string;
+  rows: Row[];
+}
+
+export interface Row
+{
+  name: string;
+  type: SQLType;
+  default?: string;
+  notNull?: boolean;
+  unique?: boolean;
+  references?: Table;
+}
+
+export interface SQLType
+{
+  name: string;
+  size?: number; // For VARCHAR, etc..
+  values?: string[]; // For enums
+  precision?: number; // DOUBLE, DECIMAL, etc..
 }
