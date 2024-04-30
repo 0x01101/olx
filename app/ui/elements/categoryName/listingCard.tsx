@@ -11,6 +11,7 @@ import localizedFormat from "dayjs/plugin/localizedFormat";
 import isToday from "dayjs/plugin/isToday";
 import isYesterday from "dayjs/plugin/isYesterday";
 import weekOfYear from "dayjs/plugin/weekOfYear";
+import Link from "next/link";
 
 dayjs.extend( relativeTime );
 dayjs.extend( localizedFormat );
@@ -47,20 +48,20 @@ export default function ListingCard ( { product }: { product: Product } ): JSX.E
       <div className={styles.container}>
         <div typeof={"list"} className={styles.elementsContainer}>
           <div typeof={"list"} className={styles.imageContainer}>
-            <a className={styles.imageLinkElement} href={URL}>
+            <Link className={styles.imageLinkElement} href={URL}>
               <div typeof={"list"} className={styles.imagesContainer}>
                 <div className={styles.images}>
                   <Image src={`/app/static/media/images/products/${product.uuid}/main`}
                          alt={`${product.name} (${product.id})`} className={styles.imageElement} width={216} height={152} />
                 </div>
               </div>
-            </a>
+            </Link>
           </div>
           <div typeof={"list"} className={styles.infoOuterContainer}>
             <div className={styles.infoContainer}>
-              <a className={styles.nameAElement} href={URL}>
+              <Link className={styles.nameAElement} href={URL}>
                 <h6 className={styles.nameText}>{product.name}</h6>
-              </a>
+              </Link>
               <p data-testid="ad-price" className={styles.priceContainer}>
                 {`${product.price}${config.currency}`}
                 {product.negotiable ? <span className={styles.negotiable}>negotiable</span> : ""}
