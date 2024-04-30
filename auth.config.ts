@@ -6,9 +6,14 @@ export const authConfig: NextAuthConfig = {
     signIn: "/login",
   },
   callbacks: {
-    authorized ( { auth, request: { nextUrl } }: { auth: Session | null, request: { nextUrl: NextURL } } ): boolean
+    authorized ( { auth, request: { nextUrl } }: { auth: Session | null, request: { nextUrl: NextURL } } ): boolean | Response
     {
       const isLoggedIn: boolean = !!auth?.user;
+      const isOnAccountPage: RegExpMatchArray | null = nextUrl.pathname.match( /^\/((my)?account|adding)/img );
+      
+      if ( isOnAccountPage )
+        return isLoggedIn;
+      
       return true;
     },
   },
