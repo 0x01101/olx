@@ -33,3 +33,89 @@
     padding : 0 32px;
   }
 }
+
+.tabsContainer
+{
+  display                : -webkit-box;
+  display                : -webkit-flex;
+  display                : -ms-flexbox;
+  display                : flex;
+  -webkit-flex-direction : column;
+  -ms-flex-direction     : column;
+  flex-direction         : column;
+  width                  : 100%;
+}
+
+.iDunno
+{
+  padding-top : 16px;
+}
+
+.iDunno div:nth-of-type(2)
+{
+  padding : 0;
+}
+
+.iDunnoChild
+{
+  display : block;
+}
+
+.tabs
+{
+  height   : 56px;
+  position : relative;
+  width    : 100%;
+}
+
+.tabsHeader
+{
+  bottom   : 0;
+  display  : -webkit-box;
+  display  : -webkit-flex;
+  display  : -ms-flexbox;
+  display  : flex;
+  left     : 0;
+  overflow : auto;
+  position : absolute;
+  right    : 0;
+  top      : 0;
+}
+
+.tabsContainer > div > header > button
+{
+  width   : 50%;
+  outline : 0;
+}
+
+.tabSelected, .tab {
+  --borderColor: #002f34;
+  align-items: center;
+  background: #ffffff;
+  border: none;
+  border-bottom: 1px solid var(--borderColor);
+  box-sizing: border-box;
+  color: #002f34;
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  flex-shrink: 0;
+  font-family: Geomanist, sans-serif;
+  font-size: 14px;
+  height: 56px;
+  justify-content: center;
+  padding: 0 16px;
+}
+
+.tabSelected {
+  box-shadow: inset 0 -3px 0 0 #002f34;
+  cursor: default;
+  pointer-events: none;
+}
+
+.tab {
+  --borderColor: #7f9799;
+  color: #406367;
+  cursor: pointer;
+  pointer-events: auto;
+}
