@@ -1,6 +1,7 @@
 import NavBar from "@/app/ui/elements/navbar";
 import Footer from "@/app/ui/elements/footer";
 import styles from "@/app/ui/css/layout.module.css";
+import React from "react";
 
 export default function MainLayout ( {
   children,
