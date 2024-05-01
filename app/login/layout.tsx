@@ -20,11 +20,9 @@ export default function RootLayout ( {
   return (
     <html lang="en">
     <body className={`${inter.className} antialiased`}>
-    <div id={"__next"}>
-      <div className={"login-page"}>
-        <div data-testid={"core-layout"} className={styles.coreLayout}>
-          {children}
-        </div>
+    <div className={"login-page"}>
+      <div data-testid={"core-layout"} className={styles.coreLayout}>
+        {children}
       </div>
     </div>
     </body>
