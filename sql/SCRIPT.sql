@@ -48,7 +48,7 @@ create table products
   active      boolean   default true,
   created_at  timestamp default current_timestamp,
   foreign key (category_id) references categories (id),
-  foreign key (user_id) references users (id)
+  foreign key (user_id) references user_info (id)
 );
 
 create table bids
@@ -58,7 +58,7 @@ create table bids
   product_id int            not null,
   amount     decimal(10, 2) not null,
   created_at timestamp default current_timestamp,
-  foreign key (user_id) references users (id),
+  foreign key (user_id) references user_info (id),
   foreign key (product_id) references products (id)
 );
 
@@ -70,8 +70,8 @@ create table transactions
   product_id int            not null,
   amount     decimal(10, 2) not null,
   created_at timestamp default current_timestamp,
-  foreign key (bidder_id) references users (id),
-  foreign key (seller_id) references users (id),
+  foreign key (bidder_id) references user_info (id),
+  foreign key (seller_id) references user_info (id),
   foreign key (product_id) references products (id)
 );
 
