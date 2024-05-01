@@ -2,26 +2,9 @@ import { authConfig } from "./auth.config";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 import bcrypt from "bcrypt";
-import { fetchUserByEMail } from "@/app/lib/data/fetch";
+import { fetchUserByEMail } from "@/app/lib/sql/data/fetch";
 import { Role, User } from "@/app/lib/definitions";
 import NextAuth, { DefaultSession } from "next-auth";
-
-declare module "next-auth"
-{
-  interface Session
-  {
-    user: {
-      id: number;
-      uuid: string;
-      username: string;
-      email: string;
-      password: string;
-      role: Role | string;
-      watched_category_ids: number[];
-      created_at: Date;
-    } & DefaultSession["user"];
-  }
-}
 
 export const { auth, signIn, signOut } = NextAuth( {
   ...authConfig,
@@ -44,10 +27,7 @@ export const { auth, signIn, signOut } = NextAuth( {
           if ( !user ) return null;
           const passwordsMatch: boolean = await bcrypt.compare( password, user.password );
           
-          if ( passwordsMatch ) return {
-            ...user,
-            id: `${user.id}`,
-          };
+          if ( passwordsMatch ) return user;
         }
         
         console.log( "Invalid credentials" );

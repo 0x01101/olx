@@ -9,15 +9,21 @@ grant select, insert, update, delete on olx.* to funnyuser@'%';
 
 create table users
 (
+  id       int primary key auto_increment,
+  username varchar(255) not null unique,
+  email    varchar(255) not null unique,
+  password varchar(255) not null
+);
+
+create table user_info
+(
   id                     int primary key auto_increment,
   uuid                   varchar(100) unique                 not null,
-  username               varchar(255)                        not null unique,
-  email                  varchar(255)                        not null unique,
-  password               varchar(255)                        not null,
   role                   enum ('admin', 'user', 'moderator') not null,
   watched_categories_ids varchar(255) default '',
   created_at             timestamp    default current_timestamp,
-  constraint isvalid check (watched_categories_ids regexp '^[0-9,]+$')
+  constraint isvalid check (watched_categories_ids regexp '^[0-9,]+$'),
+  foreign key (id) references users (id)
 );
 
 create table categories

@@ -3,6 +3,7 @@
 > Files containing type declarations:
 > - `lib/definitions.ts`
 > - `lib/sql/types/schemas.ts`
+> - `lib/sql/types/definitions.ts`
 
 > [!NOTE]
 > Files containing database queries:

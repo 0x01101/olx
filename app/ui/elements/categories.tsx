@@ -1,7 +1,7 @@
 import styles from "@/app/ui/elements/css/categories.module.css";
 import { Category } from "@/app/lib/definitions";
 import Image from "next/image";
-import { fetchCategories } from "@/app/lib/data/fetch";
+import { fetchCategories } from "@/app/lib/sql/data/fetch";
 import Link from "next/link";
 
 export default async function Categories (): Promise<JSX.Element>

@@ -19,41 +19,15 @@ export enum Condition
   USED = "used"
 }
 
-type UniqForJoinedUserTypes = { watched_category_ids: string }
-
-export type JoinedUser = Omit<{
-  [K in keyof User as `user_${string & K}`]: User[K];
-}, "user_watched_category_ids"> & UniqForJoinedUserTypes;
-
-export type JoinedSeller = Omit<{
-  [K in keyof User as `seller_${string & K}`]: User[K];
-}, "seller_watched_category_ids"> & UniqForJoinedUserTypes;
-
-export type JoinedBidder = Omit<{
-  [K in keyof User as `bidder_${string & K}`]: User[K];
-}, "bidder_watched_category_ids"> & UniqForJoinedUserTypes;
-
-export type AnyJoinedUserOrSmth = JoinedUser | JoinedSeller | JoinedBidder;
-
-export type JoinedCategory = {
-  [K in keyof Category as `category_${string & K}`]: Category[K];
-};
-
-export type JoinedProduct = {
-  [K in keyof Product as `product_${string & K}`]: Product[K];
-};
-
-export type RawProductRecord = Product & JoinedSeller & JoinedCategory
-export type RawBidRecord =
-  Bid
-  & Product
-  & JoinedCategory
-  & JoinedProduct
-  & JoinedSeller
-  & JoinedUser
-export type RawTransactionRecord = Transaction & JoinedProduct & JoinedSeller & JoinedCategory & JoinedBidder
-
 export interface User
+{
+  id: string;
+  username: string;
+  email: string | null | undefined;
+  password: string;
+}
+
+export interface UserInfo
 {
   id: number;
   uuid: string;
