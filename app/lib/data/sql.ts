@@ -1,13 +1,21 @@
 import * as mariadb from "mariadb";
 import { Pool, QueryOptions } from "mariadb";
 import config from "@/config.json";
-import { Row, SQLType, TableConfig } from "@/app/lib/definitions";
 
+/**
+ * Global declaration for mariadbPool.
+ * This is done to creating pool each restart without closing old one.
+ */
 declare global
 {
-  var mariadbPool: mariadb.Pool | undefined; // "var" is needed due to `TS2339: Property  mariadbPool  does not exist on type  typeof globalThis` error (fuck)
+  var mariadbPool: mariadb.Pool | undefined;
 }
 
+/**
+ * Function to connect to the database.
+ * If a connection does not exist, it creates a new one.
+ * @returns {Pool} - The connection pool.
+ */
 function connectOnceToDatabase (): Pool
 {
   if ( !global.mariadbPool )
@@ -26,11 +34,21 @@ function connectOnceToDatabase (): Pool
 
 const pool: Pool = connectOnceToDatabase();
 
+/**
+ * Function to execute a query.
+ * @param {string | QueryOptions} sql - The SQL query or query options.
+ * @param {any} values - The values to be inserted in the query.
+ * @returns {Promise<any[]>} - The result of the query.
+ */
 export async function execQuery ( sql: string | QueryOptions, values?: any ): Promise<any[]>
 {
   return await pool.query( sql, values );
 }
 
+/**
+ * Function to close the connection pool.
+ * @returns {Promise<void>}
+ */
 export async function closePool (): Promise<void>
 {
   if ( global.mariadbPool )
@@ -39,6 +57,12 @@ export async function closePool (): Promise<void>
   }
 }
 
+/**
+ * Function to merge two queries.
+ * @param {string} baseQuery - The base query.
+ * @param {string} toMerge - The query to be merged.
+ * @returns {string} - The merged query.
+ */
 export function mergeQuery ( baseQuery: string, toMerge: string ): string
 {
   if ( baseQuery.trim().endsWith( ";" ) ) return baseQuery.replace( /;\s*$/im, ` ${toMerge};` );
