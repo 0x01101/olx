@@ -40,9 +40,9 @@ const pool: Pool = connectOnceToDatabase();
  * @param {any} values - The values to be inserted in the query.
  * @returns {Promise<any[]>} - The result of the query.
  */
-export async function execQuery ( sql: string | QueryOptions, values?: any ): Promise<any[]>
+export async function execQuery<T> ( sql: string | QueryOptions, values?: any ): Promise<T[]>
 {
-  return await pool.query( sql, values );
+  return (await pool.query( sql, values ) as T[]);
 }
 
 /**
