@@ -1,6 +1,12 @@
 import { User } from "@/app/lib/definitions";
+import { execQuery, mergeQuery } from "@/app/lib/sql/sql";
+import { UserRecord } from "@/app/lib/sql/types/definitions";
+import { user } from "@/app/lib/sql/constants/queries";
+import { userSchema } from "@/app/lib/sql/types/schemas";
 
-export async function fetchUserByEMail ( email: string ): Promise<User | null>
+export async function fetchUserByEMail ( email: string ): Promise<User | undefined>
 {
-  const rows = await db.query<User>( `SELECT * FROM users WHERE email = ?`, [ email ] );
+  const rows: UserRecord[] = await execQuery<UserRecord>( mergeQuery( user, `WHERE email = ?` ), [ email ] );
+  if ( !rows.length ) return undefined;
+  return userSchema.parse( rows[ 0 ] );
 }
