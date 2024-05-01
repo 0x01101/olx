@@ -3,8 +3,8 @@ import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import { fetchUserByEMail } from "@/app/lib/sql/data/fetch";
-import { Role, User } from "@/app/lib/definitions";
-import NextAuth, { DefaultSession } from "next-auth";
+import { User } from "@/app/lib/definitions";
+import NextAuth from "next-auth";
 
 export const { auth, signIn, signOut } = NextAuth( {
   ...authConfig,

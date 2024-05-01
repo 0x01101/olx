@@ -1,5 +1,6 @@
 import type { NextAuthConfig, Session } from "next-auth";
 import { NextURL } from "next/dist/server/web/next-url";
+import config from "@/config.json";
 
 export const authConfig: NextAuthConfig = {
   pages:     {
@@ -18,4 +19,5 @@ export const authConfig: NextAuthConfig = {
     },
   },
   providers: [],
+  secret:    config.authSecret,
 } satisfies NextAuthConfig;

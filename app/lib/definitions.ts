@@ -19,6 +19,7 @@ export enum Condition
   USED = "used"
 }
 
+// User is for authorization
 export interface User
 {
   id: string;
@@ -27,7 +28,18 @@ export interface User
   password: string;
 }
 
+// UserInfo is for non-sensitive user info, for use for example in product listings
 export interface UserInfo
+{
+  id: number;
+  uuid: string;
+  role: Role | string;
+  watched_category_ids: number[];
+  created_at: Date;
+}
+
+// FullUser is for everything else
+export interface FullUser
 {
   id: number;
   uuid: string;
@@ -51,7 +63,7 @@ export interface Product
 {
   id: number;
   uuid: string;
-  seller: User;
+  seller: UserInfo;
   condition: Condition | string;
   name: string;
   description: string | undefined | null;
@@ -65,7 +77,7 @@ export interface Product
 export interface Bid
 {
   id: number;
-  user: User;
+  user: UserInfo;
   product: Product;
   amount: number;
   created_at: Date;
@@ -74,8 +86,8 @@ export interface Bid
 export interface Transaction
 {
   id: number;
-  bidder: User;
-  seller: User;
+  bidder: UserInfo;
+  seller: UserInfo;
   product: Product;
   amount: number;
   created_at: Date;

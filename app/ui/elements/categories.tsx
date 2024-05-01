@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default async function Categories (): Promise<JSX.Element>
 {
-  const categories: Category[] = await fetchCategories();
+  const categories: Category[] | undefined = await fetchCategories();
   
   return (
     <div className={styles.container}>
@@ -16,7 +16,7 @@ export default async function Categories (): Promise<JSX.Element>
               className={styles.text}>Main Categories</h2>
           <div data-testid="home-categories-menu-row" data-cy="home-categories-menu-row"
                className={styles.categories}>
-            {categories.map( ( c: Category, i: number ) =>
+            {categories?.map( ( c: Category, i: number ) =>
               ( <Link className={styles.category} key={i} data-testid={`cat-${c.id}`} data-cy={`cat-${c.id}`}
                    data-check={c.id} data-path={c.name.toLowerCase()} href={`/${c.name.toLowerCase()}/`}>
                 <Image src={`${c.logo_path}`}
