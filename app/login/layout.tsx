@@ -1,8 +1,9 @@
-import "./ui/css/global.css";
+import "@/app/ui/css/global.css";
 import { inter } from "@/app/ui/fonts";
 import "@/app/lib/processHandlers";
 import { Metadata } from "next";
 import styles from "@/app/ui/css/login.module.css";
+import React from "react";
 
 export const metadata: Metadata = {
   title:        "OLX.PL - Login",
