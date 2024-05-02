@@ -75,8 +75,3 @@ export const notification: string = `
   from
     notifications;
 `;
-
-export const insertUser: string = `
-  insert into users ( ${userKeys.join(", ")} )
-  values ( ${userKeys.map((k: string): string => "?").join(", ")} );
-`;
