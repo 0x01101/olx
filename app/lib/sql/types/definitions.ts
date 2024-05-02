@@ -1,13 +1,5 @@
 import { Category } from "@/app/lib/definitions";
 
-export interface UserRecord
-{
-  id: number;
-  username: string;
-  email: string;
-  password: string;
-}
-
 export interface UserInfoRecord
 {
   id: number;

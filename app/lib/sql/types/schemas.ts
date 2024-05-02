@@ -1,18 +1,12 @@
 import { z } from "zod";
-import { ProductRecord, UserInfoRecord, UserRecord } from "@/app/lib/sql/types/definitions";
-import { Product, User, UserInfo } from "@/app/lib/definitions";
+import { ProductRecord, UserInfoRecord } from "@/app/lib/sql/types/definitions";
+import { Product, UserInfo } from "@/app/lib/definitions";
 
 export const userSchema = z.object( {
   id:       z.number(),
-  username: z.string().min( 2 ),
   email:    z.string().email(),
   password: z.string().min( 6 ),
-} ).transform( ( user: UserRecord ): User => ( {
-  id:       `${user.id}`,
-  username: user.username,
-  email:    user.email,
-  password: user.password,
-} ) );
+} );
 
 export const userInfoSchema = z.object( {
   id:                   z.number(),

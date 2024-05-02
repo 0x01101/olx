@@ -22,9 +22,8 @@ export enum Condition
 // User is for authorization
 export interface User
 {
-  id: string;
-  username: string;
-  email: string | null | undefined;
+  id: number;
+  email: string;
   password: string;
 }
 
