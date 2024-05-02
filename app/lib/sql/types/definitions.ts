@@ -6,7 +6,6 @@ export interface UserInfoRecord
   name: string;
   username: string;
   role: string;
-  watched_category_ids: string;
   created_at: Date;
 }
 
@@ -31,6 +30,5 @@ export interface ProductRecord
   seller_username: string;
   seller_name: string;
   seller_role: string;
-  seller_watched_category_ids: string;
   seller_created_at: Date;
 }

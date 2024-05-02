@@ -1,6 +1,6 @@
 /* Exclude references (foreign keys) */
 export const userKeys: string[] = [ "id", "email", "password" ];
-export const user_infoKeys: string[] = [ "id", "username", "name", "role", "watched_categories_ids", "created_at" ];
+export const user_infoKeys: string[] = [ "id", "username", "name", "role", "created_at" ];
 export const categoryKeys: string[] = [ "id", "name", "logo_path", "created_at" ];
 export const productKeys: string[] = [ "id", "uuid", "condition", "name", "description", "price", "negotiable", "active", "created_at" ];
 export const bidKeys: string[] = [ "id", "amount", "created_at" ];

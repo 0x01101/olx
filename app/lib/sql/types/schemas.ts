@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { ProductRecord, UserInfoRecord } from "@/app/lib/sql/types/definitions";
-import { Product, UserInfo } from "@/app/lib/definitions";
+import { ProductRecord } from "@/app/lib/sql/types/definitions";
+import { Product } from "@/app/lib/definitions";
 
 export const userSchema = z.object( {
   id:       z.number(),
@@ -13,16 +13,8 @@ export const userInfoSchema = z.object( {
   username:             z.string().min( 3 ).max( 20 ),
   name:                 z.string().max( 100 ),
   role:                 z.enum( [ "admin", "user", "moderator" ] ),
-  watched_category_ids: z.string().regex( /^[0-9,]+$/ ),
   created_at:           z.date(),
-} ).transform( ( userInfo: UserInfoRecord ): UserInfo => ( {
-  id:                   userInfo.id,
-  username:             userInfo.username,
-  name:                 userInfo.name,
-  role:                 userInfo.role,
-  watched_category_ids: userInfo.watched_category_ids.split( "," ).map( ( id: string ): number => parseInt( id ) ),
-  created_at:           userInfo.created_at,
-} ) );
+} );
 
 export const productSchema = z.object( {
   id:          z.number(),
@@ -44,7 +36,6 @@ export const productSchema = z.object( {
   seller_username:             z.string().min( 3 ).max( 20 ),
   seller_name:                 z.string().max( 100 ),
   seller_role:                 z.enum( [ "admin", "user", "moderator" ] ),
-  seller_watched_category_ids: z.string().regex( /^[0-9,]+$/ ),
   seller_created_at:           z.date(),
 } ).transform( ( product: ProductRecord ): Product => ( {
   id:          product.id,
@@ -69,7 +60,6 @@ export const productSchema = z.object( {
     username:             product.seller_username,
     name:                 product.seller_name,
     role:                 product.seller_role,
-    watched_category_ids: product.seller_watched_category_ids,
     created_at:           product.seller_created_at,
   } ),
 } ) );

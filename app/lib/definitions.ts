@@ -34,7 +34,6 @@ export interface UserInfo
   username: string;
   name: string;
   role: Role | string;
-  watched_category_ids: number[];
   created_at: Date;
 }
 
