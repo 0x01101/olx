@@ -28,7 +28,8 @@ export interface ProductRecord
   category_created_at: Date;
   
   seller_id: number;
-  seller_uuid: string;
+  seller_username: string;
+  seller_name: string;
   seller_role: string;
   seller_watched_category_ids: string;
   seller_created_at: Date;

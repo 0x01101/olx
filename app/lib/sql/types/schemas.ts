@@ -41,7 +41,8 @@ export const productSchema = z.object( {
   category_created_at: z.date(),
   
   seller_id:                   z.number(),
-  seller_uuid:                 z.string(),
+  seller_username:             z.string().min( 3 ).max( 20 ),
+  seller_name:                 z.string().max( 100 ),
   seller_role:                 z.enum( [ "admin", "user", "moderator" ] ),
   seller_watched_category_ids: z.string().regex( /^[0-9,]+$/ ),
   seller_created_at:           z.date(),
@@ -65,7 +66,8 @@ export const productSchema = z.object( {
   
   seller: userInfoSchema.parse( {
     id:                   product.seller_id,
-    uuid:                 product.seller_uuid,
+    username:             product.seller_username,
+    name:                 product.seller_name,
     role:                 product.seller_role,
     watched_category_ids: product.seller_watched_category_ids,
     created_at:           product.seller_created_at,
