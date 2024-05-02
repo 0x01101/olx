@@ -3,7 +3,8 @@ import { Category } from "@/app/lib/definitions";
 export interface UserInfoRecord
 {
   id: number;
-  uuid: string;
+  name: string;
+  username: string;
   role: string;
   watched_category_ids: string;
   created_at: Date;

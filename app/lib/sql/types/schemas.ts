@@ -10,13 +10,15 @@ export const userSchema = z.object( {
 
 export const userInfoSchema = z.object( {
   id:                   z.number(),
-  uuid:                 z.string(),
+  username:             z.string().min( 3 ).max( 20 ),
+  name:                 z.string().max( 100 ),
   role:                 z.enum( [ "admin", "user", "moderator" ] ),
   watched_category_ids: z.string().regex( /^[0-9,]+$/ ),
   created_at:           z.date(),
 } ).transform( ( userInfo: UserInfoRecord ): UserInfo => ( {
   id:                   userInfo.id,
-  uuid:                 userInfo.uuid,
+  username:             userInfo.username,
+  name:                 userInfo.name,
   role:                 userInfo.role,
   watched_category_ids: userInfo.watched_category_ids.split( "," ).map( ( id: string ): number => parseInt( id ) ),
   created_at:           userInfo.created_at,

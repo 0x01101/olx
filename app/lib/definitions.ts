@@ -31,20 +31,8 @@ export interface User
 export interface UserInfo
 {
   id: number;
-  uuid: string;
-  role: Role | string;
-  watched_category_ids: number[];
-  created_at: Date;
-}
-
-// FullUser is for everything else
-export interface FullUser
-{
-  id: number;
-  uuid: string;
   username: string;
-  email: string;
-  password: string;
+  name: string;
   role: Role | string;
   watched_category_ids: number[];
   created_at: Date;

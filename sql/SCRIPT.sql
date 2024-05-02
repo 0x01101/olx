@@ -17,7 +17,8 @@ create table users
 create table user_info
 (
   id                     int primary key auto_increment,
-  uuid                   varchar(100) unique                 not null,
+  username               varchar(20) unique                  not null,
+  name                   varchar(100)                        not null,
   role                   enum ('admin', 'user', 'moderator') not null,
   watched_categories_ids varchar(255) default '',
   created_at             timestamp    default current_timestamp,
