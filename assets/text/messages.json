@@ -1,0 +1,6 @@
+{
+  "invalidEmail": "This doesn't seem to be valid E-mail",
+  "noEmail": "Enter your E-mail",
+  "invalidPassword": "Are you sure about the password? It's too short",
+  "noPassword": "Enter your password"
+}

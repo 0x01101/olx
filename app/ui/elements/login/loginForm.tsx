@@ -1,12 +1,50 @@
 "use client";
 
 import styles from "@/app/ui/elements/login/css/loginForm.module.css";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
+import { authenticate } from "@/app/lib/actions";
+import { z } from "zod";
+import config from "@/config.json";
+import * as messages from "@/assets/text/messages.json";
+import * as jokeMessages from "@/assets/text/jokeMessages.json";
 
 export default function LoginForm (): JSX.Element
 {
-  const [ selected, setSelected ] = useState( -1 );
+  const [ msgProvider ] = useState( config.jokeFeatures ? jokeMessages : messages );
+  
+  const [ register, doesRegister ] = useState( false );
   const [ visible, setVisible ] = useState( false );
+  const [ errorMessage, login ] = useFormState( authenticate, undefined );
+  const { pending } = useFormStatus();
+  
+  const [ isValidEmail, setIsValidEmail ] = useState( true );
+  const [ isValidPassword, setIsValidPassword ] = useState( true );
+  
+  const [ isEmailPresent, setEmailPresence ] = useState( true );
+  const [ isPasswordPresent, setPasswordPresence ] = useState( true );
+  
+  const [ changedEmail, setChangedEmail ] = useState( false );
+  const [ changedPassword, setChangedPassword ] = useState( false );
+  
+  const checkIfValidEmail = ( event: React.ChangeEvent<HTMLInputElement> ): void => setIsValidEmail( z.string().email().safeParse( event.target.value ).success );
+  const checkIfValidPassword = ( event: React.ChangeEvent<HTMLInputElement> ): void => setIsValidPassword( z.string().min( 6 ).safeParse( event.target.value ).success );
+  const checkIfEmailPresent = ( event: React.ChangeEvent<HTMLInputElement> ): void => setEmailPresence( event.target.value.length > 0 );
+  const checkIfPasswordPresent = ( event: React.ChangeEvent<HTMLInputElement> ): void => setPasswordPresence( event.target.value.length > 0 );
+  
+  const onEmailChange = ( event: React.ChangeEvent<HTMLInputElement> ): void =>
+  {
+    checkIfEmailPresent( event );
+    checkIfValidEmail( event );
+    setChangedEmail( true );
+  };
+  
+  const onPasswordChange = ( event: React.ChangeEvent<HTMLInputElement> ): void =>
+  {
+    checkIfPasswordPresent( event );
+    checkIfValidPassword( event );
+    setChangedPassword( true );
+  };
   
   return (
     <div className={styles.loginBox}>
@@ -15,12 +53,12 @@ export default function LoginForm (): JSX.Element
         <div className={styles.tabsContainer}>
           <div className={styles.tabs}>
             <header className={styles.tabsHeader}>
-              <button tabIndex={-1} onClick={() => setSelected( -1 )}
-                      className={selected == -1 ? styles.tabSelected : styles.tab}>
+              <button tabIndex={-1} onClick={() => doesRegister( false )}
+                      className={register ? styles.tab : styles.tabSelected}>
                 <span>Log In</span>
               </button>
-              <button tabIndex={0} onClick={() => setSelected( 0 )}
-                      className={selected == 0 ? styles.tabSelected : styles.tab}>
+              <button tabIndex={0} onClick={() => doesRegister( true )}
+                      className={register ? styles.tabSelected : styles.tab}>
                 <span>Sign Up</span>
               </button>
             </header>
@@ -30,13 +68,19 @@ export default function LoginForm (): JSX.Element
           </div>
         </div>
         <div className={styles.formContainer}>
-          <form noValidate={true} className={styles.form}>
+          <form noValidate={true} className={styles.form} action={register ? () => {} : login}>
             <div className={styles.emailInputContainer}>
               <div>
                 <label className={styles.inputLabel}>E-mail</label>
                 <div className={styles.emailInputInnerContainer}>
-                  <input name={"username"} type={"email"} className={styles.emailInput} />
-                  <div className={styles.emailFailureIconContainer}></div>
+                  <input name={"email"} type={"email"} className={styles.emailInput} required={true}
+                         onInput={onEmailChange} />
+                  <div className={styles.emailFailureIconContainer}>
+                    <Icon isPresent={isEmailPresent} isValid={isValidEmail} wasChanged={changedEmail} />
+                  </div>
+                </div>
+                <div className={styles.youFuckedUpText}>
+                  {isEmailPresent ? ( isValidEmail ? "" : msgProvider.invalidEmail ) : msgProvider.noEmail}
                 </div>
               </div>
             </div>
@@ -45,8 +89,10 @@ export default function LoginForm (): JSX.Element
                 <div>
                   <label className={styles.inputLabel}>Password</label>
                   <div className={styles.passwordInputInnerContainer}>
-                    <input name={"password"} type={visible ? "text" : "password"} className={styles.passwordInput} />
-                    <div className={styles.passwordVisibleIconContainer}>
+                    <input name={"password"} type={visible ? "text" : "password"} className={styles.passwordInput}
+                           onInput={onPasswordChange} />
+                    <div className={styles.passwordIconContainer}>
+                      <Icon isPresent={isPasswordPresent} isValid={isValidPassword} wasChanged={changedPassword} />
                       <div className={styles.passwordVisibleIconInnerContainer} onClick={() => setVisible( !visible )}>
                         {visible ? (
                           <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"
@@ -66,18 +112,23 @@ export default function LoginForm (): JSX.Element
                       </div>
                     </div>
                   </div>
+                  <div className={styles.youFuckedUpText}>
+                    {isPasswordPresent ? ( isValidPassword ? "" : msgProvider.invalidPassword ) : msgProvider.noPassword}
+                  </div>
                 </div>
               </div>
             </div>
-            <div className={styles.error}></div>
-            <button className={styles.forgorPassButton} type={"button"}>
+            <div className={`${styles.error}`}>{errorMessage}</div>
+            {register ? ( <></> ) : ( <button className={styles.forgorPassButton} type={"button"}>
               <span className={styles.forgorPassSpan}>
                 <span>Forgot password?</span>
               </span>
-            </button>
-            <button className={styles.loginSubmitButton} type={"submit"}>
+            </button> )}
+            <button className={styles.loginSubmitButton} type={"submit"}
+                    aria-disabled={pending || !( isValidEmail && isValidPassword && changedEmail && changedPassword )}
+                    disabled={pending || !( isValidEmail && isValidPassword && changedEmail && changedPassword )}>
               <span className={styles.loginSubmitButtonSpan}>
-                <span>Log In</span>
+                <span>{register ? "Sign Up" : "Log In"}</span>
               </span>
             </button>
           </form>
@@ -90,4 +141,27 @@ export default function LoginForm (): JSX.Element
       </div>
     </div>
   );
+}
+
+function Icon ( { isPresent, isValid, wasChanged }: { isPresent: boolean, isValid: boolean, wasChanged: boolean } ): JSX.Element
+{
+  if ( wasChanged && ( !isPresent || !isValid ) ) return (
+    <div className={styles.iconContainer}>
+      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24"
+           className={styles.youFuckedUpIcon}>
+        <path fill="currentColor" d="M11 8v5l1 1 1-1V8l-1-1-1 1ZM11 16a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"></path>
+        <path fill="currentColor" fillRule="evenodd"
+              d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2Zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8Z"
+              clipRule="evenodd"></path>
+      </svg>
+    </div>
+  );
+  else if ( wasChanged && isValid && isPresent ) return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"
+         className={styles.youDidntFuckUpIcon}>
+      <path fill="currentColor" fillRule="evenodd"
+            d="m20.586 5-1.271 1.296L8 17.836l-3.315-3.38-1.271-1.297H2v1.443l1.271 1.296L7.293 20h1.414L20.73 7.738 22 6.442V5z"></path>
+    </svg>
+  );
+  return ( <></> );
 }

@@ -1,17 +1,26 @@
 "use server";
 
-import { getUser, modifyUser } from "@/app/lib/user/user";
-import { Category, User } from "@/app/lib/definitions";
+import { signIn } from "@/auth";
+import { AuthError } from "next-auth";
 
-export async function setWatchingAction ( watching: boolean, category: Category ): Promise<void>
+export async function authenticate ( prevState: string | undefined, formData: FormData ): Promise<"Invalid credentials." | "Something went wrong." | undefined>
 {
-  const oldUser: User = await getUser();
-  const includes: boolean = oldUser.watched_category_ids.includes( category.id );
-  
-  if ( watching && !includes )
-    oldUser.watched_category_ids.push( category.id );
-  else if ( !watching && includes )
-    oldUser.watched_category_ids = oldUser.watched_category_ids.filter( id => id !== category.id );
-  
-  await modifyUser( oldUser );
+  try
+  {
+    await signIn( "credentials", formData );
+  }
+  catch ( e: any )
+  {
+    if ( e instanceof AuthError )
+    {
+      switch ( e.type )
+      {
+        case "CredentialsSignin":
+          return "Invalid credentials.";
+        default:
+          return "Something went wrong.";
+      }
+    }
+    throw e;
+  }
 }

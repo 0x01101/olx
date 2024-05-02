@@ -1,11 +1,11 @@
 /* Exclude references (foreign keys) */
-const userKeys: string[] = [ "id", "username", "email", "password" ];
-const user_infoKeys: string[] = [ "id", "uuid", "role", "watched_categories_ids", "created_at" ];
-const categoryKeys: string[] = [ "id", "name", "logo_path", "created_at" ];
-const productKeys: string[] = [ "id", "uuid", "condition", "name", "description", "price", "negotiable", "active", "created_at" ];
-const bidKeys: string[] = [ "id", "amount", "created_at" ];
-const transactionKeys: string[] = [ "id", "amount", "created_at" ];
-const notificationKeys: string[] = [ "id", "source", "title", "content", "created_at" ];
+export const userKeys: string[] = [ "id", "username", "email", "password" ];
+export const user_infoKeys: string[] = [ "id", "uuid", "role", "watched_categories_ids", "created_at" ];
+export const categoryKeys: string[] = [ "id", "name", "logo_path", "created_at" ];
+export const productKeys: string[] = [ "id", "uuid", "condition", "name", "description", "price", "negotiable", "active", "created_at" ];
+export const bidKeys: string[] = [ "id", "amount", "created_at" ];
+export const transactionKeys: string[] = [ "id", "amount", "created_at" ];
+export const notificationKeys: string[] = [ "id", "source", "title", "content", "created_at" ];
 
 export const user: string = `
   select
@@ -74,4 +74,9 @@ export const notification: string = `
     ${notificationKeys.join( "," )}
   from
     notifications;
+`;
+
+export const insertUser: string = `
+  insert into users ( ${userKeys.join(", ")} )
+  values ( ${userKeys.map((k: string): string => "?").join(", ")} );
 `;
