@@ -8,6 +8,7 @@ import { z } from "zod";
 import config from "@/config.json";
 import * as messages from "@/assets/text/messages.json";
 import * as jokeMessages from "@/assets/text/jokeMessages.json";
+import Image from "next/image";
 
 export default function LoginForm (): JSX.Element
 {
@@ -69,6 +70,16 @@ export default function LoginForm (): JSX.Element
         </div>
         <div className={styles.formContainer}>
           <form noValidate={true} className={styles.form} action={register ? () => {} : login}>
+            {errorMessage ? ( <div className={styles.errorBoxContainer}>
+              <div className={styles.errorBoxFunnyGuyContainer}>
+                <Image src={"/app/static/media/error.svg"} alt={"error"} width={40} height={40} />
+              </div>
+              <div className={styles.errorBoxTextContainer}>
+                <p className={styles.errorBoxText}>
+                  {errorMessage}
+                </p>
+              </div>
+            </div> ) : ( <></> )}
             <div className={styles.emailInputContainer}>
               <div>
                 <label className={styles.inputLabel}>E-mail</label>
@@ -118,7 +129,6 @@ export default function LoginForm (): JSX.Element
                 </div>
               </div>
             </div>
-            <div className={`${styles.error}`}>{errorMessage}</div>
             {register ? ( <></> ) : ( <button className={styles.forgorPassButton} type={"button"}>
               <span className={styles.forgorPassSpan}>
                 <span>Forgot password?</span>

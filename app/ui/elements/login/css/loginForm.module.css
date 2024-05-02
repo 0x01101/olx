@@ -322,14 +322,6 @@
   color  : #002f34;
 }
 
-.error
-{
-  margin-top          : 24px;
-  -webkit-align-self  : center;
-  -ms-flex-item-align : center;
-  align-self          : center;
-}
-
 .forgorPassButton
 {
   --displayUnderline  : none;
@@ -455,4 +447,55 @@
   width       : 24px;
   margin-left : 8px;
   color       : rgb(35, 229, 219) !important;
+}
+
+.errorBoxContainer
+{
+  -webkit-box-align : center;
+  align-items       : center;
+  background        : rgb(255, 214, 201);
+  border-radius     : 4px;
+  box-sizing        : border-box;
+  display           : flex;
+  flex-direction    : row;
+  -webkit-box-pack  : start;
+  justify-content   : flex-start;
+  width             : 100%;
+  margin            : 16px 0;
+  padding           : 16px;
+  overflow          : hidden;
+}
+
+.errorBoxFunnyGuyContainer
+{
+  margin-right : 8px;
+}
+
+.errorBoxTextContainer
+{
+  -webkit-box-align : center;
+  align-items       : center;
+  display           : flex;
+  flex-direction    : row;
+  -webkit-box-flex  : 1;
+  flex-grow         : 1;
+  flex-shrink       : 2;
+  -webkit-box-pack  : start;
+  justify-content   : flex-start;
+}
+
+.errorBoxTextContainer:not(:only-child)
+{
+  margin-right : 16px;
+}
+
+.errorBoxText
+{
+  color           : rgb(0, 47, 52);
+  font-family     : Geomanist, sans-serif;
+  font-weight     : 400;
+  text-decoration : none;
+  font-size       : 14px;
+  line-height     : 18px;
+  margin-block    : unset;
 }
