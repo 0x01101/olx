@@ -2,13 +2,11 @@
 
 import styles from "@/app/ui/elements/login/css/loginForm.module.css";
 import React, { useState } from "react";
-import { useFormState, useFormStatus } from "react-dom";
-import { authenticate } from "@/app/lib/actions";
+import { useFormStatus } from "react-dom";
 import { z } from "zod";
 import config from "@/config.json";
 import * as messages from "@/assets/text/messages.json";
 import * as jokeMessages from "@/assets/text/jokeMessages.json";
-import Image from "next/image";
 
 export default function LoginForm (): JSX.Element
 {
@@ -16,7 +14,6 @@ export default function LoginForm (): JSX.Element
   
   const [ register, doesRegister ] = useState( false );
   const [ visible, setVisible ] = useState( false );
-  const [ errorMessage, login ] = useFormState( authenticate, undefined );
   const { pending } = useFormStatus();
   
   const [ isValidEmail, setIsValidEmail ] = useState( true );
@@ -47,6 +44,23 @@ export default function LoginForm (): JSX.Element
     setChangedPassword( true );
   };
   
+  const handleSubmit = async ( event: React.FormEvent<HTMLFormElement> ): Promise<void> => {
+    event.preventDefault();
+    const formData: FormData = new FormData( event.currentTarget );
+    if (register) {
+      const response: Response = await fetch(`/api/auth/register`, {
+        method: "POST",
+        body: JSON.stringify({
+          email: formData.get("email"),
+          password: formData.get("password"),
+        }),
+      });
+      console.log(response);
+    } else {
+      console.log("login");
+    }
+  }
+  
   return (
     <div className={styles.loginBox}>
       {/* maybe TODO: add OAuth */}
@@ -69,8 +83,8 @@ export default function LoginForm (): JSX.Element
           </div>
         </div>
         <div className={styles.formContainer}>
-          <form noValidate={true} className={styles.form} action={register ? () => {} : login}>
-            {errorMessage ? ( <div className={styles.errorBoxContainer}>
+          <form noValidate={true} className={styles.form} onSubmit={handleSubmit}>
+            {/*errorMessage ? ( <div className={styles.errorBoxContainer}>
               <div className={styles.errorBoxFunnyGuyContainer}>
                 <Image src={"/app/static/media/error.svg"} alt={"error"} width={40} height={40} />
               </div>
@@ -79,7 +93,7 @@ export default function LoginForm (): JSX.Element
                   {errorMessage}
                 </p>
               </div>
-            </div> ) : ( <></> )}
+            </div> ) : ( <></> )*/}
             <div className={styles.emailInputContainer}>
               <div>
                 <label className={styles.inputLabel}>E-mail</label>
