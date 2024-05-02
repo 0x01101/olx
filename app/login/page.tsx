@@ -8,7 +8,9 @@ export default async function Page (): Promise<JSX.Element>
     <LoginLayout>
       <div className={styles.grid}>
         <div className={styles.outerContainer}>
-          <LoginForm />
+          <div className={styles.container}>
+            <LoginForm />
+          </div>
         </div>
       </div>
     </LoginLayout>
