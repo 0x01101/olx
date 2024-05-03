@@ -499,3 +499,17 @@
   line-height     : 18px;
   margin-block    : unset;
 }
+
+.errorBoxCloseButton
+{
+  place-self  : flex-start flex-end;
+  cursor      : pointer;
+  margin-left : auto;
+}
+
+.errorBoxCloseIcon
+{
+  height : 16px;
+  width  : 16px;
+  color  : rgb(0, 47, 52);
+}

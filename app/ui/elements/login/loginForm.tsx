@@ -7,6 +7,7 @@ import { z } from "zod";
 import config from "@/config.json";
 import * as messages from "@/assets/text/messages.json";
 import * as jokeMessages from "@/assets/text/jokeMessages.json";
+import Image from "next/image";
 
 export default function LoginForm (): JSX.Element
 {
@@ -14,6 +15,7 @@ export default function LoginForm (): JSX.Element
   
   const [ register, doesRegister ] = useState( false );
   const [ visible, setVisible ] = useState( false );
+  const [ errorMessage, setErrorMessage ] = useState( "" );
   const { pending } = useFormStatus();
   
   const [ isValidEmail, setIsValidEmail ] = useState( true );
@@ -44,22 +46,37 @@ export default function LoginForm (): JSX.Element
     setChangedPassword( true );
   };
   
-  const handleSubmit = async ( event: React.FormEvent<HTMLFormElement> ): Promise<void> => {
+  const closeError = (): void => setErrorMessage( "" );
+  
+  const handleSubmit = async ( event: React.FormEvent<HTMLFormElement> ): Promise<void> =>
+  {
     event.preventDefault();
     const formData: FormData = new FormData( event.currentTarget );
-    if (register) {
-      const response: Response = await fetch(`/api/auth/register`, {
-        method: "POST",
-        body: JSON.stringify({
-          email: formData.get("email"),
-          password: formData.get("password"),
-        }),
-      });
-      console.log(response);
-    } else {
-      console.log("login");
+    
+    const credentials = z
+    .object( { email: z.string().email(), password: z.string().min( 6 ) } )
+    .safeParse( { email: formData.get( "email" ), password: formData.get( "password" ) } );
+    
+    if ( !credentials.success )
+    {
+      setErrorMessage( "Invalid credentials format" );
+      return;
     }
-  }
+    
+    if ( register )
+    {
+      const response: Response = await fetch( `/api/auth/register`, {
+        method: "POST",
+        body:   JSON.stringify( {
+          email:    credentials.data.email,
+          password: credentials.data.password,
+        } ),
+      } );
+    } else
+    {
+      setErrorMessage( "Not implemented yet" );
+    }
+  };
   
   return (
     <div className={styles.loginBox}>
@@ -84,7 +101,7 @@ export default function LoginForm (): JSX.Element
         </div>
         <div className={styles.formContainer}>
           <form noValidate={true} className={styles.form} onSubmit={handleSubmit}>
-            {/*errorMessage ? ( <div className={styles.errorBoxContainer}>
+            {errorMessage ? ( <div className={styles.errorBoxContainer}>
               <div className={styles.errorBoxFunnyGuyContainer}>
                 <Image src={"/app/static/media/error.svg"} alt={"error"} width={40} height={40} />
               </div>
@@ -93,7 +110,15 @@ export default function LoginForm (): JSX.Element
                   {errorMessage}
                 </p>
               </div>
-            </div> ) : ( <></> )*/}
+              <div tabIndex={0} role={"button"} className={styles.errorBoxCloseButton} onClick={() => closeError()}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24"
+                     className={styles.errorBoxCloseIcon}>
+                  <path fill="currentColor" fillRule="evenodd"
+                        d="M20.586 2 12 10.585 3.414 2H2v1.414L10.586 12 2 20.586V22h1.414L12 13.414 20.586 22H22v-1.414L13.415 12 22 3.414V2h-1.414Z"
+                        clipRule="evenodd"></path>
+                </svg>
+              </div>
+            </div> ) : ( <></> )}
             <div className={styles.emailInputContainer}>
               <div>
                 <label className={styles.inputLabel}>E-mail</label>
