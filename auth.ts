@@ -9,16 +9,22 @@ export const { auth, signIn, signOut } = NextAuth( {
   ...authConfig,
   providers: [
     CredentialsProvider( {
-      async authorize ( credentials )
+      async authorize ( credentials, req )
       {
-        const { email, password }: { email: string, password: string } = credentials as { email: string, password: string };
+        const { email, password }: {
+          email: string,
+          password: string
+        } = credentials as {
+          email: string,
+          password: string
+        };
         
         const user: User | undefined = await fetchUserByEMail( email );
         
         if ( !user ) return null;
         
         if ( await compare( password, user.password ) ) return {
-          id:    user.id,
+          id: `${user.id}`,
           email: user.email,
         };
         

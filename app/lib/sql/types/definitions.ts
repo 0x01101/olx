@@ -1,5 +1,3 @@
-import { Category } from "@/app/lib/definitions";
-
 export interface UserRecord
 {
   id: number;

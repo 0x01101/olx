@@ -66,15 +66,23 @@ export default function LoginForm (): JSX.Element
     
     if ( register )
     {
-      const { success, message }: { success: boolean, message?: string } = await signUp( credentials.data );
+      const { success, message }: {
+        success: boolean,
+        message?: string
+      } = await signUp( credentials.data );
       
-      if ( !success ) setErrorMessage( message || "Unknown error" );
+      if ( !success )
+      {
+        setErrorMessage( message || "Unknown error" );
+        return;
+      }
     }
     
-    if ( errorMessage ) return;
-    
-    //const { success, message }: { success: boolean, message?: string } = await logIn( credentials.data );
-    //if ( !success ) setErrorMessage( message || "Unknown error" );
+    const { success, message }: {
+      success: boolean,
+      message?: string
+    } = await logIn( credentials.data );
+    if ( !success ) setErrorMessage( message || "Unknown error" );
   };
   
   return (
@@ -191,7 +199,11 @@ export default function LoginForm (): JSX.Element
   );
 }
 
-function Icon ( { isPresent, isValid, wasChanged }: { isPresent: boolean, isValid: boolean, wasChanged: boolean } ): JSX.Element
+function Icon ( { isPresent, isValid, wasChanged }: {
+  isPresent: boolean,
+  isValid: boolean,
+  wasChanged: boolean
+} ): JSX.Element
 {
   if ( wasChanged && ( !isPresent || !isValid ) ) return (
     <div className={styles.iconContainer}>
