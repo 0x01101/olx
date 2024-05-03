@@ -25,6 +25,7 @@ export interface User
   id: number;
   email: string;
   password: string;
+  watched_categories: number[];
 }
 
 // UserInfo is for non-sensitive user info, for use for example in product listings
