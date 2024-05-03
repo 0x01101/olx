@@ -492,10 +492,23 @@
 .errorBoxText
 {
   color           : rgb(0, 47, 52);
-  font-family     : Geomanist, sans-serif;
   font-weight     : 400;
   text-decoration : none;
   font-size       : 14px;
   line-height     : 18px;
   margin-block    : unset;
+}
+
+.errorBoxCloseButton
+{
+  place-self  : flex-start flex-end;
+  cursor      : pointer;
+  margin-left : auto;
+}
+
+.errorBoxCloseIcon
+{
+  height : 16px;
+  width  : 16px;
+  color  : rgb(0, 47, 52);
 }

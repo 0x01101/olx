@@ -1,19 +1,17 @@
-import { Category } from "@/app/lib/definitions";
-
 export interface UserRecord
 {
   id: number;
-  username: string;
   email: string;
   password: string;
+  watched_category_ids: string;
 }
 
 export interface UserInfoRecord
 {
   id: number;
-  uuid: string;
+  name: string;
+  username: string;
   role: string;
-  watched_category_ids: string;
   created_at: Date;
 }
 
@@ -35,8 +33,8 @@ export interface ProductRecord
   category_created_at: Date;
   
   seller_id: number;
-  seller_uuid: string;
+  seller_username: string;
+  seller_name: string;
   seller_role: string;
-  seller_watched_category_ids: string;
   seller_created_at: Date;
 }

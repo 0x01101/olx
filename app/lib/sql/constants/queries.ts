@@ -1,6 +1,6 @@
 /* Exclude references (foreign keys) */
-export const userKeys: string[] = [ "id", "username", "email", "password" ];
-export const user_infoKeys: string[] = [ "id", "uuid", "role", "watched_categories_ids", "created_at" ];
+export const userKeys: string[] = [ "id", "email", "password", "watched_category_ids" ];
+export const user_infoKeys: string[] = [ "id", "username", "name", "role", "created_at" ];
 export const categoryKeys: string[] = [ "id", "name", "logo_path", "created_at" ];
 export const productKeys: string[] = [ "id", "uuid", "condition", "name", "description", "price", "negotiable", "active", "created_at" ];
 export const bidKeys: string[] = [ "id", "amount", "created_at" ];
@@ -74,9 +74,4 @@ export const notification: string = `
     ${notificationKeys.join( "," )}
   from
     notifications;
-`;
-
-export const insertUser: string = `
-  insert into users ( ${userKeys.join(", ")} )
-  values ( ${userKeys.map((k: string): string => "?").join(", ")} );
 `;

@@ -22,32 +22,19 @@ export enum Condition
 // User is for authorization
 export interface User
 {
-  id: string;
-  username: string;
-  email: string | null | undefined;
+  id: number;
+  email: string;
   password: string;
+  watched_categories: number[];
 }
 
 // UserInfo is for non-sensitive user info, for use for example in product listings
 export interface UserInfo
 {
   id: number;
-  uuid: string;
-  role: Role | string;
-  watched_category_ids: number[];
-  created_at: Date;
-}
-
-// FullUser is for everything else
-export interface FullUser
-{
-  id: number;
-  uuid: string;
   username: string;
-  email: string;
-  password: string;
+  name: string;
   role: Role | string;
-  watched_category_ids: number[];
   created_at: Date;
 }
 

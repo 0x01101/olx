@@ -8,4 +8,3 @@
 > [!NOTE]
 > Files containing database queries:
 > - `lib/sql/queries.ts`
-> - `lib/sql/data/insert.ts`

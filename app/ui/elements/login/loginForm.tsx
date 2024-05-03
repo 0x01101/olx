@@ -1,14 +1,14 @@
 "use client";
 
 import styles from "@/app/ui/elements/login/css/loginForm.module.css";
-import React, { useState } from "react";
-import { useFormState, useFormStatus } from "react-dom";
-import { authenticate } from "@/app/lib/actions";
-import { z } from "zod";
+import React, { useEffect, useRef, useState } from "react";
+import { useFormStatus } from "react-dom";
+import { never, z } from "zod";
 import config from "@/config.json";
 import * as messages from "@/assets/text/messages.json";
 import * as jokeMessages from "@/assets/text/jokeMessages.json";
 import Image from "next/image";
+import { logIn, signUp } from "@/app/lib/actions";
 
 export default function LoginForm (): JSX.Element
 {
@@ -16,7 +16,7 @@ export default function LoginForm (): JSX.Element
   
   const [ register, doesRegister ] = useState( false );
   const [ visible, setVisible ] = useState( false );
-  const [ errorMessage, login ] = useFormState( authenticate, undefined );
+  const [ errorMessage, setErrorMessage ] = useState( "" );
   const { pending } = useFormStatus();
   
   const [ isValidEmail, setIsValidEmail ] = useState( true );
@@ -28,23 +28,81 @@ export default function LoginForm (): JSX.Element
   const [ changedEmail, setChangedEmail ] = useState( false );
   const [ changedPassword, setChangedPassword ] = useState( false );
   
-  const checkIfValidEmail = ( event: React.ChangeEvent<HTMLInputElement> ): void => setIsValidEmail( z.string().email().safeParse( event.target.value ).success );
-  const checkIfValidPassword = ( event: React.ChangeEvent<HTMLInputElement> ): void => setIsValidPassword( z.string().min( 6 ).safeParse( event.target.value ).success );
-  const checkIfEmailPresent = ( event: React.ChangeEvent<HTMLInputElement> ): void => setEmailPresence( event.target.value.length > 0 );
-  const checkIfPasswordPresent = ( event: React.ChangeEvent<HTMLInputElement> ): void => setPasswordPresence( event.target.value.length > 0 );
+  const checkIfValidEmail = ( email: string ): void => setIsValidEmail( z.string().email().safeParse( email ).success );
+  const checkIfValidPassword = ( password: string ): void => setIsValidPassword( z.string().min( 6 ).safeParse( password ).success );
+  const checkIfEmailPresent = ( email: string ): void => setEmailPresence( email.length > 0 );
+  const checkIfPasswordPresent = ( password: string ): void => setPasswordPresence( password.length > 0 );
   
   const onEmailChange = ( event: React.ChangeEvent<HTMLInputElement> ): void =>
   {
-    checkIfEmailPresent( event );
-    checkIfValidEmail( event );
+    checkIfEmailPresent( event.target.value );
+    checkIfValidEmail( event.target.value );
     setChangedEmail( true );
   };
   
   const onPasswordChange = ( event: React.ChangeEvent<HTMLInputElement> ): void =>
   {
-    checkIfPasswordPresent( event );
-    checkIfValidPassword( event );
+    checkIfPasswordPresent( event.target.value );
+    checkIfValidPassword( event.target.value );
     setChangedPassword( true );
+  };
+  
+  const emailRef = useRef<HTMLInputElement>( null );
+  const passwordRef = useRef<HTMLInputElement>( null );
+  
+  useEffect( () =>
+  {
+    if ( emailRef.current && emailRef.current.value )
+    {
+      checkIfEmailPresent( emailRef.current.value );
+      checkIfValidEmail( emailRef.current.value );
+      setChangedEmail( true );
+    }
+    
+    if ( passwordRef.current && passwordRef.current.value )
+    {
+      checkIfPasswordPresent( passwordRef.current.value );
+      checkIfValidPassword( passwordRef.current.value );
+      setChangedPassword( true );
+    }
+  }, [] );
+  
+  const closeError = (): void => setErrorMessage( "" );
+  
+  const handleSubmit = async ( event: React.FormEvent<HTMLFormElement> ): Promise<void> =>
+  {
+    event.preventDefault();
+    const formData: FormData = new FormData( event.currentTarget );
+    
+    const credentials = z
+    .object( { email: z.string().email(), password: z.string().min( 6 ) } )
+    .safeParse( { email: formData.get( "email" ), password: formData.get( "password" ) } );
+    
+    if ( !credentials.success )
+    {
+      setErrorMessage( "Invalid credentials format" );
+      return;
+    }
+    
+    if ( register )
+    {
+      const { success, message }: {
+        success: boolean,
+        message?: string
+      } = await signUp( credentials.data );
+      
+      if ( !success )
+      {
+        setErrorMessage( message || "Unknown error" );
+        return;
+      }
+    }
+    
+    const { success, message }: {
+      success: boolean,
+      message?: string
+    } = await logIn( credentials.data );
+    if ( !success ) setErrorMessage( message || "Unknown error" );
   };
   
   return (
@@ -69,7 +127,7 @@ export default function LoginForm (): JSX.Element
           </div>
         </div>
         <div className={styles.formContainer}>
-          <form noValidate={true} className={styles.form} action={register ? () => {} : login}>
+          <form noValidate={true} className={styles.form} onSubmit={handleSubmit}>
             {errorMessage ? ( <div className={styles.errorBoxContainer}>
               <div className={styles.errorBoxFunnyGuyContainer}>
                 <Image src={"/app/static/media/error.svg"} alt={"error"} width={40} height={40} />
@@ -79,13 +137,21 @@ export default function LoginForm (): JSX.Element
                   {errorMessage}
                 </p>
               </div>
+              <div tabIndex={0} role={"button"} className={styles.errorBoxCloseButton} onClick={() => closeError()}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24"
+                     className={styles.errorBoxCloseIcon}>
+                  <path fill="currentColor" fillRule="evenodd"
+                        d="M20.586 2 12 10.585 3.414 2H2v1.414L10.586 12 2 20.586V22h1.414L12 13.414 20.586 22H22v-1.414L13.415 12 22 3.414V2h-1.414Z"
+                        clipRule="evenodd"></path>
+                </svg>
+              </div>
             </div> ) : ( <></> )}
             <div className={styles.emailInputContainer}>
               <div>
                 <label className={styles.inputLabel}>E-mail</label>
                 <div className={styles.emailInputInnerContainer}>
                   <input name={"email"} type={"email"} className={styles.emailInput} required={true}
-                         onInput={onEmailChange} />
+                         onInput={onEmailChange} ref={emailRef} />
                   <div className={styles.emailFailureIconContainer}>
                     <Icon isPresent={isEmailPresent} isValid={isValidEmail} wasChanged={changedEmail} />
                   </div>
@@ -101,7 +167,8 @@ export default function LoginForm (): JSX.Element
                   <label className={styles.inputLabel}>Password</label>
                   <div className={styles.passwordInputInnerContainer}>
                     <input name={"password"} type={visible ? "text" : "password"} className={styles.passwordInput}
-                           onInput={onPasswordChange} />
+                           onInput={onPasswordChange}
+                           ref={passwordRef} />
                     <div className={styles.passwordIconContainer}>
                       <Icon isPresent={isPasswordPresent} isValid={isValidPassword} wasChanged={changedPassword} />
                       <div className={styles.passwordVisibleIconInnerContainer} onClick={() => setVisible( !visible )}>
@@ -153,7 +220,11 @@ export default function LoginForm (): JSX.Element
   );
 }
 
-function Icon ( { isPresent, isValid, wasChanged }: { isPresent: boolean, isValid: boolean, wasChanged: boolean } ): JSX.Element
+function Icon ( { isPresent, isValid, wasChanged }: {
+  isPresent: boolean,
+  isValid: boolean,
+  wasChanged: boolean
+} ): JSX.Element
 {
   if ( wasChanged && ( !isPresent || !isValid ) ) return (
     <div className={styles.iconContainer}>

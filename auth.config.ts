@@ -1,23 +1,19 @@
-import type { NextAuthConfig, Session } from "next-auth";
-import { NextURL } from "next/dist/server/web/next-url";
 import config from "@/config.json";
+import { NextAuthConfig } from "next-auth";
 
-export const authConfig: NextAuthConfig = {
+export const authConfig = {
   pages:     {
-    signIn: "/login",
+    signIn: "login",
+  },
+  session:   {
+    strategy: "jwt",
   },
   callbacks: {
-    authorized ( { auth, request: { nextUrl } }: { auth: Session | null, request: { nextUrl: NextURL } } ): boolean | Response
+    authorized ( { auth, request: { nextUrl } } )
     {
-      const isLoggedIn: boolean = !!auth?.user;
-      const isOnAccountPage: RegExpMatchArray | null = nextUrl.pathname.match( /^\/((my)?account|adding)/img );
-      
-      if ( isOnAccountPage )
-        return isLoggedIn;
-      
-      return true;
+      return !!auth?.user;
     },
   },
-  providers: [],
   secret:    config.authSecret,
+  providers: [],
 } satisfies NextAuthConfig;
