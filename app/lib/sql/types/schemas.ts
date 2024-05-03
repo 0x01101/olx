@@ -1,19 +1,25 @@
 import { z } from "zod";
-import { ProductRecord } from "@/app/lib/sql/types/definitions";
-import { Product } from "@/app/lib/definitions";
+import { ProductRecord, UserRecord } from "@/app/lib/sql/types/definitions";
+import { Product, User } from "@/app/lib/definitions";
 
 export const userSchema = z.object( {
-  id:       z.number(),
-  email:    z.string().email(),
-  password: z.string().min( 6 ),
-} );
+  id:                     z.number(),
+  email:                  z.string().email(),
+  password:               z.string().min( 6 ),
+  watched_categories_ids: z.string().regex( /^\d+(,\d+)*$/ ),
+} ).transform( ( user: UserRecord ): User => ( {
+  id:                 user.id,
+  email:              user.email,
+  password:           user.password,
+  watched_categories: user.watched_categories_ids.split( "," ).map( Number ),
+} ) );
 
 export const userInfoSchema = z.object( {
-  id:                   z.number(),
-  username:             z.string().min( 3 ).max( 20 ),
-  name:                 z.string().max( 100 ),
-  role:                 z.enum( [ "admin", "user", "moderator" ] ),
-  created_at:           z.date(),
+  id:         z.number(),
+  username:   z.string().min( 3 ).max( 20 ),
+  name:       z.string().max( 100 ),
+  role:       z.enum( [ "admin", "user", "moderator" ] ),
+  created_at: z.date(),
 } );
 
 export const productSchema = z.object( {
@@ -32,11 +38,11 @@ export const productSchema = z.object( {
   category_logo_path:  z.string(),
   category_created_at: z.date(),
   
-  seller_id:                   z.number(),
-  seller_username:             z.string().min( 3 ).max( 20 ),
-  seller_name:                 z.string().max( 100 ),
-  seller_role:                 z.enum( [ "admin", "user", "moderator" ] ),
-  seller_created_at:           z.date(),
+  seller_id:         z.number(),
+  seller_username:   z.string().min( 3 ).max( 20 ),
+  seller_name:       z.string().max( 100 ),
+  seller_role:       z.enum( [ "admin", "user", "moderator" ] ),
+  seller_created_at: z.date(),
 } ).transform( ( product: ProductRecord ): Product => ( {
   id:          product.id,
   uuid:        product.uuid,
@@ -56,10 +62,10 @@ export const productSchema = z.object( {
   },
   
   seller: userInfoSchema.parse( {
-    id:                   product.seller_id,
-    username:             product.seller_username,
-    name:                 product.seller_name,
-    role:                 product.seller_role,
-    created_at:           product.seller_created_at,
+    id:         product.seller_id,
+    username:   product.seller_username,
+    name:       product.seller_name,
+    role:       product.seller_role,
+    created_at: product.seller_created_at,
   } ),
 } ) );

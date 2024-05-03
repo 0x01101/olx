@@ -1,5 +1,13 @@
 import { Category } from "@/app/lib/definitions";
 
+export interface UserRecord
+{
+  id: number;
+  email: string;
+  password: string;
+  watched_categories_ids: string;
+}
+
 export interface UserInfoRecord
 {
   id: number;
