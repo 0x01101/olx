@@ -8,7 +8,7 @@ import config from "@/config.json";
 import * as messages from "@/assets/text/messages.json";
 import * as jokeMessages from "@/assets/text/jokeMessages.json";
 import Image from "next/image";
-import { signIn } from "@/auth";
+import { logIn, signUp } from "@/app/lib/actions";
 
 export default function LoginForm (): JSX.Element
 {
@@ -66,25 +66,15 @@ export default function LoginForm (): JSX.Element
     
     if ( register )
     {
-      const response: Response = await fetch( `/api/auth/register`, {
-        method: "POST",
-        body:   JSON.stringify( {
-          email:    credentials.data.email,
-          password: credentials.data.password,
-        } ),
-      } );
+      const { success, message }: { success: boolean, message?: string } = await signUp( credentials.data );
       
-      const data: { success: boolean, message?: string } = await response.json();
-      
-      if ( !data.success ) setErrorMessage( data.message || "Unknown error" );
+      if ( !success ) setErrorMessage( message || "Unknown error" );
     }
     
     if ( errorMessage ) return;
-    await signIn( "credentials", {
-      email:    credentials.data.email,
-      password: credentials.data.password,
-      redirect: false,
-    } );
+    
+    const { success, message }: { success: boolean, message?: string } = await logIn( credentials.data );
+    if ( !success ) setErrorMessage( message || "Unknown error" );
   };
   
   return (
