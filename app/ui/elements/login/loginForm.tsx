@@ -1,9 +1,9 @@
 "use client";
 
 import styles from "@/app/ui/elements/login/css/loginForm.module.css";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
-import { z } from "zod";
+import { never, z } from "zod";
 import config from "@/config.json";
 import * as messages from "@/assets/text/messages.json";
 import * as jokeMessages from "@/assets/text/jokeMessages.json";
@@ -28,24 +28,44 @@ export default function LoginForm (): JSX.Element
   const [ changedEmail, setChangedEmail ] = useState( false );
   const [ changedPassword, setChangedPassword ] = useState( false );
   
-  const checkIfValidEmail = ( event: React.ChangeEvent<HTMLInputElement> ): void => setIsValidEmail( z.string().email().safeParse( event.target.value ).success );
-  const checkIfValidPassword = ( event: React.ChangeEvent<HTMLInputElement> ): void => setIsValidPassword( z.string().min( 6 ).safeParse( event.target.value ).success );
-  const checkIfEmailPresent = ( event: React.ChangeEvent<HTMLInputElement> ): void => setEmailPresence( event.target.value.length > 0 );
-  const checkIfPasswordPresent = ( event: React.ChangeEvent<HTMLInputElement> ): void => setPasswordPresence( event.target.value.length > 0 );
+  const checkIfValidEmail = ( email: string ): void => setIsValidEmail( z.string().email().safeParse( email ).success );
+  const checkIfValidPassword = ( password: string ): void => setIsValidPassword( z.string().min( 6 ).safeParse( password ).success );
+  const checkIfEmailPresent = ( email: string ): void => setEmailPresence( email.length > 0 );
+  const checkIfPasswordPresent = ( password: string ): void => setPasswordPresence( password.length > 0 );
   
   const onEmailChange = ( event: React.ChangeEvent<HTMLInputElement> ): void =>
   {
-    checkIfEmailPresent( event );
-    checkIfValidEmail( event );
+    checkIfEmailPresent( event.target.value );
+    checkIfValidEmail( event.target.value );
     setChangedEmail( true );
   };
   
   const onPasswordChange = ( event: React.ChangeEvent<HTMLInputElement> ): void =>
   {
-    checkIfPasswordPresent( event );
-    checkIfValidPassword( event );
+    checkIfPasswordPresent( event.target.value );
+    checkIfValidPassword( event.target.value );
     setChangedPassword( true );
   };
+  
+  const emailRef = useRef<HTMLInputElement>( null );
+  const passwordRef = useRef<HTMLInputElement>( null );
+  
+  useEffect( () =>
+  {
+    if ( emailRef.current && emailRef.current.value )
+    {
+      checkIfEmailPresent( emailRef.current.value );
+      checkIfValidEmail( emailRef.current.value );
+      setChangedEmail( true );
+    }
+    
+    if ( passwordRef.current && passwordRef.current.value )
+    {
+      checkIfPasswordPresent( passwordRef.current.value );
+      checkIfValidPassword( passwordRef.current.value );
+      setChangedPassword( true );
+    }
+  }, [] );
   
   const closeError = (): void => setErrorMessage( "" );
   
@@ -131,7 +151,7 @@ export default function LoginForm (): JSX.Element
                 <label className={styles.inputLabel}>E-mail</label>
                 <div className={styles.emailInputInnerContainer}>
                   <input name={"email"} type={"email"} className={styles.emailInput} required={true}
-                         onInput={onEmailChange} />
+                         onInput={onEmailChange} ref={emailRef} />
                   <div className={styles.emailFailureIconContainer}>
                     <Icon isPresent={isEmailPresent} isValid={isValidEmail} wasChanged={changedEmail} />
                   </div>
@@ -147,7 +167,8 @@ export default function LoginForm (): JSX.Element
                   <label className={styles.inputLabel}>Password</label>
                   <div className={styles.passwordInputInnerContainer}>
                     <input name={"password"} type={visible ? "text" : "password"} className={styles.passwordInput}
-                           onInput={onPasswordChange} />
+                           onInput={onPasswordChange}
+                           ref={passwordRef} />
                     <div className={styles.passwordIconContainer}>
                       <Icon isPresent={isPasswordPresent} isValid={isValidPassword} wasChanged={changedPassword} />
                       <div className={styles.passwordVisibleIconInnerContainer} onClick={() => setVisible( !visible )}>

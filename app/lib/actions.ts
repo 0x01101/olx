@@ -12,7 +12,7 @@ import config from "@/config.json";
 export async function logIn ( data: {
   email: string,
   password: string
-} ): Promise<{
+}, redirectUrl?: string ): Promise<{
   success: boolean,
   message?: string
 }>
@@ -22,7 +22,8 @@ export async function logIn ( data: {
     await signIn( "credentials", {
       email:    data.email,
       password: data.password,
-      redirect: false,
+      redirect: !!redirectUrl,
+      redirectTo: redirectUrl,
     } );
   }
   catch ( e: any )
