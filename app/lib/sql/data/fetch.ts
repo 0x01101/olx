@@ -1,15 +1,15 @@
 import { Category, Product, User } from "@/app/lib/definitions";
 import { execQuery, mergeQuery } from "@/app/lib/sql/sql";
-import { ProductRecord } from "@/app/lib/sql/types/definitions";
+import { ProductRecord, UserRecord } from "@/app/lib/sql/types/definitions";
 import { category, product, user } from "@/app/lib/sql/constants/queries";
 import { productSchema, userSchema } from "@/app/lib/sql/types/schemas";
 import { SafeParseReturnType } from "zod";
 
 export async function fetchUserByEMail ( email: string ): Promise<User | undefined>
 {
-  const rows: User[] = await execQuery<User>( mergeQuery( user, `WHERE email = ?` ), [ email ] );
+  const rows: UserRecord[] = await execQuery<UserRecord>( mergeQuery( user, `WHERE email = ?` ), [ email ] );
   if ( !rows.length ) return undefined;
-  const parsed: SafeParseReturnType<User, User> = userSchema.safeParse( rows[ 0 ] );
+  const parsed: SafeParseReturnType<UserRecord, User> = userSchema.safeParse( rows[ 0 ] );
   if ( !parsed.success ) return undefined;
   return parsed.data;
 }
