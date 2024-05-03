@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { hash } from "bcrypt";
 import { z } from "zod";
 import { execQuery } from "@/app/lib/sql/sql";
+import { Role } from "@/app/lib/definitions";
 
 export async function POST ( request: Request )
 {
@@ -22,10 +23,18 @@ export async function POST ( request: Request )
     
     await execQuery<undefined>( `
         insert into
-          users (users.email, users.password)
+          users (email, password)
         values
           (?, ?);`,
       [ parsedCredentials.data.email, hashedPassword ],
+    );
+    
+    await execQuery<undefined>( `
+        insert into
+          user_info (username, name, role)
+        values
+          (?, ?, ?);`,
+      [ parsedCredentials.data.email, parsedCredentials.data.email.replace( /@.*$/img, "" ), Role.USER ],
     );
   }
   catch ( e: any )
