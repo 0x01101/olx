@@ -10,15 +10,8 @@ const handler = NextAuth( {
       },
       async authorize ( credentials, req )
       {
-        const user: User = { id: `${1}`, name: "J Smith", email: "jsmith@example.com" };
-        
-        if ( user )
-        {
-          return user;
-        } else
-        {
-          return null;
-        }
+        console.log( credentials );
+        return null;
       },
     } ),
   ],
