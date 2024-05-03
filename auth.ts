@@ -23,10 +23,10 @@ export const { auth, signIn, signOut } = NextAuth( {
         
         if ( !user ) return null;
         
-        if ( await compare( password, user.password ) ) return {
+        if ( await compare( password, user.password ) ) return user; /*{
           id: `${user.id}`,
           email: user.email,
-        };
+        };*/
         
         return null;
       },
