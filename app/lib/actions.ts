@@ -29,7 +29,6 @@ export async function logIn ( data: { email: string, password: string } ): Promi
           return { success: false, message: "An error occurred." };
       }
     }
-    throw e;
   }
   return { success: true };
 }
