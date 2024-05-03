@@ -16,7 +16,7 @@ export async function POST ( request: Request )
     
     if ( !parsedCredentials.success )
     {
-      return NextResponse.json( { message: "Invalid credentials format" }, { status: 400 } );
+      return NextResponse.json( { success: false, message: "Invalid credentials format" }, { status: 400 } );
     }
     
     const hashedPassword: string = await hash( parsedCredentials.data.password, 10 );
@@ -42,5 +42,5 @@ export async function POST ( request: Request )
     console.log( e );
   }
   
-  return NextResponse.json( { message: "OK" } );
+  return NextResponse.json( { success: true } );
 }
