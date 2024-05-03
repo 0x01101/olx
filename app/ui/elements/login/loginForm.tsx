@@ -73,8 +73,8 @@ export default function LoginForm (): JSX.Element
     
     if ( errorMessage ) return;
     
-    const { success, message }: { success: boolean, message?: string } = await logIn( credentials.data );
-    if ( !success ) setErrorMessage( message || "Unknown error" );
+    //const { success, message }: { success: boolean, message?: string } = await logIn( credentials.data );
+    //if ( !success ) setErrorMessage( message || "Unknown error" );
   };
   
   return (
