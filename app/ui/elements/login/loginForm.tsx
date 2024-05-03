@@ -8,6 +8,7 @@ import config from "@/config.json";
 import * as messages from "@/assets/text/messages.json";
 import * as jokeMessages from "@/assets/text/jokeMessages.json";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
 
 export default function LoginForm (): JSX.Element
 {
@@ -72,10 +73,18 @@ export default function LoginForm (): JSX.Element
           password: credentials.data.password,
         } ),
       } );
-    } else
-    {
-      setErrorMessage( "Not implemented yet" );
+      
+      const data: { success: boolean, message?: string } = await response.json();
+      
+      if ( !data.success ) setErrorMessage( data.message || "Unknown error" );
     }
+    
+    if ( errorMessage ) return;
+    await signIn( "credentials", {
+      email:    credentials.data.email,
+      password: credentials.data.password,
+      redirect: false,
+    } );
   };
   
   return (
