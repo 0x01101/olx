@@ -1,5 +1,10 @@
 import config from "@/config.json";
+import { NextAuthConfig } from "next-auth";
 
 export const authConfig = {
-  secret: config.authSecret,
-};
+  pages:     {
+    signIn: "login",
+  },
+  secret:    config.authSecret,
+  providers: [],
+} satisfies NextAuthConfig;

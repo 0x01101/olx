@@ -12,8 +12,8 @@ create table users
   id       int primary key auto_increment,
   email    varchar(255) not null unique,
   password varchar(255) not null,
-  watched_categories_ids varchar(255) default '',
-  constraint isvalid check (watched_categories_ids regexp '^[0-9,]*$')
+  watched_category_ids varchar(255) default '',
+  constraint isvalid check (watched_category_ids regexp '^[0-9,]*$')
 );
 
 create table user_info

@@ -5,7 +5,7 @@ export interface UserRecord
   id: number;
   email: string;
   password: string;
-  watched_categories_ids: string;
+  watched_category_ids: string;
 }
 
 export interface UserInfoRecord

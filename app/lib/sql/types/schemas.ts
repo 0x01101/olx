@@ -6,12 +6,12 @@ export const userSchema = z.object( {
   id:                     z.number(),
   email:                  z.string().email(),
   password:               z.string().min( 6 ),
-  watched_categories_ids: z.string().regex( /^\d+(,\d+)*$/ ),
+  watched_category_ids: z.string().regex( /^\d+(,\d+)*$/ ),
 } ).transform( ( user: UserRecord ): User => ( {
   id:                 user.id,
   email:              user.email,
   password:           user.password,
-  watched_categories: user.watched_categories_ids.split( "," ).map( Number ),
+  watched_categories: user.watched_category_ids.split( "," ).map( Number ),
 } ) );
 
 export const userInfoSchema = z.object( {
