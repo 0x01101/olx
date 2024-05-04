@@ -4,6 +4,7 @@
  */
 export const publicRoutes: string[] = [
   "/",
+  "/auth/new-verification",
   // TODO: Add category names here too (fetch them from db)
 ];
 
@@ -15,7 +16,6 @@ export const authRoutes: string[] = [
   "/auth/login",
   "/auth/register",
   "/auth/error",
-  "/auth/new-verification",
 ];
 
 /**
