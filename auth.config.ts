@@ -11,7 +11,15 @@ export const authConfig = {
   callbacks: {
     authorized ( { auth, request: { nextUrl } } )
     {
-      return !!auth?.user;
+      const isLoggedIn: boolean = !!auth?.user;
+      const isOnProtectedPage: boolean = !!nextUrl.pathname.match( /^\/(my)?account/ );
+      
+      if ( isOnProtectedPage )
+      {
+        return isLoggedIn;
+      }
+      
+      return true;
     },
   },
   secret:    config.authSecret,
