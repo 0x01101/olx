@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { register } from "@/actions/register";
+import { ServerResponse } from "@/lib/definitions";
 
 export function RegisterForm (): JSX.Element
 {
@@ -45,7 +46,7 @@ export function RegisterForm (): JSX.Element
     
     startTransition( async (): Promise<void> =>
     {
-      const response = await register( values );
+      const response: ServerResponse = await register( values );
       setError( response?.error );
       setSuccess( response?.success );
     } );

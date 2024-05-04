@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import Link from "next/link";
+import { ServerResponse } from "@/lib/definitions";
 
 export function LoginForm (): JSX.Element
 {
@@ -49,7 +50,7 @@ export function LoginForm (): JSX.Element
     
     startTransition( async (): Promise<void> =>
     {
-      const response = await login( values );
+      const response: ServerResponse = await login( values );
       setError( response?.error );
       setSuccess( response?.success );
     } );
