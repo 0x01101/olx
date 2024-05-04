@@ -4,6 +4,7 @@ import * as z from "zod";
 import { RegisterSchema } from "@/schemas";
 import { compare, hash } from "bcrypt";
 import { db } from "@/lib/db";
+import { getUserByEmail } from "@/data/user";
 
 export async function register ( values: z.infer<typeof RegisterSchema> ): Promise<{ success?: string, error?: string }>
 {
@@ -27,7 +28,7 @@ export async function register ( values: z.infer<typeof RegisterSchema> ): Promi
       return { error: `This password is already used by ${reusedPassword.email}, try something different` };
   }
   
-  const existingUser = await db.user.findUnique( { where: { email } } );
+  const existingUser = await getUserByEmail( email );
   
   if ( existingUser )
     return { error: "Email already in use" };
