@@ -14,6 +14,7 @@ CREATE TABLE `User` (
                       `email` VARCHAR(255),
                       `emailVerified` DATETIME,
                       `image` VARCHAR(255),
+                      `password` VARCHAR(255),
                       `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                       `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
