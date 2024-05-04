@@ -5,7 +5,7 @@ use olx;
 
 drop user if exists funnyuser@'%';
 create user funnyuser@'%' identified by 'P@55w0rd';
-grant select, insert, update, delete on olx.* to funnyuser@'%';
+grant select, insert, update, delete, create on olx.* to funnyuser@'%';
 
 create table users
 (
