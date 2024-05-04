@@ -1,4 +1,8 @@
 import { Resend } from "resend";
+import dayjs from "dayjs";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
+
+dayjs.extend( LocalizedFormat );
 
 const resend: Resend = new Resend( process.env.RESEND_API_KEY );
 
@@ -36,7 +40,11 @@ export async function sendVerificationEmail ( email: string, token: string ): Pr
                             </tr>
                         </tbody>
                     </table>
-                    <p style="font-size:14px;line-height:24px;margin:0 0 40px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;color:#AAAAAA">85 Holly Street, Clifton<br/>NJ 07013, United States of America</p>
+                    <p style="font-size:14px;line-height:24px;margin:0 0 40px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;color:#AAAAAA">
+                    85 Holly Street, Clifton<br/>
+                    NJ 07013, United States of America<br/>
+                    ${dayjs( new Date() ).format( "LLL" )}
+                    </p>
                 </td>
             </tr>
         </tbody>
