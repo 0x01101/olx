@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
+import Link from "next/link";
 
 export function LoginForm (): JSX.Element
 {
@@ -98,6 +99,16 @@ export function LoginForm (): JSX.Element
                       type={"password"}
                     />
                   </FormControl>
+                  <Button
+                    size={"sm"}
+                    variant={"link"}
+                    asChild
+                    className={"px-0 font-normal"}
+                  >
+                    <Link href={"/auth/reset"}>
+                      Forgot password?
+                    </Link>
+                  </Button>
                   <FormMessage />
                 </FormItem>
               )}
