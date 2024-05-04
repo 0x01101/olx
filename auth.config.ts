@@ -3,6 +3,7 @@ import { NextAuthConfig } from "next-auth";
 import { LoginSchema } from "@/schemas";
 import { getUserByEmail } from "@/data/user";
 import bcrypt from "bcryptjs";
+import { User } from "@prisma/client";
 
 export default {
   providers: [
@@ -15,10 +16,10 @@ export default {
         {
           const { email, password }: { email: string, password: string } = validatedFields.data;
           
-          const user = await getUserByEmail( email );
+          const user: User | null = await getUserByEmail( email );
           if ( !user || !user.password ) return null;
           
-          const passwordsMatch = await bcrypt.compare( password, user.password );
+          const passwordsMatch: boolean = await bcrypt.compare( password, user.password );
           
           if ( passwordsMatch ) return user;
         }

@@ -1,7 +1,7 @@
 import { Category, Product } from "@/app/lib/definitions";
 import { notFound } from "next/navigation";
 import styles from "@/app/ui/css/category.module.css";
-import { capitalize } from "@/app/lib/text";
+import { capitalize } from "@/lib/text";
 import ListingCard from "@/app/ui/elements/categoryName/listingCard";
 import WatchSearchButton from "@/app/ui/elements/categoryName/watchSearchButton";
 import Image from "next/image";

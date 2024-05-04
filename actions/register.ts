@@ -5,6 +5,7 @@ import { RegisterSchema } from "@/schemas";
 import { compare, hash } from "bcryptjs";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
+import { User } from "@prisma/client";
 
 export async function register ( values: z.infer<typeof RegisterSchema> ): Promise<{ success?: string, error?: string }>
 {
@@ -18,8 +19,10 @@ export async function register ( values: z.infer<typeof RegisterSchema> ): Promi
   
   if ( process.env.JOKE_FEATURES == "true" )
   {
-    const users = await db.user.findMany();
-    const reusedPassword = users.find( async ( { password } ) =>
+    const users: User[] = await db.user.findMany();
+    const reusedPassword: User | undefined = users.find( async ( { password }: {
+      password: string | null
+    } ): Promise<boolean | undefined> =>
     {
       if ( password )
         return await compare( hashedPassword, password );
@@ -28,7 +31,7 @@ export async function register ( values: z.infer<typeof RegisterSchema> ): Promi
       return { error: `This password is already used by ${reusedPassword.email}, try something different` };
   }
   
-  const existingUser = await getUserByEmail( email );
+  const existingUser: User | null = await getUserByEmail( email );
   
   if ( existingUser )
     return { error: "Email already in use" };

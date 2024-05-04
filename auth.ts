@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { JWT } from "@auth/core/jwt";
 import { AdapterSession, AdapterUser } from "@auth/core/adapters";
 import { getUserById } from "@/data/user";
+import { User } from "@prisma/client";
 
 export const {
   handlers: { GET, POST },
@@ -28,7 +29,7 @@ export const {
       if ( !token.sub )
         return token;
       
-      const existingUser = await getUserById( token.sub );
+      const existingUser: User | null = await getUserById( token.sub );
       
       if ( !existingUser )
         return token;
