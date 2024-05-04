@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "@/lib/db";
 import { JWT } from "@auth/core/jwt";
 import { AdapterSession, AdapterUser } from "@auth/core/adapters";
+import { getUserById } from "@/data/user";
 
 export const {
   handlers: { GET, POST },
@@ -14,13 +15,26 @@ export const {
   callbacks: {
     async session ( { token, session }: { token: JWT, session: { user: AdapterUser } & AdapterSession & Session } )
     {
-      if (token.sub && session.user)
+      if ( token.sub && session.user )
         session.user.id = token.sub;
+      
+      if (token.role && session.user)
+        session.user.role = token.role;
       
       return session;
     },
     async jwt ( { token }: { token: JWT } ): Promise<JWT>
     {
+      if ( !token.sub )
+        return token;
+      
+      const existingUser = await getUserById( token.sub );
+      
+      if ( !existingUser )
+        return token;
+      
+      token.role = existingUser.role;
+      
       return token;
     },
   },
