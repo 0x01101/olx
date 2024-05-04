@@ -9,8 +9,8 @@
 6. Run project: `npm run start`
 ## How to prepare database:
 1. `cd` into cloned repository
-2. run command `npx prisma generate`
-3. a) run command `npx prisma db push` (recommended)<br>b) execute script `sql/SCRIPT.sql` on user with sufficient permissions
+2. run command `npm run generate`
+3. a) run command `npm run pushtodb` (recommended)<br>b) execute script `sql/SCRIPT.sql` on user with sufficient permissions
 ### Development notes:
 How to run raw SQL in Prisma:<br>
 ```ts
