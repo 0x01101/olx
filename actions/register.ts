@@ -8,8 +8,9 @@ import { getUserByEmail } from "@/data/user";
 import { User, VerificationToken } from "@prisma/client";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
+import { ServerResponse } from "@/lib/definitions";
 
-export async function register ( values: z.infer<typeof RegisterSchema> ): Promise<{ success?: string, error?: string }>
+export async function register ( values: z.infer<typeof RegisterSchema> ): Promise<ServerResponse>
 {
   const validatedFields = RegisterSchema.safeParse( values );
   
