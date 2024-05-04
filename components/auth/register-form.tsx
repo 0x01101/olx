@@ -4,10 +4,9 @@ import * as z from "zod";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { login } from "@/actions/login";
 import { useState, useTransition } from "react";
 
-import { LoginSchema } from "@/schemas";
+import { RegisterSchema } from "@/schemas";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import {
   Form,
@@ -21,30 +20,32 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
+import { register } from "@/actions/register";
 
-export function LoginForm (): JSX.Element
+export function RegisterForm (): JSX.Element
 {
   const [ error, setError ] = useState<string | undefined>( "" );
   const [ success, setSuccess ] = useState<string | undefined>( "" );
   
   const [ isPending, startTransition ] = useTransition();
   
-  const form = useForm<z.infer<typeof LoginSchema>>( {
-    resolver:      zodResolver( LoginSchema ),
+  const form = useForm<z.infer<typeof RegisterSchema>>( {
+    resolver:      zodResolver( RegisterSchema ),
     defaultValues: {
       email:    "",
       password: "",
+      name:     "",
     },
   } );
   
-  const onSubmit = async ( values: z.infer<typeof LoginSchema> ): Promise<void> =>
+  const onSubmit = async ( values: z.infer<typeof RegisterSchema> ): Promise<void> =>
   {
     setError( "" );
     setSuccess( "" );
     
     startTransition( async (): Promise<void> =>
     {
-      const response = await login( values );
+      const response = await register( values );
       setError( response.error );
       setSuccess( response.success );
     } );
@@ -52,9 +53,9 @@ export function LoginForm (): JSX.Element
   
   return (
     <CardWrapper
-      headerLabel={"Welcome back"}
-      backButtonLabel={"Don't have an account?"}
-      backButtonHref={"/auth/register"}
+      headerLabel={"Create an account"}
+      backButtonLabel={"Already have an account?"}
+      backButtonHref={"/auth/login"}
       showSocial>
       <Form {...form}>
         <form
@@ -62,6 +63,23 @@ export function LoginForm (): JSX.Element
           className={"space-y-6"}
         >
           <div className={"space-y-4"}>
+            <FormField
+              control={form.control}
+              name={"name"}
+              render={( { field } ) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      placeholder={"John Smith"}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name={"email"}
@@ -106,7 +124,7 @@ export function LoginForm (): JSX.Element
             type={"submit"}
             className={"w-full"}
           >
-            Log in
+            Sign Up
           </Button>
         </form>
       </Form>
