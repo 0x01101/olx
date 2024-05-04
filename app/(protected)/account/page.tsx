@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth, signOut } from "@/auth";
 
 export default async function Page ()
 {
@@ -7,6 +7,15 @@ export default async function Page ()
   return (
     <div>
       {JSON.stringify( session )}
+      <form action={async () =>
+      {
+        "use server";
+        await signOut();
+      }}>
+        <button type={"submit"}>
+          Sign out
+        </button>
+      </form>
     </div>
   );
 }
