@@ -45,8 +45,8 @@ export function LoginForm (): JSX.Element
     startTransition( async (): Promise<void> =>
     {
       const response = await login( values );
-      setError( response.error );
-      setSuccess( response.success );
+      setError( response?.error );
+      setSuccess( response?.success );
     } );
   };
   

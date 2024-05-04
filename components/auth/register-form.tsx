@@ -46,8 +46,8 @@ export function RegisterForm (): JSX.Element
     startTransition( async (): Promise<void> =>
     {
       const response = await register( values );
-      setError( response.error );
-      setSuccess( response.success );
+      setError( response?.error );
+      setSuccess( response?.success );
     } );
   };
   
