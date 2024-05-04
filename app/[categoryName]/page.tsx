@@ -5,7 +5,6 @@ import { capitalize } from "@/app/lib/text";
 import ListingCard from "@/app/ui/elements/categoryName/listingCard";
 import WatchSearchButton from "@/app/ui/elements/categoryName/watchSearchButton";
 import Image from "next/image";
-import { fetchCategoryByName, fetchProductsInCategory } from "@/app/lib/sql/data/fetch";
 import MainLayout from "@/app/ui/layouts/mainLayout";
 
 export default async function Page ( { params }: { params: { categoryName: string } } ): Promise<JSX.Element>
