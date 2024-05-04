@@ -7,7 +7,7 @@ export async function sendVerificationEmail ( email: string, token: string ): Pr
   const confirmLink: string = `${process.env.SELF_URL}/auth/new-verification?token=${token}`;
   
   await resend.emails.send( {
-    from:    "verification@j3rzy.dev",
+    from:    process.env.VERIFICATION_EMAIL || "verification@j3rzy.dev",
     to:      email,
     subject: `Confirm your email on ${process.env.SELF_URL?.replace( /^https?:\/\//img, "" )}`,
     html:    `
