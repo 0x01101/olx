@@ -68,7 +68,7 @@ model VerificationToken {
 model Category {
   id        Int        @id @default(autoincrement())
   name      String     @unique
-  logo_path String?
+  image String?
   parent_id Int?
   parent    Category?  @relation("CategoryToCategory", fields: [parent_id], references: [id])
   children  Category[] @relation("CategoryToCategory")
