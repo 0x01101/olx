@@ -99,7 +99,7 @@ button
   outline     : none;
   font-weight : inherit;
 }
-
+/*
 @media only screen and (max-width : 768px)
 {
   body > div, body > div > div, body > div > div > div, body > div > div > div > div
@@ -107,6 +107,8 @@ button
     height : 100%;
   }
 }
+
+ */
 
 @layer base
 {
