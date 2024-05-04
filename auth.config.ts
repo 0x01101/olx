@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import { User } from "@prisma/client";
 import GitHub from "@auth/core/providers/github";
 import Google from "@auth/core/providers/google";
+import Apple from "@auth/core/providers/apple";
 
 export default {
   providers: [
@@ -16,6 +17,10 @@ export default {
     Google( {
       clientId:     process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    } ),
+    Apple( {
+      clientId:     process.env.APPLE_CLIENT_ID,
+      clientSecret: process.env.APPLE_CLIENT_SECRET || "",
     } ),
     Credentials( {
       async authorize ( credentials )
