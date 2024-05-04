@@ -19,6 +19,8 @@ export function NewVerificationForm (): JSX.Element
   
   const onSubmit = useCallback( async (): Promise<void> =>
   {
+    if ( success || error ) return;
+    
     if ( !token )
     {
       setError( "Missing token!" );
@@ -36,7 +38,7 @@ export function NewVerificationForm (): JSX.Element
     {
       setError( "Something went wrong!" );
     }
-  }, [ token ] );
+  }, [ token, success, error ] );
   
   useEffect( (): void =>
   {
@@ -54,7 +56,9 @@ export function NewVerificationForm (): JSX.Element
           <HashLoader />
         )}
         <FormSuccess message={success} />
-        <FormError message={error} />
+        {!success && (
+          <FormError message={error} />
+        )}
       </div>
     </CardWrapper>
   );
