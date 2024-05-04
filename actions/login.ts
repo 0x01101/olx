@@ -5,6 +5,9 @@ import { LoginSchema } from "@/schemas";
 import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
+import { getUserByEmail } from "@/data/user";
+import { User, VerificationToken } from "@prisma/client";
+import { generateVerificationToken } from "@/lib/tokens";
 
 export async function login ( values: z.infer<typeof LoginSchema> ): Promise<{
   success?: string,
@@ -19,6 +22,16 @@ export async function login ( values: z.infer<typeof LoginSchema> ): Promise<{
   }
   
   const { email, password }: { email: string, password: string } = validatedFields.data;
+  
+  const existingUser: User | null = await getUserByEmail( email );
+  
+  if (!existingUser || !existingUser.email || !existingUser.password)
+    return { error: "Email does not exist" };
+  
+  if (!existingUser.emailVerified) {
+    await generateVerificationToken( existingUser.email );
+    return { success: "Confirmation email sent" }
+  }
   
   try
   {

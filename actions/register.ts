@@ -5,7 +5,8 @@ import { RegisterSchema } from "@/schemas";
 import { compare, hash } from "bcryptjs";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
-import { User } from "@prisma/client";
+import { User, VerificationToken } from "@prisma/client";
+import { generateVerificationToken } from "@/lib/tokens";
 
 export async function register ( values: z.infer<typeof RegisterSchema> ): Promise<{ success?: string, error?: string }>
 {
@@ -38,7 +39,9 @@ export async function register ( values: z.infer<typeof RegisterSchema> ): Promi
   
   await db.user.create( { data: { email, password: hashedPassword, name } } );
   
+  const verificationToken: VerificationToken = await generateVerificationToken( email );
+  
   // TODO: Send verification email
   
-  return { success: "User created" };
+  return { success: "Confirmation email sent!" };
 }
