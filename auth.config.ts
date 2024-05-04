@@ -4,9 +4,16 @@ import { LoginSchema } from "@/schemas";
 import { getUserByEmail } from "@/data/user";
 import bcrypt from "bcryptjs";
 import { User } from "@prisma/client";
+import GitHub from "@auth/core/providers/github";
+import Google from "@auth/core/providers/google";
 
 export default {
   providers: [
+    GitHub({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    }),
+    Google,
     Credentials( {
       async authorize ( credentials )
       {
