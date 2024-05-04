@@ -12,7 +12,7 @@ export async function generateVerificationToken ( email: string ): Promise<Verif
   
   if ( existingToken )
     await db.verificationToken.delete( { where: { id: existingToken.id } } );
-  
+
   return db.verificationToken.create( {
     data: {
       email,
