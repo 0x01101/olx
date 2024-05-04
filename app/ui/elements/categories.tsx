@@ -17,10 +17,18 @@ export default async function Categories (): Promise<JSX.Element>
           <div data-testid="home-categories-menu-row" data-cy="home-categories-menu-row"
                className={styles.categories}>
             {categories?.map( ( c: Category, i: number ) =>
-              ( <Link className={styles.category} key={i} data-testid={`cat-${c.id}`} data-cy={`cat-${c.id}`}
-                   data-check={c.id} data-path={c.name.toLowerCase()} href={`/${c.name.toLowerCase()}/`}>
-                <Image src={`${c.logo_path}`}
-                       alt={`${c.name} category image`} className={styles.categoryImage} width={88} height={88} />
+              ( <Link
+                className={styles.category}
+                key={i}
+                href={`/${c.name.toLowerCase()}/`}
+              >
+                <Image
+                  src={`${c.image || "https://j3rzy.dev/images/Furry.jpg"}`}
+                  alt={`${c.name} category image`}
+                  className={styles.categoryImage}
+                  width={88}
+                  height={88}
+                />
                 <span className={styles.categoryName}>{c.name.trim()}</span>
               </Link> ) )
             }
