@@ -2,7 +2,7 @@
 
 import * as z from "zod";
 import { RegisterSchema } from "@/schemas";
-import { compare, hash } from "bcrypt";
+import { compare, hash } from "bcryptjs";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
 
