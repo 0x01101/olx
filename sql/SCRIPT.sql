@@ -51,3 +51,13 @@ create table VerificationToken
   expires datetime,
   unique (email, token)
 );
+
+create table Category
+(
+  id        int auto_increment primary key,
+  name      varchar(255) unique,
+  logo_path varchar(255),
+  parent_id int,
+  index (parent_id),
+  foreign key (parent_id) references Category (id) on delete set null
+);
