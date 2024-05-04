@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { FormError } from "@/components/form-error";
+import { FormSuccess } from "@/components/form-success";
 
 export function LoginForm (): JSX.Element
 {
@@ -80,6 +82,8 @@ export function LoginForm (): JSX.Element
               )}
             />
           </div>
+          <FormError message={"Something went wrong"} />
+          <FormSuccess message={"E-Mail sent"} />
           <Button
             type={"submit"}
             className={"w-full"}
