@@ -1,6 +1,5 @@
 import "./ui/css/global.css";
 import { inter } from "@/app/ui/fonts";
-import "@/app/lib/processHandlers";
 import { Metadata } from "next";
 import React from "react";
 
