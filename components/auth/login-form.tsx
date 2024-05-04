@@ -5,7 +5,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { login } from "@/actions/login";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 
 import { LoginSchema } from "@/schemas";
 import { CardWrapper } from "@/components/auth/card-wrapper";
@@ -24,6 +24,9 @@ import { FormSuccess } from "@/components/form-success";
 
 export function LoginForm (): JSX.Element
 {
+  const [ error, setError ] = useState<string | undefined>( "" );
+  const [ success, setSuccess ] = useState<string | undefined>( "" );
+  
   const [ isPending, startTransition ] = useTransition();
   
   const form = useForm<z.infer<typeof LoginSchema>>( {
@@ -36,9 +39,14 @@ export function LoginForm (): JSX.Element
   
   const onSubmit = async ( values: z.infer<typeof LoginSchema> ): Promise<void> =>
   {
+    setError( "" );
+    setSuccess( "" );
+    
     startTransition( async (): Promise<void> =>
     {
-      await login( values );
+      const response = await login( values );
+      setError( response.error );
+      setSuccess( response.success );
     } );
   };
   
@@ -91,8 +99,8 @@ export function LoginForm (): JSX.Element
               )}
             />
           </div>
-          <FormError message={""} />
-          <FormSuccess message={""} />
+          <FormError message={error} />
+          <FormSuccess message={success} />
           <Button
             disabled={isPending}
             type={"submit"}
