@@ -82,8 +82,8 @@ export function LoginForm (): JSX.Element
               )}
             />
           </div>
-          <FormError message={"Something went wrong"} />
-          <FormSuccess message={"E-Mail sent"} />
+          <FormError message={""} />
+          <FormSuccess message={""} />
           <Button
             type={"submit"}
             className={"w-full"}
