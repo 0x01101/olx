@@ -5,82 +5,100 @@ use olx;
 
 drop user if exists funnyuser@'%';
 create user funnyuser@'%' identified by 'P@55w0rd';
-grant select, insert, update, delete on olx.* to funnyuser@'%';
+grant all privileges on olx.* to funnyuser@'%';
 
-create table users
+create table User
 (
-  id       int primary key auto_increment,
-  email    varchar(255) not null unique,
-  password varchar(255) not null,
-  watched_category_ids varchar(255) default '',
-  constraint isvalid check (watched_category_ids regexp '^[0-9,]*$')
+  id                       varchar(255) primary key default (uuid()),
+  name                     varchar(255),
+  username                 varchar(255) unique,
+  email                    varchar(255) unique,
+  emailVerified            datetime,
+  image                    varchar(255),
+  password                 varchar(255),
+  role                     enum ('USER', 'ADMIN')   default 'USER',
+  Account_id               varchar(255) unique,
+  isTwoFactorEnabled       boolean                  default false,
+  twoFactorConfirmation_id varchar(255),
+  createdAt                datetime                 default now(),
+  updatedAt                datetime on update current_timestamp,
+  foreign key (Account_id) references Account (id),
+  foreign key (twoFactorConfirmation_id) references TwoFactorConfirmation (id)
 );
 
-create table user_info
+create table Account
 (
-  id                     int primary key auto_increment,
-  username               varchar(20) unique                  not null,
-  name                   varchar(100)                        not null,
-  role                   enum ('admin', 'user', 'moderator') not null,
-  created_at             timestamp    default current_timestamp,
-  foreign key (id) references users (id)
+  id                       varchar(255) primary key default (uuid()),
+  userId                   varchar(255) unique,
+  type                     varchar(255),
+  provider                 varchar(255),
+  providerAccountId        varchar(255),
+  refresh_token            text,
+  access_token             text,
+  expires_at               int,
+  token_type               varchar(255),
+  scope                    varchar(255),
+  id_token                 text,
+  session_state            varchar(255),
+  refresh_token_expires_in int,
+  createdAt                datetime                 default now(),
+  updatedAt                datetime on update current_timestamp,
+  foreign key (userId) references User (id)
 );
 
-create table categories
+create table VerificationToken
 (
-  id         int primary key auto_increment,
-  name       varchar(255) not null unique,
-  logo_path  varchar(255),
-  created_at timestamp default current_timestamp
+  id      varchar(255) primary key default (uuid()),
+  email   varchar(255),
+  token   varchar(255) unique,
+  expires datetime,
+  foreign key (email) references User (email)
 );
 
-create table products
+create table Category
 (
-  id          int primary key auto_increment,
-  uuid        varchar(100) unique  not null,
-  user_id     int                  not null,
-  `condition` enum ('new', 'used') not null,
-  name        varchar(255)         not null,
+  id        int auto_increment primary key,
+  name      varchar(255) unique,
+  image     varchar(255),
+  parent_id int,
+  foreign key (parent_id) references Category (id),
+  foreign key (parent_id) references Category (id) on delete cascade
+);
+
+create table PasswordResetToken
+(
+  id      varchar(255) primary key default (uuid()),
+  email   varchar(255),
+  token   varchar(255) unique,
+  expires datetime,
+  foreign key (email) references User (email)
+);
+
+create table TwoFactorToken
+(
+  id      varchar(255) primary key default (uuid()),
+  email   varchar(255),
+  token   varchar(255) unique,
+  expires datetime,
+  foreign key (email) references User (email)
+);
+
+create table TwoFactorConfirmation
+(
+  id     varchar(255) primary key default (uuid()),
+  userId varchar(255) unique,
+  foreign key (userId) references User (id) on delete cascade
+);
+
+create table Product
+(
+  id          int auto_increment primary key,
+  name        varchar(255),
   description text,
-  price       decimal(10, 2)       not null,
-  negotiable  boolean   default false,
+  price       float,
+  image       varchar(255),
   category_id int,
-  active      boolean   default true,
-  created_at  timestamp default current_timestamp,
-  foreign key (category_id) references categories (id),
-  foreign key (user_id) references user_info (id)
+  createdAt   datetime default now(),
+  updatedAt   datetime on update current_timestamp,
+  foreign key (category_id) references Category (id)
 );
-
-create table bids
-(
-  id         int primary key auto_increment,
-  user_id    int            not null,
-  product_id int            not null,
-  amount     decimal(10, 2) not null,
-  created_at timestamp default current_timestamp,
-  foreign key (user_id) references user_info (id),
-  foreign key (product_id) references products (id)
-);
-
-create table transactions
-(
-  id         int primary key auto_increment,
-  bidder_id  int            not null,
-  seller_id  int            not null,
-  product_id int            not null,
-  amount     decimal(10, 2) not null,
-  created_at timestamp default current_timestamp,
-  foreign key (bidder_id) references user_info (id),
-  foreign key (seller_id) references user_info (id),
-  foreign key (product_id) references products (id)
-);
-
-create table notifications
-(
-  id         int primary key auto_increment,
-  source     enum ('system', 'message', 'notification', 'watched') not null,
-  user_id    int                                                   not null,
-  title      varchar(255)                                          not null,
-  content    text                                                  not null,
-  created_at timestamp default current_timestamp
-)

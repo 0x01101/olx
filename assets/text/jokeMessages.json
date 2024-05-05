@@ -1,6 +1,5 @@
 {
-  "invalidEmail": "You fucked up E-mail, did you?",
-  "noEmail": "Didn't you forgor to enter E-mail?",
-  "invalidPassword": "You would use password that short?",
-  "noPassword": "Did you feel like you forgor something important?"
+  "misc" : {
+    "passwordAlreadyInUse" : "This password is already used by %, try something different"
+  }
 }

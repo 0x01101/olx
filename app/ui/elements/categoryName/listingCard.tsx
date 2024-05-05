@@ -3,8 +3,7 @@
 import styles from "@/app/ui/elements/categoryName/css/listingCard.module.css";
 import { Product } from "@/app/lib/definitions";
 import Image from "next/image";
-import config from "@/config.json";
-import { capitalize } from "@/app/lib/text";
+import { capitalize } from "@/lib/text";
 import dayjs, { Dayjs } from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import localizedFormat from "dayjs/plugin/localizedFormat";

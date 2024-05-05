@@ -1,8 +1,10 @@
 import "./ui/css/global.css";
 import { inter } from "@/app/ui/fonts";
-import "@/app/lib/processHandlers";
 import { Metadata } from "next";
 import React from "react";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
+import { Session } from "next-auth";
 
 export const metadata: Metadata = {
   title:        {
@@ -13,17 +15,21 @@ export const metadata: Metadata = {
   metadataBase: new URL( "https://j3rzy.dev/" ),
 };
 
-export default function RootLayout ( {
+export default async function RootLayout ( {
   children,
 }: Readonly<{
   children: React.ReactNode;
-}> )
+}> ): Promise<JSX.Element>
 {
+  const session: Session | null = await auth();
+  
   return (
-    <html lang="en">
-    <body className={`${inter.className} antialiased`}>
-    {children}
-    </body>
-    </html>
+    <SessionProvider session={session}>
+      <html lang="en">
+      <body className={`${inter.className} antialiased`}>
+      {children}
+      </body>
+      </html>
+    </SessionProvider>
   );
 }
