@@ -56,6 +56,9 @@ export const {
       if ( token.role && session.user )
         session.user.role = token.role;
       
+      if ( token.isTwoFactorEnabled && session.user )
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled;
+      
       return session;
     },
     async jwt ( { token }: { token: JWT } ): Promise<JWT>
@@ -68,6 +71,7 @@ export const {
       if ( !existingUser )
         return token;
       
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
       token.role = existingUser.role;
       
       return token;
