@@ -10,18 +10,9 @@ import Apple from "@auth/core/providers/apple";
 
 export default {
   providers: [
-    GitHub( {
-      clientId:     process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    } ),
-    Google( {
-      clientId:     process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    } ),
-    Apple( {
-      clientId:     process.env.APPLE_CLIENT_ID,
-      clientSecret: process.env.APPLE_CLIENT_SECRET || "",
-    } ),
+    GitHub,
+    Google,
+    Apple,
     Credentials( {
       async authorize ( credentials )
       {
