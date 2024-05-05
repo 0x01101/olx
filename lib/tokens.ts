@@ -1,8 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 import { getVerificationTokenByEmail } from "@/data/verification-token";
-import { PasswordResetToken, VerificationToken } from "@prisma/client";
+import { PasswordResetToken, TwoFactorToken, VerificationToken } from "@prisma/client";
 import { db } from "@/lib/db";
 import { getPasswordResetTokenByEMail } from "@/data/password-reset-token";
+import crypto from "crypto";
+import { getTwoFactorTokenByEMail } from "@/data/two-factor-token";
 
 export async function generateVerificationToken ( email: string ): Promise<VerificationToken>
 {
@@ -39,5 +41,17 @@ export async function generatePasswordResetToken ( email: string ): Promise<Pass
       token,
       expires,
     },
+  } );
+}
+
+export async function generateTwoFactorToken ( email: string ): Promise<TwoFactorToken>
+{
+  const token: string = crypto.randomInt( 100_000, 1_000_000 ).toString();
+  const expires: Date = new Date( new Date().getTime() + 60 * 15 * 1000 );
+  const existingToken: TwoFactorToken | null = await getTwoFactorTokenByEMail( email );
+  if ( existingToken )
+    await db.twoFactorToken.delete( { where: { id: existingToken.id } } );
+  return db.twoFactorToken.create( {
+    data: { email, token, expires },
   } );
 }
