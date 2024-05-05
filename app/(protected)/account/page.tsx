@@ -13,8 +13,7 @@ export default function Page (): JSX.Element
   };
   
   return (
-    <div>
-      {JSON.stringify( user )}
+    <div className={"bg-white p-10 rounded-xl"}>
       <button onClick={onClick}>
         Sign out
       </button>
