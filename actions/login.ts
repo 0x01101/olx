@@ -34,7 +34,7 @@ export async function login ( values: z.infer<typeof LoginSchema> ): Promise<{
   {
     const verificationToken: VerificationToken = await generateVerificationToken( existingUser.email );
     await sendVerificationEmail( verificationToken.email, verificationToken.token );
-    return { success: messageProvider.confirmationEmailSent };
+    return { success: messageProvider.success.confirmationEmailSent };
   }
   
   try
@@ -59,5 +59,5 @@ export async function login ( values: z.infer<typeof LoginSchema> ): Promise<{
     throw e;
   }
   
-  return { success: messageProvider.loggedIn };
+  return { success: messageProvider.success.loggedIn };
 }

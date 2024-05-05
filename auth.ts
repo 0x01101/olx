@@ -5,7 +5,8 @@ import { db } from "@/lib/db";
 import { JWT } from "@auth/core/jwt";
 import { AdapterSession, AdapterUser } from "@auth/core/adapters";
 import { getUserById } from "@/data/user";
-import { User } from "@prisma/client";
+import { TwoFactorConfirmation, User } from "@prisma/client";
+import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
 
 export const {
   handlers: { GET, POST },
@@ -36,7 +37,14 @@ export const {
       // Prevent sign in without verified email
       if ( !existingUser?.emailVerified ) return false;
       
-      // TODO: Add 2FA Check
+      if ( existingUser.isTwoFactorEnabled )
+      {
+        const twoFactorConfirmation: TwoFactorConfirmation | null = await getTwoFactorConfirmationByUserId( existingUser.id );
+        if ( !twoFactorConfirmation )
+          return false;
+        
+        await db.twoFactorConfirmation.delete( { where: { id: twoFactorConfirmation.id } } );
+      }
       
       return true;
     },
