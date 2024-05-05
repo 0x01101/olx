@@ -61,3 +61,12 @@ create table Category
   index (parent_id),
   foreign key (parent_id) references Category (id) on delete set null
 );
+
+create table PasswordResetToken
+(
+  id      varchar(255) not null primary key default (uuid()),
+  email   varchar(255),
+  token   varchar(255) unique,
+  expires datetime,
+  unique (email, token)
+);
