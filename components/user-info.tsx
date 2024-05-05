@@ -1,3 +1,6 @@
-interface UserInfoProps {
-  user
+import { ExtendedUser } from "@/next-auth";
+
+interface UserInfoProps
+{
+  user: ExtendedUser;
 }
