@@ -25,7 +25,7 @@ export async function sendPasswordResetEmail ( email: string, token: string ): P
     <div style="background: white; padding: 20px; border-radius: 5px; max-width: 500px; width: 100%">
       <h1 style="font-size: 24px; font-weight: 600; margin-bottom: 20px">Reset your password</h1>
       <p style="margin-bottom: 20px">Click button bellow to reset your password</p>
-      <a href="${confirmLink}" style="display: inline-block; background: #000; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none">Confirm email</a>
+      <a href="${confirmLink}" style="display: inline-block; background: #000; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none">Reset password</a>
     </div>
   </div>
 </body>
