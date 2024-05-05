@@ -51,17 +51,8 @@ export function LoginForm (): JSX.Element
     startTransition( async (): Promise<void> =>
     {
       const response: ServerResponse & { twoFactor?: boolean } = await login( values );
-      if ( response.error )
-      {
-        form.reset();
-        setError( response.error );
-      }
-      
-      if ( response.success )
-      {
-        form.reset();
-        setSuccess( response.success );
-      }
+      setError( response.error );
+      setSuccess( response.success );
       
       if ( response.twoFactor )
       {

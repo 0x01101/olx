@@ -9,7 +9,9 @@
     "noToken" : "Missing token",
     "noPasswordField" : "This user does not use credentials",
     "reusePassword" : "Cannot use the same password",
-    "emailInUse" : "Email already in use"
+    "emailInUse" : "Email already in use",
+    "invalid2FAToken" : "Invalid 2FA code",
+    "TwoFactorCodeExpired" : "2FA code has expired"
   },
 
   "success" : {
