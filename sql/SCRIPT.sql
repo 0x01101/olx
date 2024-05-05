@@ -9,16 +9,17 @@ grant all privileges on olx.* to funnyuser@'%';
 
 create table User
 (
-  id            varchar(255) not null primary key default (uuid()),
-  name          varchar(255),
-  username      varchar(255) unique,
-  email         varchar(255) unique,
-  emailVerified datetime,
-  image         varchar(255),
-  password      varchar(255),
-  role          enum ('USER', 'ADMIN')            default 'USER',
-  createdAt     datetime                          default current_timestamp,
-  updatedAt     datetime                          default current_timestamp on update current_timestamp
+  id                 varchar(255) not null primary key default (uuid()),
+  name               varchar(255),
+  username           varchar(255) unique,
+  email              varchar(255) unique,
+  emailVerified      datetime,
+  image              varchar(255),
+  password           varchar(255),
+  role               enum ('USER', 'ADMIN')            default 'USER',
+  isTwoFactorEnabled boolean                           default false,
+  createdAt          datetime                          default current_timestamp,
+  updatedAt          datetime                          default current_timestamp on update current_timestamp
 );
 
 create table Account
@@ -56,7 +57,7 @@ create table Category
 (
   id        int auto_increment primary key,
   name      varchar(255) unique,
-  image varchar(255),
+  image     varchar(255),
   parent_id int,
   index (parent_id),
   foreign key (parent_id) references Category (id) on delete set null
