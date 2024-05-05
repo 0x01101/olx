@@ -1,4 +1,3 @@
-import { Category, Product } from "@/app/lib/definitions";
 import { notFound } from "next/navigation";
 import styles from "@/app/ui/css/category.module.css";
 import { capitalize } from "@/lib/text";
@@ -6,11 +5,13 @@ import ListingCard from "@/app/ui/elements/categoryName/listingCard";
 import WatchSearchButton from "@/app/ui/elements/categoryName/watchSearchButton";
 import Image from "next/image";
 import MainLayout from "@/app/ui/layouts/mainLayout";
+import { Category } from "@prisma/client";
+import { db } from "@/lib/db";
 
 export default async function Page ( { params }: { params: { categoryName: string } } ): Promise<JSX.Element>
 {
   const categoryName: string = params.categoryName.trim();
-  let category: Category | undefined = await fetchCategoryByName( categoryName ); // TODO: Make so you can change it via category dropdown
+  let category: Category | undefined = await db.category.findUnique( { where: { name: categoryName } } ); // TODO: Make so you can change it via category dropdown
   if ( !category ) notFound();
   const products: Product[] | undefined = await fetchProductsInCategory( category );
   if ( !products ) notFound(); // TODO: Change
