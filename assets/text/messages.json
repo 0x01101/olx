@@ -1,6 +1,18 @@
 {
-  "invalidEmail": "This doesn't seem to be valid E-mail",
-  "noEmail": "Enter your E-mail",
-  "invalidPassword": "Are you sure about the password? It's too short",
-  "noPassword": "Enter your password"
+  "parseError": "Invalid fields",
+  "invalidCredentials": "Invalid credentials",
+  "invalidToken": "Invalid token",
+  "expiredToken": "Token has expired",
+  "emailDoesntExist": "Email does not exist",
+  "genericError": "Something went wrong",
+  "noToken": "Missing token",
+  "noPasswordField": "This user does not use credentials",
+  "reusePassword": "Cannot use the same password",
+  "emailInUse": "Email already in use",
+
+  "confirmationEmailSent": "Confirmation email sent",
+  "loggedIn": "Logged in",
+  "passwordUpdated": "Password updated",
+  "emailVerified": "Email verified",
+  "resetEmailSent": "Password reset email sent"
 }

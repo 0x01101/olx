@@ -7,23 +7,24 @@ import { getUserByEmail } from "@/data/user";
 import { PasswordResetToken, User } from "@prisma/client";
 import { generatePasswordResetToken } from "@/lib/tokens";
 import { sendPasswordResetEmail } from "@/lib/mail";
+import { messageProvider } from "@/lib/messages";
 
 export async function reset ( values: z.infer<typeof ResetSchema> ): Promise<ServerResponse>
 {
   const validated = ResetSchema.safeParse( values );
   
   if ( !validated.success )
-    return { error: validated.error.message };
+    return { error: messageProvider.parseError };
   
   const { email }: { email: string } = validated.data;
   
   const existingUser: User | null = await getUserByEmail( email );
   
   if ( !existingUser )
-    return { error: "Email not found" };
+    return { error: messageProvider.emailDoesntExist };
   
   const passwordResetToken: PasswordResetToken = await generatePasswordResetToken( email );
   await sendPasswordResetEmail( passwordResetToken.email, passwordResetToken.token );
   
-  return { success: "Password reset email sent" };
+  return { success: messageProvider.resetEmailSent };
 }

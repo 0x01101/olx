@@ -9,6 +9,7 @@ import { getUserByEmail } from "@/data/user";
 import { User, VerificationToken } from "@prisma/client";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
+import { messageProvider } from "@/lib/messages";
 
 export async function login ( values: z.infer<typeof LoginSchema> ): Promise<{
   success?: string,
@@ -19,7 +20,7 @@ export async function login ( values: z.infer<typeof LoginSchema> ): Promise<{
   
   if ( !validatedFields.success )
   {
-    return { error: "Invalid fields" };
+    return { error: messageProvider.parseError };
   }
   
   const { email, password }: { email: string, password: string } = validatedFields.data;
@@ -27,13 +28,13 @@ export async function login ( values: z.infer<typeof LoginSchema> ): Promise<{
   const existingUser: User | null = await getUserByEmail( email );
   
   if ( !existingUser || !existingUser.email || !existingUser.password )
-    return { error: "Email does not exist" };
+    return { error: messageProvider.emailDoesntExist };
   
   if ( !existingUser.emailVerified )
   {
     const verificationToken: VerificationToken = await generateVerificationToken( existingUser.email );
     await sendVerificationEmail( verificationToken.email, verificationToken.token );
-    return { success: "Confirmation email sent" };
+    return { success: messageProvider.confirmationEmailSent };
   }
   
   try
@@ -50,13 +51,13 @@ export async function login ( values: z.infer<typeof LoginSchema> ): Promise<{
       switch ( e.type )
       {
         case "CredentialsSignin":
-          return { error: "Invalid credentials" };
+          return { error: messageProvider.invalidCredentials };
         default:
-          return { error: "Something went wrong" };
+          return { error: messageProvider.genericError };
       }
     
     throw e;
   }
   
-  return { success: "Logged in" };
+  return { success: messageProvider.loggedIn };
 }

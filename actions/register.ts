@@ -9,18 +9,19 @@ import { User, VerificationToken } from "@prisma/client";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
 import { ServerResponse } from "@/lib/definitions";
+import { jokeFeatures, messageProvider } from "@/lib/messages";
 
 export async function register ( values: z.infer<typeof RegisterSchema> ): Promise<ServerResponse>
 {
   const validatedFields = RegisterSchema.safeParse( values );
   
   if ( !validatedFields.success )
-    return { error: "Invalid fields" };
+    return { error: messageProvider.parseError };
   
   const { email, password, name }: { email: string, password: string, name: string } = validatedFields.data;
   const hashedPassword: string = await hash( password, 10 );
   
-  if ( process.env.JOKE_FEATURES == "true" )
+  if ( jokeFeatures )
   {
     const users: User[] = await db.user.findMany();
     const reusedPassword: User | undefined = users.find( async ( { password }: {
@@ -31,13 +32,13 @@ export async function register ( values: z.infer<typeof RegisterSchema> ): Promi
         return await compare( hashedPassword, password );
     } );
     if ( reusedPassword && reusedPassword.email )
-      return { error: `This password is already used by ${reusedPassword.email}, try something different` };
+      return { error: messageProvider.passwordAlreadyInUse.replace( "%", reusedPassword.email ) };
   }
   
   const existingUser: User | null = await getUserByEmail( email );
   
   if ( existingUser )
-    return { error: "Email already in use" };
+    return { error: messageProvider.emailInUse };
   
   await db.user.create( { data: { email, password: hashedPassword, name } } );
   
@@ -45,5 +46,5 @@ export async function register ( values: z.infer<typeof RegisterSchema> ): Promi
   
   await sendVerificationEmail( verificationToken.email, verificationToken.token );
   
-  return { success: "Confirmation email sent!" };
+  return { success: messageProvider.confirmationEmailSent };
 }

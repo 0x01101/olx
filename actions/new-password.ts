@@ -8,41 +8,42 @@ import { PasswordResetToken, User } from "@prisma/client";
 import { getUserByEmail } from "@/data/user";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
+import { messageProvider } from "@/lib/messages";
 
 export async function newPassword ( values: z.infer<typeof NewPasswordSchema>, token?: string | null ): Promise<ServerResponse>
 {
   if ( !token )
-    return { error: "Missing token" };
+    return { error: messageProvider.noToken };
   
   const validatedFields = NewPasswordSchema.safeParse( values );
   
   if ( !validatedFields.success )
-    return { error: "Invalid fields" };
+    return { error: messageProvider.parseError };
   
   const { password }: z.infer<typeof NewPasswordSchema> = validatedFields.data;
   
   const existingToken: PasswordResetToken | null = await getPasswordResetTokenByToken( token );
   
   if ( !existingToken )
-    return { error: "Invalid token" };
+    return { error: messageProvider.invalidToken };
   
   const hasExpired: boolean = new Date( existingToken.expires ) < new Date();
   
   if ( hasExpired )
-    return { error: "Token has expired" };
+    return { error: messageProvider.expiredToken };
   
   const existingUser: User | null = await getUserByEmail( existingToken.email );
   
   if ( !existingUser )
-    return { error: "Email does not exist" };
+    return { error: messageProvider.emailDoesntExist };
   
   if ( !existingUser.password )
-    return { error: "This user does not use credentials" };
+    return { error: messageProvider.noPasswordField };
   
   const usingTheSamePassword: boolean = await bcrypt.compare( password, existingUser.password );
   
   if ( usingTheSamePassword )
-    return { error: "Cannot use the same password" };
+    return { error: messageProvider.reusePassword };
   
   const hashedPassword: string = await bcrypt.hash( password, 10 );
   
@@ -55,5 +56,5 @@ export async function newPassword ( values: z.infer<typeof NewPasswordSchema>, t
   
   await db.passwordResetToken.delete( { where: { id: existingToken.id } } );
   
-  return { success: "Password updated!" };
+  return { success: messageProvider.passwordUpdated };
 }
