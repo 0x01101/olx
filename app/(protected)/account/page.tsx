@@ -1,10 +1,11 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
-export default function Page ()
+export default function Page (): JSX.Element
 {
-  const session = useSession();
+  const user = useCurrentUser();
   
   const onClick = async () =>
   {
@@ -13,7 +14,7 @@ export default function Page ()
   
   return (
     <div>
-      {JSON.stringify( session )}
+      {JSON.stringify( user )}
       <button onClick={onClick}>
         Sign out
       </button>
