@@ -12,17 +12,17 @@ export async function newVerification ( token: string ): Promise<ServerResponse>
   const existingToken: VerificationToken | null = await getVerificationTokenByToken( token );
   
   if ( !existingToken )
-    return { error: messageProvider.invalidToken };
+    return { error: messageProvider.error.invalidToken };
   
   const hasExpired: boolean = new Date( existingToken.expires ) < new Date();
   
   if ( hasExpired )
-    return { error: messageProvider.expiredToken };
+    return { error: messageProvider.error.expiredToken };
   
   const existingUser: User | null = await getUserByEmail( existingToken.email );
   
   if ( !existingUser )
-    return { error: messageProvider.emailDoesntExist };
+    return { error: messageProvider.error.emailDoesntExist };
   
   await db.user.update( {
     where: { id: existingUser.id },
@@ -36,5 +36,5 @@ export async function newVerification ( token: string ): Promise<ServerResponse>
     where: { id: existingToken.id },
   } );
   
-  return { success: messageProvider.emailVerified };
+  return { success: messageProvider.success.emailVerified };
 }

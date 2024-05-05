@@ -20,7 +20,7 @@ export async function login ( values: z.infer<typeof LoginSchema> ): Promise<{
   
   if ( !validatedFields.success )
   {
-    return { error: messageProvider.parseError };
+    return { error: messageProvider.error.parseError };
   }
   
   const { email, password }: { email: string, password: string } = validatedFields.data;
@@ -28,7 +28,7 @@ export async function login ( values: z.infer<typeof LoginSchema> ): Promise<{
   const existingUser: User | null = await getUserByEmail( email );
   
   if ( !existingUser || !existingUser.email || !existingUser.password )
-    return { error: messageProvider.emailDoesntExist };
+    return { error: messageProvider.error.emailDoesntExist };
   
   if ( !existingUser.emailVerified )
   {
@@ -51,9 +51,9 @@ export async function login ( values: z.infer<typeof LoginSchema> ): Promise<{
       switch ( e.type )
       {
         case "CredentialsSignin":
-          return { error: messageProvider.invalidCredentials };
+          return { error: messageProvider.error.invalidCredentials };
         default:
-          return { error: messageProvider.genericError };
+          return { error: messageProvider.error.genericError };
       }
     
     throw e;

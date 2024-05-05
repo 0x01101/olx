@@ -16,7 +16,7 @@ export async function register ( values: z.infer<typeof RegisterSchema> ): Promi
   const validatedFields = RegisterSchema.safeParse( values );
   
   if ( !validatedFields.success )
-    return { error: messageProvider.parseError };
+    return { error: messageProvider.error.parseError };
   
   const { email, password, name }: { email: string, password: string, name: string } = validatedFields.data;
   const hashedPassword: string = await hash( password, 10 );
@@ -32,13 +32,13 @@ export async function register ( values: z.infer<typeof RegisterSchema> ): Promi
         return await compare( hashedPassword, password );
     } );
     if ( reusedPassword && reusedPassword.email )
-      return { error: messageProvider.passwordAlreadyInUse.replace( "%", reusedPassword.email ) };
+      return { error: messageProvider.misc.passwordAlreadyInUse.replace( "%", reusedPassword.email ) };
   }
   
   const existingUser: User | null = await getUserByEmail( email );
   
   if ( existingUser )
-    return { error: messageProvider.emailInUse };
+    return { error: messageProvider.error.emailInUse };
   
   await db.user.create( { data: { email, password: hashedPassword, name } } );
   
@@ -46,5 +46,5 @@ export async function register ( values: z.infer<typeof RegisterSchema> ): Promi
   
   await sendVerificationEmail( verificationToken.email, verificationToken.token );
   
-  return { success: messageProvider.confirmationEmailSent };
+  return { success: messageProvider.success.confirmationEmailSent };
 }

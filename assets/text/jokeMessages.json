@@ -1,3 +1,5 @@
 {
-  "passwordAlreadyInUse": "This password is already used by %, try something different"
+  "misc" : {
+    "passwordAlreadyInUse" : "This password is already used by %, try something different"
+  }
 }
