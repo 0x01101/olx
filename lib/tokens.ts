@@ -47,7 +47,7 @@ export async function generatePasswordResetToken ( email: string ): Promise<Pass
 export async function generateTwoFactorToken ( email: string ): Promise<TwoFactorToken>
 {
   const token: string = crypto.randomInt( 100_000, 1_000_000 ).toString();
-  const expires: Date = new Date( new Date().getTime() + 60 * 15 * 1000 );
+  const expires: Date = new Date( new Date().getTime() + 5 * 60 * 1000 );
   const existingToken: TwoFactorToken | null = await getTwoFactorTokenByEMail( email );
   if ( existingToken )
     await db.twoFactorToken.delete( { where: { id: existingToken.id } } );
