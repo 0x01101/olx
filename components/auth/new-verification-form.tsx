@@ -31,8 +31,8 @@ export function NewVerificationForm (): JSX.Element
     {
       const response: ServerResponse = await newVerification( token );
       
-      setSuccess( response.success );
-      setError( response.error );
+      setSuccess( response?.success );
+      setError( response?.error );
     }
     catch ( e: any )
     {
