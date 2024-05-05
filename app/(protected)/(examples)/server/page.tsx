@@ -1,8 +1,9 @@
 import { currentUser } from "@/lib/auth";
+import { ExtendedUser } from "@/next-auth";
 
 export default async function Page (): Promise<JSX.Element>
 {
-  const user = await currentUser();
+  const user: ExtendedUser | undefined = await currentUser();
   
   return (
     <div>
