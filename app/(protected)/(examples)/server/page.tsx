@@ -1,13 +1,12 @@
-import { auth } from "@/auth";
-import { Session } from "next-auth";
+import { currentUser } from "@/lib/auth";
 
 export default async function Page (): Promise<JSX.Element>
 {
-  const session: Session | null = await auth();
+  const user = await currentUser();
   
   return (
     <div>
-      {JSON.stringify(session?.user)}
+      {JSON.stringify( user )}
     </div>
   );
 }
