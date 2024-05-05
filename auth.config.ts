@@ -7,11 +7,13 @@ import { User } from "@prisma/client";
 import GitHub from "@auth/core/providers/github";
 import Google from "@auth/core/providers/google";
 import Apple from "@auth/core/providers/apple";
+import Discord from "@auth/core/providers/discord";
 
 export default {
   providers: [
     GitHub,
     Google,
+    Discord,
     Apple,
     Credentials( {
       async authorize ( credentials )
