@@ -10,11 +10,9 @@ import { TwoFactorToken, User, VerificationToken } from "@prisma/client";
 import { generateTwoFactorToken, generateVerificationToken } from "@/lib/tokens";
 import { sendTwoFactorTokenEmail, sendVerificationEmail } from "@/lib/mail";
 import { messageProvider } from "@/lib/messages";
+import { ServerResponse } from "@/lib/definitions";
 
-export async function login ( values: z.infer<typeof LoginSchema> ): Promise<{
-  success?: string,
-  error?: string
-}>
+export async function login ( values: z.infer<typeof LoginSchema> ): Promise<ServerResponse & { twoFactor?: boolean }>
 {
   const validatedFields = LoginSchema.safeParse( values );
   
@@ -37,9 +35,12 @@ export async function login ( values: z.infer<typeof LoginSchema> ): Promise<{
     return { success: messageProvider.success.confirmationEmailSent };
   }
   
-  if (existingUser.isTwoFactorEnabled && existingUser.email) {
-    const twoFactorToken: TwoFactorToken = await generateTwoFactorToken(existingUser.email);
-    await sendTwoFactorTokenEmail()
+  if ( existingUser.isTwoFactorEnabled && existingUser.email )
+  {
+    const twoFactorToken: TwoFactorToken = await generateTwoFactorToken( existingUser.email );
+    await sendTwoFactorTokenEmail( twoFactorToken.email, twoFactorToken.token );
+    
+    return { twoFactor: true };
   }
   
   try
