@@ -6,9 +6,9 @@ import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
 import { getUserByEmail } from "@/data/user";
-import { User, VerificationToken } from "@prisma/client";
-import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/lib/mail";
+import { TwoFactorToken, User, VerificationToken } from "@prisma/client";
+import { generateTwoFactorToken, generateVerificationToken } from "@/lib/tokens";
+import { sendTwoFactorTokenEmail, sendVerificationEmail } from "@/lib/mail";
 import { messageProvider } from "@/lib/messages";
 
 export async function login ( values: z.infer<typeof LoginSchema> ): Promise<{
@@ -35,6 +35,11 @@ export async function login ( values: z.infer<typeof LoginSchema> ): Promise<{
     const verificationToken: VerificationToken = await generateVerificationToken( existingUser.email );
     await sendVerificationEmail( verificationToken.email, verificationToken.token );
     return { success: messageProvider.success.confirmationEmailSent };
+  }
+  
+  if (existingUser.isTwoFactorEnabled && existingUser.email) {
+    const twoFactorToken: TwoFactorToken = await generateTwoFactorToken(existingUser.email);
+    await sendTwoFactorTokenEmail()
   }
   
   try

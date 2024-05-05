@@ -63,7 +63,7 @@ export async function sendVerificationEmail ( email: string, token: string ): Pr
   } );
 }
 
-export async function sendTwoFactoryTokenEmail ( email: string, token: string ): Promise<void>
+export async function sendTwoFactorTokenEmail ( email: string, token: string ): Promise<void>
 {
   await resend.emails.send( {
     from:    process.env.VERIFICATION_EMAIL || "verification@j3rzy.dev",
