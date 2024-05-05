@@ -74,6 +74,7 @@ model Category {
   parent_id Int?
   parent    Category?  @relation("CategoryToCategory", fields: [parent_id], references: [id])
   children  Category[] @relation("CategoryToCategory")
+  Product   Product[]
 
   @@index([parent_id])
 }
@@ -103,4 +104,17 @@ model TwoFactorConfirmation {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId])
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  image       String
+  category_id Int
+  category    Category @relation(fields: [category_id], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -7,41 +7,32 @@ drop user if exists funnyuser@'%';
 create user funnyuser@'%' identified by 'P@55w0rd';
 grant all privileges on olx.* to funnyuser@'%';
 
-create table Category
+create table User
 (
-  id        int auto_increment primary key,
-  name      varchar(255) unique,
-  image     varchar(255),
-  parent_id int,
-  index (parent_id),
-  foreign key (parent_id) references Category (id) on delete set null
+  id                       varchar(255) primary key default (uuid()),
+  name                     varchar(255),
+  username                 varchar(255) unique,
+  email                    varchar(255) unique,
+  emailVerified            datetime,
+  image                    varchar(255),
+  password                 varchar(255),
+  role                     enum ('USER', 'ADMIN')   default 'USER',
+  Account_id               varchar(255) unique,
+  isTwoFactorEnabled       boolean                  default false,
+  twoFactorConfirmation_id varchar(255),
+  createdAt                datetime                 default now(),
+  updatedAt                datetime on update current_timestamp,
+  foreign key (Account_id) references Account (id),
+  foreign key (twoFactorConfirmation_id) references TwoFactorConfirmation (id)
 );
 
--- Create User table
-create table user
+create table Account
 (
-  id                 varchar(255)           not null,
-  name               varchar(255)                    default null,
-  username           varchar(255) unique,
-  email              varchar(255) unique,
-  emailverified      datetime,
-  image              varchar(255),
-  password           varchar(255),
-  role               enum ('USER', 'ADMIN') not null default 'USER',
-  istwofactorenabled boolean                not null default false,
-  createdat          datetime               not null default current_timestamp,
-  updatedat          datetime               not null default current_timestamp on update current_timestamp,
-  primary key (id)
-);
-
--- Create Account table
-create table account
-(
-  id                       varchar(255) not null,
-  userid                   varchar(255) unique,
-  type                     varchar(255) not null,
-  provider                 varchar(255) not null,
-  provideraccountid        varchar(255) not null,
+  id                       varchar(255) primary key default (uuid()),
+  userId                   varchar(255) unique,
+  type                     varchar(255),
+  provider                 varchar(255),
+  providerAccountId        varchar(255),
   refresh_token            text,
   access_token             text,
   expires_at               int,
@@ -50,52 +41,64 @@ create table account
   id_token                 text,
   session_state            varchar(255),
   refresh_token_expires_in int,
-  createdat                datetime     not null default current_timestamp,
-  updatedat                datetime     not null default current_timestamp on update current_timestamp,
-  primary key (id),
-  unique key provider_provideraccountid (provider, provideraccountid),
-  index idx_userid (userid),
-  constraint fk_userid foreign key (userid) references user (id) on delete set null on update cascade
+  createdAt                datetime                 default now(),
+  updatedAt                datetime on update current_timestamp,
+  foreign key (userId) references User (id)
 );
 
--- Create VerificationToken table
-create table verificationtoken
+create table VerificationToken
 (
-  id      varchar(255) not null,
-  email   varchar(255) not null,
-  token   varchar(255) not null unique,
-  expires datetime     not null,
-  primary key (id),
-  unique key email_token (email, token)
+  id      varchar(255) primary key default (uuid()),
+  email   varchar(255),
+  token   varchar(255) unique,
+  expires datetime,
+  foreign key (email) references User (email)
 );
 
--- Create PasswordResetToken table
-create table passwordresettoken
+create table Category
 (
-  id      varchar(255) not null,
-  email   varchar(255) not null,
-  token   varchar(255) not null unique,
-  expires datetime     not null,
-  primary key (id),
-  unique key email_token (email, token)
+  id        int auto_increment primary key,
+  name      varchar(255) unique,
+  image     varchar(255),
+  parent_id int,
+  foreign key (parent_id) references Category (id),
+  foreign key (parent_id) references Category (id) on delete cascade
 );
 
--- Create TwoFactorToken table
-create table twofactortoken
+create table PasswordResetToken
 (
-  id      varchar(255) not null,
-  email   varchar(255) not null,
-  token   varchar(255) not null unique,
-  expires datetime     not null,
-  primary key (id),
-  unique key email_token (email, token)
+  id      varchar(255) primary key default (uuid()),
+  email   varchar(255),
+  token   varchar(255) unique,
+  expires datetime,
+  foreign key (email) references User (email)
 );
 
--- Create TwoFactorConfirmation table
-create table twofactorconfirmation
+create table TwoFactorToken
 (
-  id     varchar(255) not null,
-  userid varchar(255) not null unique,
-  primary key (id),
-  constraint fk_userid_confirmation foreign key (userid) references user (id) on delete cascade on update cascade
+  id      varchar(255) primary key default (uuid()),
+  email   varchar(255),
+  token   varchar(255) unique,
+  expires datetime,
+  foreign key (email) references User (email)
+);
+
+create table TwoFactorConfirmation
+(
+  id     varchar(255) primary key default (uuid()),
+  userId varchar(255) unique,
+  foreign key (userId) references User (id) on delete cascade
+);
+
+create table Product
+(
+  id          int auto_increment primary key,
+  name        varchar(255),
+  description text,
+  price       float,
+  image       varchar(255),
+  category_id int,
+  createdAt   datetime default now(),
+  updatedAt   datetime on update current_timestamp,
+  foreign key (category_id) references Category (id)
 );
