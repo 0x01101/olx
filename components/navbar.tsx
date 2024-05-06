@@ -43,12 +43,12 @@ export default function NavBar ( { children }: NavBarProps ): JSX.Element
     <nav
       style={visible ? {} : { top: "-72px" }}
       className={`bg-secondary flex justify-between items-center p-4 rounded-xl shadow-sm h-[72px] fixed top-0 right-0 w-full transition-all
-      ease-in-out z-[1030] duration-500`}
+      ease-in-out z-[1030] duration-500 select-none`}
     >
       <div className={"flex gap-x-2 mr-1"}>
         <Link
           href={"/"}
-          className={`no-underline text-5xl font-extrabold ${dosis.className}`}
+          className={`no-underline text-5xl font-extrabold ${dosis.className} text-blue-500`}
         >
           <p>Jast</p>
         </Link>
