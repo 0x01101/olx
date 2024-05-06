@@ -37,4 +37,3 @@ export default function Categories ( { categories }: CategoriesProps ): JSX.Elem
     </div>
   );
 }
-
