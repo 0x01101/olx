@@ -23,8 +23,8 @@ export default function Categories (): JSX.Element
   }, [] );
   
   return (
-    <div className="w-full m-0 mx-auto bg-white py-14 rounded">
-      <h2 className="text-[32px] leading-[34px] font-bold text-center text-[#002f34] mb-[56px]">
+    <div className="w-[calc(100% - 24px)] my-[12px] mx-[12px] bg-muted py-14 rounded-xl">
+      <h2 className="text-[32px] leading-[34px] font-bold text-center text-primary mb-[56px]">
         Categories
       </h2>
       <div className="grid w-full bg-inherit grid-cols-9 gap-x-0 items-stretch">
@@ -36,7 +36,7 @@ export default function Categories (): JSX.Element
           >
             <Avatar className="w-[88px] h-[88px] flex-shrink-0 mx-auto block">
               <AvatarImage src={c.image || undefined} />
-              <AvatarFallback>
+              <AvatarFallback className={"bg-popover"}>
                 <FaCat className="w-10 h-10" />
               </AvatarFallback>
             </Avatar>

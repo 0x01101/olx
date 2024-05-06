@@ -6,8 +6,8 @@ import Link from "next/link";
 export default function Footer (): JSX.Element
 {
   return (
-    <div id={"footerContent"} className={styles.footerContent}>
-      <div className={styles.actualFooter}>
+    <div id={"footerContent"} className={`${styles.footerContent} bg-background border-t-2 border-t-primary`}>
+      <div className={`${styles.actualFooter} bg-background`}>
         <div className={styles.main}>
           <ul className={styles.section}>
             <li><Link href="https://www.olx.pl/mobileapps" title="Aplikacje mobilne OLX.pl" target="_blank">OLX.pl&apos;s
