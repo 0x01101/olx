@@ -1,4 +1,4 @@
-import "./ui/css/global.css";
+import "./globals.css";
 import { inter } from "@/lib/fonts";
 import { Metadata } from "next";
 import React from "react";
@@ -26,7 +26,7 @@ export default async function RootLayout ( {
   return (
     <SessionProvider session={session}>
       <html lang="en">
-      <body className={`${inter.className} antialiased scroll-b`}>
+      <body className={`${inter.className} antialiased`}>
       {children}
       </body>
       </html>

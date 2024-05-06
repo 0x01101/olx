@@ -89,16 +89,7 @@ body,
   height : 100%;
 }
 
-@layer utilities
+html::-webkit-scrollbar, body::-webkit-scrollbar, :root::-webkit-scrollbar
 {
-  .no-scrollbar::-webkit-scrollbar
-  {
-    display : none;
-  }
-
-  .no-scrollbar
-  {
-    -ms-overflow-style : none;
-    scrollbar-width    : none;
-  }
+  display : none;
 }
