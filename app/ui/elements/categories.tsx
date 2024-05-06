@@ -13,7 +13,7 @@ interface CategoriesProps
 export default function Categories ( { categories }: CategoriesProps ): JSX.Element
 {
   return (
-    <div className={styles.container}>
+    <div className={""}>
       <div className={styles.innerContainer}>
         <div data-testid="home-categories-menu" data-cy="home-categories-menu">
           <h2 data-testid="home-categories-title" data-cy="home-categories-title"
