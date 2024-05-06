@@ -1,4 +1,4 @@
-w// This is your Prisma schema file,
+// This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
@@ -31,8 +31,9 @@ model User {
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product[]
 }
 
 model Account {
@@ -114,8 +115,8 @@ model Product {
   image       String
   category_id Int
   category    Category @relation(fields: [category_id], references: [id])
-seller_id   String
-seller      User     @relation(fields: [seller_id], references: [id])
+  seller_id   String
+  seller      User     @relation(fields: [seller_id], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
