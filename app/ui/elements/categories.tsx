@@ -4,14 +4,24 @@ import Link from "next/link";
 import { Category } from "@prisma/client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaCat } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { getCategories } from "@/actions/fetch";
 
-interface CategoriesProps
+export default function Categories (): JSX.Element
 {
-  categories: Category[];
-}
-
-export default function Categories ( { categories }: CategoriesProps ): JSX.Element
-{
+  const [ categories, setCategories ] = useState<Category[]>( [] );
+  
+  useEffect( () =>
+  {
+    const fetchCategories = async () =>
+    {
+      const result: Category[] = await getCategories();
+      setCategories( result );
+    };
+    
+    fetchCategories().then();
+  }, [] );
+  
   return (
     <div className="w-full m-0 mx-auto bg-white py-14 rounded">
       <h2 className="text-[32px] leading-[34px] font-bold text-center text-[#002f34] mb-[56px]">

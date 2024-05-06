@@ -8,13 +8,11 @@ import { CategoriesSkeleton } from "@/components/skeletons";
 
 export default async function Page (): Promise<JSX.Element>
 {
-  const categories: Category[] = await db.category.findMany();
-  
   return (
-    <div data-testid="home-page" id="searchmain-container" className={styles.homePage}>
+    <div className={styles.homePage}>
       <SearchBar />
       <Suspense fallback={<CategoriesSkeleton />}>
-        <Categories categories={categories} />
+        <Categories />
       </Suspense>
     </div>
   );
