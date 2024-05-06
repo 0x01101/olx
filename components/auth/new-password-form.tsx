@@ -58,7 +58,7 @@ export function NewPasswordForm (): JSX.Element
     <CardWrapper
       headerLabel={"Enter a new password"}
       backButtonLabel={"Back to login"}
-      backButtonHref={"/auth/login"}
+      backButtonHref={"/session/login"}
     >
       <Form {...form}>
         <form

@@ -17,7 +17,7 @@ export default function LoginButton ( { children, mode = "redirect", asChild }: 
   
   const onClick = (): void =>
   {
-    router.push( "/auth/login" );
+    router.push( "/session/login" );
   };
   
   if ( mode == "modal" )

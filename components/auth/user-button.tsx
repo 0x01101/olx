@@ -14,20 +14,11 @@ import { EnterIcon, ExitIcon } from "@radix-ui/react-icons";
 import { FaUserXmark } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ExtendedUser } from "@/next-auth";
-import { Session } from "next-auth";
 
-interface UserButtonProps
+export function UserButton (): JSX.Element
 {
-  user?: ExtendedUser | null;
-  session?: Session | null
-}
-
-export function UserButton ( { user, session }: UserButtonProps ): JSX.Element
-{
-  const useUser = useCurrentUser();
-  user = session?.user || user || useUser;
   const pathname: string = usePathname();
+  const user = useCurrentUser();
   
   return (
     <DropdownMenu>

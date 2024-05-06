@@ -2,11 +2,11 @@ import NavBar from "@/components/navbar";
 import Footer from "@/app/ui/elements/footer";
 import React from "react";
 
-export default function Layout ( {
+export default async function Layout ( {
   children,
 }: Readonly<{
   children: React.ReactNode;
-}> )
+}> ): Promise<JSX.Element>
 {
   return (
     <>

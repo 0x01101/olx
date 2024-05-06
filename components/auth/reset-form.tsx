@@ -54,7 +54,7 @@ export function ResetForm (): JSX.Element
     <CardWrapper
       headerLabel={"Forgot your password?"}
       backButtonLabel={"Back to login"}
-      backButtonHref={"/auth/login"}
+      backButtonHref={"/session/login"}
     >
       <Form {...form}>
         <form

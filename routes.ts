@@ -4,7 +4,7 @@
  */
 export const publicRoutes: string[] = [
   "/",
-  "/auth/new-verification",
+  "/session/new-verification",
   // TODO: Add category names here too (fetch them from db)
 ];
 
@@ -13,18 +13,18 @@ export const publicRoutes: string[] = [
  * @type {string[]}
  */
 export const authRoutes: string[] = [
-  "/auth/login",
-  "/auth/register",
-  "/auth/error",
-  "/auth/reset",
-  "/auth/new-password"
+  "/session/login",
+  "/session/register",
+  "/session/error",
+  "/session/reset",
+  "/session/new-password"
 ];
 
 /**
- * The prefix to api auth routes
+ * The prefix to api session routes
  * @type {string}
  */
-export const apiAuthPrefix: string = "/api/auth";
+export const apiAuthPrefix: string = "/api/session";
 
 /**
  * The default redirect path after logging in

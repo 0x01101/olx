@@ -59,7 +59,7 @@ export function LoginForm (): JSX.Element
     <CardWrapper
       headerLabel={"Welcome back"}
       backButtonLabel={"Don't have an account?"}
-      backButtonHref={"/auth/register"}
+      backButtonHref={"/session/register"}
       showSocial>
       <Form {...form}>
         <form
@@ -126,7 +126,7 @@ export function LoginForm (): JSX.Element
                         asChild
                         className={"px-0 font-normal"}
                       >
-                        <Link href={"/auth/reset"}>
+                        <Link href={"/session/reset"}>
                           Forgot password?
                         </Link>
                       </Button>
