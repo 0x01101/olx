@@ -10,7 +10,10 @@ interface LogoutButtonProps
 
 export function LogoutButton ( { children }: LogoutButtonProps ): JSX.Element
 {
-  const onClick = async (): Promise<void> => await logout();
+  const onClick = async (): Promise<void> =>
+  {
+    await logout();
+  };
   
   return (
     <span onClick={onClick} className={"cursor-pointer"}>
