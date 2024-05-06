@@ -16,7 +16,7 @@ export function LogoutButton ( { children, session }: LogoutButtonProps ): JSX.E
   const onClick = async (): Promise<void> =>
   {
     await logout();
-    await (session || null)?.update();
+    if (session && "update" in session) await session?.update();
   };
   
   return (
