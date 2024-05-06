@@ -7,7 +7,7 @@ import { FaCat } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { getCategories } from "@/actions/fetch";
 
-export default function Categories ()
+export default function Categories (): JSX.Element
 {
   const [ categories, setCategories ] = useState<Category[]>( [] );
   
@@ -23,7 +23,7 @@ export default function Categories ()
   }, [] );
   
   return (
-    <div className="w-full m-0 mx-auto bg-primary py-14 rounded">
+    <div className="w-full m-0 mx-auto bg-white py-14 rounded">
       <h2 className="text-[32px] leading-[34px] font-bold text-center text-[#002f34] mb-[56px]">
         Categories
       </h2>
