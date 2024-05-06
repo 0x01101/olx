@@ -11,7 +11,7 @@
 1. `cd` into cloned repository
 2. run command `npm run generate`
 3. a) run command `npm run pushtodb` (recommended)<br>b) execute script `sql/SCRIPT.sql` on user with sufficient permissions
-### Development notes:
+## Development notes:
 **How to run raw SQL in Prisma:**
 ```ts
 db.$queryRaw<Type>`QUERY`;

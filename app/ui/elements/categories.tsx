@@ -1,13 +1,17 @@
+"use client";
+
 import styles from "@/app/ui/elements/css/categories.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import { db } from "@/lib/db";
 import { Category } from "@prisma/client";
 
-export default async function Categories (): Promise<JSX.Element>
+interface CategoriesProps
 {
-  const categories: Category[] = await db.category.findMany();
-  
+  categories: Category[];
+}
+
+export default function Categories ( { categories }: CategoriesProps ): JSX.Element
+{
   return (
     <div className={styles.container}>
       <div className={styles.innerContainer}>
