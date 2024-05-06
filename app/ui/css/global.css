@@ -2,114 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-*
-{
-  box-sizing : border-box;
-}
-
-*, *::before, *::after
-{
-  -webkit-box-sizing : inherit;
-  -moz-box-sizing    : inherit;
-  box-sizing         : inherit;
-}
-
-*::selection
-{
-  background  : #c7e5f1;
-  text-shadow : none;
-}
-
-a
-{
-  color                       : #0198d0;
-  cursor                      : pointer;
-  -webkit-text-decoration     : underline;
-  text-decoration             : underline;
-  -webkit-tap-highlight-color : transparent;
-}
-
-header
-{
-  display      : block;
-  unicode-bidi : isolate;
-}
-
-audio, canvas, iframe, img, svg, video
-{
-  vertical-align : middle;
-}
-
-div
-{
-  display      : block;
-  unicode-bidi : isolate;
-}
-
-html
-{
-  -ms-text-size-adjust     : 100%;
-  -webkit-text-size-adjust : 100%;
-  -webkit-box-sizing       : border-box;
-  -moz-box-sizing          : border-box;
-  box-sizing               : border-box;
-}
-
-svg:not(:root)
-{
-  overflow-clip-margin : content-box;
-  overflow             : hidden;
-}
-
-ul
-{
-  display              : block;
-  list-style-type      : disc;
-  margin-block-start   : 1em;
-  margin-block-end     : 1em;
-  margin-inline-start  : 0px;
-  margin-inline-end    : 0px;
-  padding-inline-start : 40px;
-  unicode-bidi         : isolate;
-}
-
-input, button, select, optgroup, textarea
-{
-  font-family : inherit;
-  font-size   : inherit;
-  line-height : inherit;
-  font-weight : inherit;
-  color       : inherit;
-  margin      : 0;
-}
-
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6
-{
-  font-family : inherit;
-  font-weight : 500;
-  line-height : 1.1;
-  color       : inherit;
-}
-
-button
-{
-  overflow    : visible;
-  border      : none;
-  padding     : 0;
-  outline     : none;
-  font-weight : inherit;
-}
-/*
-@media only screen and (max-width : 768px)
-{
-  body > div, body > div > div, body > div > div > div, body > div > div > div > div
-  {
-    height : 100%;
-  }
-}
-
- */
-
 @layer base
 {
   :root
@@ -195,4 +87,18 @@ body,
 :root
 {
   height : 100%;
+}
+
+@layer utilities
+{
+  .no-scrollbar::-webkit-scrollbar
+  {
+    display : none;
+  }
+
+  .no-scrollbar
+  {
+    -ms-overflow-style : none;
+    scrollbar-width    : none;
+  }
 }

@@ -2,21 +2,21 @@
 
 import React from "react";
 import { logout } from "@/actions/logout";
-import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
+import { UpdateSession } from "next-auth/react";
 
 interface LogoutButtonProps
 {
   children?: React.ReactNode;
+  session?: {update: UpdateSession, data: Session, status: "authenticated"} | {} | null
 }
 
-export function LogoutButton ( { children }: LogoutButtonProps ): JSX.Element
+export function LogoutButton ( { children, session }: LogoutButtonProps ): JSX.Element
 {
-  const session = useSession();
-  
   const onClick = async (): Promise<void> =>
   {
     await logout();
-    await session.update();
+    await (session || null)?.update();
   };
   
   return (

@@ -33,7 +33,7 @@ export function UserButton (): JSX.Element
       </DropdownMenuTrigger>
       <DropdownMenuContent className={"w-40 z-[1031]"} align={"end"}>
         {user ? (
-          <LogoutButton>
+          <LogoutButton session={session}>
             <DropdownMenuItem>
               <ExitIcon className={"h-4 w-4 mr-2"} />
               Log Out
