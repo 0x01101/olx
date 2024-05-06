@@ -2,9 +2,9 @@
  * An array of routes accessible to the public
  * @type {string[]}
  */
-export const publicRoutes: string[] = [
-  "/",
-  "/auth/new-verification",
+export const privateRoutes: string[] = [
+  "/server",
+  "/account",
 ];
 
 /**
@@ -23,7 +23,7 @@ export const authRoutes: string[] = [
  * The prefix to api session routes
  * @type {string}
  */
-export const apiAuthPrefix: string = "/api/session";
+export const apiAuthPrefix: string = "/api/auth";
 
 /**
  * The default redirect path after logging in
