@@ -1,13 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { dosis } from "@/lib/fonts";
 import { UserButton } from "@/components/auth/user-button";
 import { Button } from "@/components/ui/button";
 import { NotificationsButton } from "@/components/notifications-button";
 
-export default function NavBar (): JSX.Element
+interface NavBarProps
+{
+  children?: React.ReactNode;
+}
+
+export default function NavBar ( { children }: NavBarProps ): JSX.Element
 {
   const [ prevScrollPos, setPrevScrollPos ] = useState( 0 );
   const [ visible, setVisible ] = useState( true );
@@ -48,14 +53,8 @@ export default function NavBar (): JSX.Element
           <p>Jast</p>
         </Link>
       </div>
+      {children}
       <div className={"flex gap-x-2"}>
-        <Button
-          size={"lg"}
-          variant={"outline"}
-          className={"mr-2 hover:bg-sky-100 active:bg-sky-400 active:text-white"}
-        >
-          Add listing
-        </Button>
         <NotificationsButton />
         <UserButton />
       </div>
