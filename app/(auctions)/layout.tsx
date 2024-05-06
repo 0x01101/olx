@@ -14,7 +14,7 @@ export default async function Layout ( {
       <NavBar>
         <AddListingButton />
       </NavBar>
-      <div className={"pt-[72px] min-h-[80vh] bg-background"}>
+      <div className={"pt-[72px] min-h-[80vh] bg-primary"}>
         {children}
       </div>
       <Footer />
