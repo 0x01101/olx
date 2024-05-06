@@ -2,6 +2,7 @@
 
 import React from "react";
 import { logout } from "@/actions/logout";
+import { useSession } from "next-auth/react";
 
 interface LogoutButtonProps
 {
@@ -10,9 +11,12 @@ interface LogoutButtonProps
 
 export function LogoutButton ( { children }: LogoutButtonProps ): JSX.Element
 {
+  const session = useSession();
+  
   const onClick = async (): Promise<void> =>
   {
     await logout();
+    await session.update();
   };
   
   return (

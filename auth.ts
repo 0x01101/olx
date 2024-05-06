@@ -15,8 +15,8 @@ export const {
   signOut,
 } = NextAuth( {
   pages:     {
-    signIn: "/session/login",
-    error:  "/session/error",
+    signIn: "/auth/login",
+    error:  "/auth/error",
   },
   events:    {
     async linkAccount ( { user } )

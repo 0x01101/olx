@@ -56,7 +56,7 @@ export function RegisterForm (): JSX.Element
     <CardWrapper
       headerLabel={"Create an account"}
       backButtonLabel={"Already have an account?"}
-      backButtonHref={"/session/login"}
+      backButtonHref={"/auth/login"}
       showSocial>
       <Form {...form}>
         <form

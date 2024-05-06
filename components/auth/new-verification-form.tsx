@@ -49,7 +49,7 @@ export function NewVerificationForm (): JSX.Element
     <CardWrapper
       headerLabel={"Confirming your verification"}
       backButtonLabel={"Back to login"}
-      backButtonHref={"/session/login"}
+      backButtonHref={"/auth/login"}
     >
       <div className={"flex items-center w-full justify-center"}>
         {!success && !error && (

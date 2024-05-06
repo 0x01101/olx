@@ -5,7 +5,7 @@ export function ErrorCard (): JSX.Element
 {
   return (
     <CardWrapper
-      headerLabel={"Oops! Something went wrong"} backButtonLabel={"Back to login"} backButtonHref={"/session/login"}
+      headerLabel={"Oops! Something went wrong"} backButtonLabel={"Back to login"} backButtonHref={"/auth/login"}
     >
       <div className={"w-full flex justify-center items-center"}>
         <ExclamationTriangleIcon className={"text-destructive"} />
