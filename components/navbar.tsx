@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { dosis } from "@/lib/fonts";
-import { useCurrentUser } from "@/hooks/use-current-user";
 import { UserButton } from "@/components/auth/user-button";
 import { Button } from "@/components/ui/button";
 import { NotificationsButton } from "@/components/notifications-button";
