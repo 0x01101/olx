@@ -26,7 +26,7 @@ export function UserButton (): JSX.Element
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className={"w-40"} align={"end"}>
+      <DropdownMenuContent className={"w-40 z-[1031]"} align={"end"}>
         <LogoutButton>
           <DropdownMenuItem>
             <ExitIcon className={"h-4 w-4 mr-2"} />
