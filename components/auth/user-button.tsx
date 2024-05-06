@@ -34,7 +34,7 @@ export function UserButton (): JSX.Element
       <DropdownMenuContent className={"w-40 z-[1031]"} align={"end"}>
         {user ? (
           <LogoutButton session={session}>
-            <DropdownMenuItem>
+            <DropdownMenuItem className={"text-gray-400"}>
               <ExitIcon className={"h-4 w-4 mr-2"} />
               Log Out
             </DropdownMenuItem>
@@ -44,7 +44,7 @@ export function UserButton (): JSX.Element
             href={`/auth/login?redirectUrl=${pathname}`}
             className={"no-underline text-black"}
           >
-            <DropdownMenuItem>
+            <DropdownMenuItem className={"text-gray-400"}>
               <EnterIcon className={"h-4 w-4 mr-2"} />
               Log In
             </DropdownMenuItem>
