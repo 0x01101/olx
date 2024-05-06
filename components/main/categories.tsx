@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaCat } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { getCategories } from "@/actions/fetch";
+import { Widget } from "@/components/main/widget";
 
 export default function Categories (): JSX.Element
 {
@@ -23,10 +24,7 @@ export default function Categories (): JSX.Element
   }, [] );
   
   return (
-    <div className="w-[calc(100% - 24px)] my-[12px] mx-[12px] bg-muted py-14 rounded-xl">
-      <h2 className="text-[32px] leading-[34px] font-bold text-center text-primary mb-[56px]">
-        Categories
-      </h2>
+    <Widget title={"Categories"}>
       <div className="grid w-full bg-inherit grid-cols-9 gap-x-0 items-stretch">
         {categories?.map( ( c: Category, i: number ) =>
           ( <Link
@@ -44,6 +42,6 @@ export default function Categories (): JSX.Element
           </Link> ) )
         }
       </div>
-    </div>
+    </Widget>
   );
 }

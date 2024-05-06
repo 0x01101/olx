@@ -29,3 +29,9 @@ export const NewPasswordSchema = z.object( {
     message: "Minimum 6 characters required",
   } ),
 } );
+
+export const SearchSchema = z.object( {
+  search: z.string().min( 1, {
+    message: "Search query is required",
+  } ),
+} );
