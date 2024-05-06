@@ -13,10 +13,21 @@ import { LogoutButton } from "@/components/auth/logout-button";
 import { EnterIcon, ExitIcon } from "@radix-ui/react-icons";
 import { FaUserXmark } from "react-icons/fa6";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ExtendedUser } from "@/next-auth";
+import { Session } from "next-auth";
 
-export function UserButton (): JSX.Element
+interface UserButtonProps
 {
-  const user = useCurrentUser();
+  user?: ExtendedUser | null;
+  session?: Session | null
+}
+
+export function UserButton ( { user, session }: UserButtonProps ): JSX.Element
+{
+  const useUser = useCurrentUser();
+  user = session?.user || user || useUser;
+  const pathname: string = usePathname();
   
   return (
     <DropdownMenu>
@@ -37,7 +48,7 @@ export function UserButton (): JSX.Element
             </DropdownMenuItem>
           </LogoutButton>
         ) : (
-          <Link href={"/auth/login"} className={"no-underline text-black"}>
+          <Link href={`/auth/login?redirectUrl=${pathname}`} className={"no-underline text-black"}>
             <DropdownMenuItem>
               <EnterIcon className={"h-4 w-4 mr-2"} />
               Log In
