@@ -15,7 +15,7 @@ import { getTwoFactorTokenByEMail } from "@/data/two-factor-token";
 import { db } from "@/lib/db";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
 
-export async function login ( values: z.infer<typeof LoginSchema> ): Promise<ServerResponse & { twoFactor?: boolean }>
+export async function login ( values: z.infer<typeof LoginSchema>, redirectTo?: string | null ): Promise<ServerResponse & { twoFactor?: boolean }>
 {
   const validatedFields = LoginSchema.safeParse( values );
   
@@ -77,7 +77,7 @@ export async function login ( values: z.infer<typeof LoginSchema> ): Promise<Ser
     await signIn( "credentials", {
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      redirectTo: redirectTo || DEFAULT_LOGIN_REDIRECT,
     } );
   }
   catch ( e: any )
