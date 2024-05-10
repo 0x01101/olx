@@ -17,6 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export function ProductSearchBar (): JSX.Element
 {
@@ -44,24 +45,26 @@ export function ProductSearchBar (): JSX.Element
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit( onSubmit )}
+          className={"flex flex-row justify-center"}
         >
           <FormField
             control={form.control}
             name={"search"}
             render={( { field } ) => (
               <FormItem>
-                <FormLabel>Search</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     disabled={isPending}
                     placeholder={""}
+                    className={`bg-primary rounded-r-none h-10 w-[50vw]`}
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <Button className={"rounded-l-none h-10"}>Search</Button>
         </form>
       </Form>
     </Widget>
