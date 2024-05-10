@@ -16,10 +16,14 @@ export default async function Page ( { params }: PageProps ): Promise<JSX.Elemen
   const categoryName: string = params.categoryName.trim();
   let category: Category | null = await db.category.findUnique( { where: { name: categoryName } } );
   if ( !category ) notFound();
-  const products: Product[] = await sql<ProductRecord>`
-  SELECT p.*, u.* FROM Product as p
-    inner join User as u on p.seller_id = u.id
-  `
+  const products: Product[] = await db.product.findMany( {
+    where: {
+      category_id: category.id
+    },
+    include: {
+      User: true
+    }
+  } );
   console.log(products);
   if ( !products ) notFound();
   
