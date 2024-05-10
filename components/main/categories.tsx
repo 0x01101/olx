@@ -25,7 +25,10 @@ export default function Categories (): JSX.Element
   
   return (
     <Widget title={"Categories"}>
-      <div className="grid w-full bg-inherit grid-cols-9 gap-x-0 items-stretch">
+      <div
+        className="grid w-full bg-inherit gap-x-0 items-stretch gap-4"
+        style={{gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))"}}
+      >
         {categories?.map( ( c: Category, i: number ) =>
           ( <Link
             className="inline-block text-center text-decoration-none grid-row-1 mb-10 px-6 text-blue-800 hover:scale-125 transition"
