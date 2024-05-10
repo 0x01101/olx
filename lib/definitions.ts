@@ -1,4 +1,8 @@
-import { Product } from "@prisma/client";
+import { Product, User } from "@prisma/client";
+
+type Prefixed<T, Prefix extends string> = {
+  [K in keyof T as `${Prefix}${string & K}`]: T[K];
+}
 
 export interface ServerResponse {
   success?: string;
@@ -13,4 +17,4 @@ export interface UserDTO
   createdAt: Date;
 }
 
-export type ProductDTO = Omit<Product, "">
+export type ProductRecord = Product & User
