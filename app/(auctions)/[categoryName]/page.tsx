@@ -2,7 +2,8 @@ import { Widget } from "@/components/main/widget";
 import { Category, Product } from "@prisma/client";
 import { db, sql } from "@/lib/db";
 import { notFound } from "next/navigation";
-import { ProductRecord } from "@/lib/definitions";
+import { ProductDTO, ProductRecord } from "@/lib/definitions";
+import { ProductDTOSchema } from "@/schemas";
 
 interface PageProps
 {
@@ -16,15 +17,15 @@ export default async function Page ( { params }: PageProps ): Promise<JSX.Elemen
   const categoryName: string = params.categoryName.trim();
   let category: Category | null = await db.category.findUnique( { where: { name: categoryName } } );
   if ( !category ) notFound();
-  const products: Product[] = await db.product.findMany( {
-    where: {
-      category_id: category.id
+  const products = ( await db.product.findMany( {
+    where:   {
+      category_id: category.id,
     },
     include: {
-      User: true
-    }
-  } );
-  console.log(products);
+      category: true,
+      seller:   true,
+    },
+  } ) ).map( ( product: ProductDTO ) => ProductDTOSchema.parse( product ) );
   if ( !products ) notFound();
   
   return (

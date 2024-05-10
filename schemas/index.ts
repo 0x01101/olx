@@ -35,3 +35,30 @@ export const SearchSchema = z.object( {
     message: "Search query is required",
   } ),
 } );
+
+export const UserDTOSchema = z.object( {
+  id:        z.string(),
+  name:      z.string().optional().nullable(),
+  image:     z.string().optional().nullable(),
+  role:      z.string(),
+  createdAt: z.date(),
+});
+
+export const ProductDTOSchema = z.object( {
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  price: z.number(),
+  image: z.string(),
+  category_id: z.number(),
+  seller_id: z.string(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  category: z.object({
+    id: z.number(),
+    name: z.string(),
+    image: z.string().optional().nullable(),
+    parent_id: z.number().optional().nullable(),
+  }),
+  seller: UserDTOSchema,
+} );

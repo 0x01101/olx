@@ -1,4 +1,4 @@
-import { Product, User } from "@prisma/client";
+import { $Enums, Product } from "@prisma/client";
 
 type Prefixed<T, Prefix extends string> = {
   [K in keyof T as `${Prefix}${string & K}`]: T[K];
@@ -12,9 +12,12 @@ export interface ServerResponse {
 export interface UserDTO
 {
   id: string;
-  name?: string;
-  image?: string;
+  name?: string | null;
+  image?: string | null;
+  role: $Enums["UserRole"];
   createdAt: Date;
 }
 
-export type ProductRecord = Product & User
+export type ProductDTO = Product & {
+  seller: UserDTO;
+}
