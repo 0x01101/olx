@@ -1,9 +1,10 @@
 import { Widget } from "@/components/main/widget";
 import { Category, Product } from "@prisma/client";
-import { db, sql } from "@/lib/db";
+import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
-import { ProductDTO, ProductRecord } from "@/lib/definitions";
+import { ProductDTO } from "@/lib/definitions";
 import { ProductDTOSchema } from "@/schemas";
+import { Products } from "@/components/products";
 
 interface PageProps
 {
@@ -29,15 +30,6 @@ export default async function Page ( { params }: PageProps ): Promise<JSX.Elemen
   if ( !products ) notFound();
   
   return (
-    <div>
-      <Widget>
-        <h1>Page</h1>
-      </Widget>
-      <Widget>
-        <div className={"w-full h-full flex flex-col justify-center"}>
-        
-        </div>
-      </Widget>
-    </div>
+    <Products products={[...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ]} />
   );
 }

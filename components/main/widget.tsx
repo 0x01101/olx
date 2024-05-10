@@ -9,7 +9,7 @@ interface WidgetProps
 export function Widget ( { children, title }: WidgetProps ): JSX.Element
 {
   return (
-    <div className="w-[calc(100% - 24px)] my-[12px] mx-[12px] bg-muted rounded-xl p-10 py-14">
+    <div className="w-[calc(100% - 24px)] m-[12px] bg-muted rounded-xl p-5 pt-10 shadow-md">
       {title && (
         <h2 className="text-[32px] leading-[34px] font-bold text-center text-primary mb-[56px]">
           {title}
