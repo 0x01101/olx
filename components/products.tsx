@@ -20,7 +20,7 @@ interface ProductsProps
 
 export function Products ( { products }: ProductsProps ): JSX.Element
 {
-  const productsPerPage: number = 5;
+  const productsPerPage: number = 10;
   const amountOfPages: number = Math.ceil( products.length / productsPerPage );
   const pages: ProductDTO[][] = splitIntoChunks<ProductDTO>( products, productsPerPage );
   
