@@ -28,6 +28,43 @@ import { ReadonlyURLSearchParams, redirect, RedirectType, usePathname, useSearch
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+interface SortByRecord
+{
+  name: string;
+  sortBy: ( a: ProductDTO, b: ProductDTO ) => number;
+}
+
+interface SortBy
+{
+  new: SortByRecord;
+  cheap: SortByRecord;
+  expensive: SortByRecord;
+  random: SortByRecord;
+}
+
+const sortValues: string[] = ["new", "cheap", "expensive", "random"]
+
+type SortByValues = "new" | "cheap" | "expensive" | "random";
+
+const sortByTable: SortBy = {
+  cheap:     {
+    name:   "Cheapest first",
+    sortBy: ( a: ProductDTO, b: ProductDTO ): number => a.price < b.price ? -1 : 1,
+  },
+  expensive: {
+    name:   "Expensive first",
+    sortBy: ( a: ProductDTO, b: ProductDTO ): number => a.price > b.price ? -1 : 1,
+  },
+  new:       {
+    name:   "Newest first",
+    sortBy: ( a: ProductDTO, b: ProductDTO ): number => a.createdAt > b.createdAt ? -1 : 1,
+  },
+  random:    {
+    name:   "Random",
+    sortBy: (): number => Math.random() - 0.5,
+  },
+};
+
 interface ProductsProps
 {
   products: ProductDTO[];
@@ -36,14 +73,19 @@ interface ProductsProps
 
 export function Products ( { products, category }: ProductsProps ): JSX.Element
 {
-  const pathname: string = usePathname()
+  const pathname: string = usePathname();
   const searchParams: ReadonlyURLSearchParams = useSearchParams();
-  const params: URLSearchParams = new URLSearchParams(searchParams.toString());
+  const params: URLSearchParams = new URLSearchParams( searchParams.toString() );
   
   const priceFromString: string | null = searchParams.get( "priceFrom" );
   const priceToString: string | null = searchParams.get( "priceTo" );
-  const priceFrom: number = priceFromString ? Number( priceFromString ) : 0;
-  const priceTo: number = priceToString ? Number( priceToString ) : 0;
+  const sortByString: string | null = searchParams.get( "sortBy" );
+  const priceFrom: number | undefined = priceFromString ? Number( priceFromString ) : undefined;
+  const priceTo: number | undefined = priceToString ? Number( priceToString ) : undefined;
+  
+  if ( priceFrom ) products = products.filter( ( p: ProductDTO ): boolean => p.price >= priceFrom );
+  if ( priceTo ) products = products.filter( ( p: ProductDTO ): boolean => p.price <= priceTo );
+  if ( sortBy ) products = products.sort( sortByTable[ sortBy ].sortBy );
   
   const productsPerPage: number = 10;
   const amountOfPages: number = Math.ceil( products.length / productsPerPage );
@@ -82,16 +124,15 @@ export function Products ( { products, category }: ProductsProps ): JSX.Element
   return (
     <>
       <Widget title={"Filters"}>
-        <div className={"flex flex-row space-x-4"}>
+        <div className={"flex flex-row space-x-4 w-full mb-7 pb-2 border-b-[1px] border-primary"}>
           <div>
             <Label>Category</Label>
-            <Select onValueChange={(value) => redirect(`/${value}?${searchParams.toString()}`, RedirectType.push)}>
+            <Select onValueChange={( value ) => redirect( `/${value}?${searchParams.toString()}`, RedirectType.push )}>
               <SelectTrigger className={"w-[180px] border-primary"}>
                 <SelectValue placeholder={category?.name ?? "Every category"} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Category</SelectLabel>
                   <SelectItem value={"offers"}>Every category</SelectItem>
                   {categories.map( ( c: Category, i: number ) => (
                     <SelectItem value={c.name.toLowerCase()} key={i}>{c.name}</SelectItem>
@@ -100,18 +141,56 @@ export function Products ( { products, category }: ProductsProps ): JSX.Element
               </SelectContent>
             </Select>
           </div>
+          {/* TODO: FIX */}
           <div>
             <Label>Price from</Label>
             <Input
               placeholder={"0"}
+              defaultValue={priceFrom}
               type={"number"}
-              className={"w-[80px] border-primary"}
-              onBlur={(event) => {
-                params.set("priceFrom", event.target.value);
-                redirect(`${pathname}?${params.toString()}`, RedirectType.push);
+              className={"w-[100px] border-primary"}
+              onBlur={( event ) =>
+              {
+                if ( !event.target.value ) return;
+                params.set( "priceFrom", event.target.value );
+                redirect( `${pathname}?${params.toString()}`, RedirectType.push );
               }}
             />
           </div>
+          <div>
+            <Label>Price to</Label>
+            <Input
+              placeholder={"0"}
+              defaultValue={priceTo}
+              type={"number"}
+              className={"w-[100px] border-primary"}
+              onBlur={( event ) =>
+              {
+                if ( !event.target.value ) return;
+                params.set( "priceTo", event.target.value );
+                redirect( `${pathname}?${params.toString()}`, RedirectType.push );
+              }}
+            />
+          </div>
+        </div>
+        <div className={"flex flex-row justify-end w-full pb-2 border-b-[1px] border-primary"}>
+          <Select onValueChange={( value ) =>
+          {
+            params.set( "sortBy", value );
+            redirect( `${pathname}?${params.toString()}`, RedirectType.push );
+          }}>
+            <SelectTrigger className={"w-[180px] border-primary"}>
+              <SelectValue placeholder={sortBy ? sortByTable[ sortBy ].name : "Random"} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value={"random"}>Random</SelectItem>
+                <SelectItem value={"new"}>{sortByTable[ "new" ].name}</SelectItem>
+                <SelectItem value={"cheap"}>{sortByTable[ "cheap" ].name}</SelectItem>
+                <SelectItem value={"expensive"}>{sortByTable[ "expensive" ].name}</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
       </Widget>
       <Widget title={`Found ${products.length} results`}>
