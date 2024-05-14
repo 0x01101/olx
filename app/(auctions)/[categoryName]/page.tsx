@@ -17,11 +17,9 @@ export default async function Page ( { params }: PageProps ): Promise<JSX.Elemen
 {
   const categoryName: string = params.categoryName.trim();
   let category: Category | null = await db.category.findUnique( { where: { name: categoryName } } );
-  if ( !category ) notFound();
+  if ( !category && categoryName !== "offers" ) notFound();
   const products = ( await db.product.findMany( {
-    where:   {
-      category_id: category.id,
-    },
+    ...( category ? { where: { category_id: category.id } } : {} ),
     include: {
       category: true,
       seller:   true,
@@ -30,6 +28,7 @@ export default async function Page ( { params }: PageProps ): Promise<JSX.Elemen
   if ( !products ) notFound();
   
   return (
-    <Products products={[...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ]} />
+    <Products category={category}
+              products={[ ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products ]} />
   );
 }

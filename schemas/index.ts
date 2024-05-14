@@ -42,23 +42,30 @@ export const UserDTOSchema = z.object( {
   image:     z.string().optional().nullable(),
   role:      z.string(),
   createdAt: z.date(),
-});
+} );
 
 export const ProductDTOSchema = z.object( {
-  id: z.string(),
-  name: z.string(),
+  id:          z.string(),
+  name:        z.string(),
   description: z.string(),
-  price: z.number(),
-  image: z.string(),
+  price:       z.number(),
+  image:       z.string(),
   category_id: z.number(),
-  seller_id: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
-  category: z.object({
-    id: z.number(),
-    name: z.string(),
-    image: z.string().optional().nullable(),
+  seller_id:   z.string(),
+  createdAt:   z.date(),
+  updatedAt:   z.date(),
+  category:    z.object( {
+    id:        z.number(),
+    name:      z.string(),
+    image:     z.string().optional().nullable(),
     parent_id: z.number().optional().nullable(),
-  }),
-  seller: UserDTOSchema,
+  } ),
+  seller:      UserDTOSchema,
+} );
+
+export const ProductFilterSchema = z.object( {
+  category:  z.string().optional(),
+  priceFrom: z.number().optional(),
+  priceTo:   z.number().optional(),
+  state:     z.enum( [ "Every", "Used", "New", "Broken" ] ).optional(),
 } );
