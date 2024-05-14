@@ -22,7 +22,6 @@ export function Products ( { products }: ProductsProps ): JSX.Element
 {
   const productsPerPage: number = 10;
   const amountOfPages: number = Math.ceil( products.length / productsPerPage );
-  const pages: ProductDTO[][] = splitIntoChunks<ProductDTO>( products, productsPerPage );
   
   const getPagesAvailable = ( page: number ): number[] =>
   {
@@ -34,6 +33,7 @@ export function Products ( { products }: ProductsProps ): JSX.Element
   };
   
   const [ page, setPage ] = useState<number>( 1 );
+  const [ pages, setPages ] = useState<ProductDTO[][]>( splitIntoChunks<ProductDTO>( products, productsPerPage ) );
   const [ pagesAvailable, setPagesAvailable ] = useState<number[]>( getPagesAvailable( page ) );
   
   const handlePageChange = ( pageNum: number ): void =>
@@ -49,7 +49,10 @@ export function Products ( { products }: ProductsProps ): JSX.Element
       </Widget>
       <Widget>
         <div className={"w-full h-full flex flex-col justify-center gap-y-4"}>
-          {pages[ page - 1 ].map( ( product: ProductDTO, index: number ) => <ProductCard key={index} product={product} /> )}
+          {pages[ page - 1 ].map( ( product: ProductDTO, index: number ) => <ProductCard
+            key={index}
+            product={product}
+          /> )}
         </div>
         <Pagination className={"m-5"}>
           <PaginationContent>

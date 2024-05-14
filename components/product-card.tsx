@@ -3,10 +3,11 @@
 import { ProductDTO } from "@/lib/definitions";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
+import { PreviewableImage } from "@/components/previewable-image";
 
 export function ProductCard ( { product }: { product: ProductDTO } ): JSX.Element
 {
-    return (
+  return (
     <Card className={"w-full shadow-md"}>
       <CardHeader>
         <div className={"w-full flex flex-col gap-y-4 items-center justify-center"}>
@@ -16,7 +17,7 @@ export function ProductCard ( { product }: { product: ProductDTO } ): JSX.Elemen
         </div>
       </CardHeader>
       <CardContent>
-        <Image src={product.image} alt={`${product.name} Image`} width={100} height={100} />
+        <PreviewableImage src={product.image} alt={`${product.name} Image`} width={100} height={100} />
       </CardContent>
     </Card>
   );
