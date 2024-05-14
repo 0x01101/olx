@@ -24,7 +24,9 @@ import {
 } from "@/components/ui/select";
 import { Category } from "@prisma/client";
 import { getCategories } from "@/actions/fetch";
-import { ReadonlyURLSearchParams, redirect, RedirectType, useSearchParams } from "next/navigation";
+import { ReadonlyURLSearchParams, redirect, RedirectType, usePathname, useSearchParams } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface ProductsProps
 {
@@ -34,10 +36,14 @@ interface ProductsProps
 
 export function Products ( { products, category }: ProductsProps ): JSX.Element
 {
+  const pathname: string = usePathname()
   const searchParams: ReadonlyURLSearchParams = useSearchParams();
+  const params: URLSearchParams = new URLSearchParams(searchParams.toString());
   
-  const priceFrom: string | null = searchParams.get( "priceFrom" );
-  const priceTo: string | null = searchParams.get( "priceTo" );
+  const priceFromString: string | null = searchParams.get( "priceFrom" );
+  const priceToString: string | null = searchParams.get( "priceTo" );
+  const priceFrom: number = priceFromString ? Number( priceFromString ) : 0;
+  const priceTo: number = priceToString ? Number( priceToString ) : 0;
   
   const productsPerPage: number = 10;
   const amountOfPages: number = Math.ceil( products.length / productsPerPage );
@@ -76,20 +82,37 @@ export function Products ( { products, category }: ProductsProps ): JSX.Element
   return (
     <>
       <Widget title={"Filters"}>
-        <Select onValueChange={(value) => redirect(`/${value}?${searchParams.toString()}`, RedirectType.push)}>
-          <SelectTrigger className={"w-[180px]"}>
-            <SelectValue placeholder={category?.name ?? "Every category"} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Category</SelectLabel>
-              <SelectItem value={"offers"}>Every category</SelectItem>
-              {categories.map( ( c: Category, i: number ) => (
-                <SelectItem value={c.name.toLowerCase()} key={i}>{c.name}</SelectItem>
-              ) )}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <div className={"flex flex-row space-x-4"}>
+          <div>
+            <Label>Category</Label>
+            <Select onValueChange={(value) => redirect(`/${value}?${searchParams.toString()}`, RedirectType.push)}>
+              <SelectTrigger className={"w-[180px] border-primary"}>
+                <SelectValue placeholder={category?.name ?? "Every category"} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Category</SelectLabel>
+                  <SelectItem value={"offers"}>Every category</SelectItem>
+                  {categories.map( ( c: Category, i: number ) => (
+                    <SelectItem value={c.name.toLowerCase()} key={i}>{c.name}</SelectItem>
+                  ) )}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Label>Price from</Label>
+            <Input
+              placeholder={"0"}
+              type={"number"}
+              className={"w-[80px] border-primary"}
+              onBlur={(event) => {
+                params.set("priceFrom", event.target.value);
+                redirect(`${pathname}?${params.toString()}`, RedirectType.push);
+              }}
+            />
+          </div>
+        </div>
       </Widget>
       <Widget title={`Found ${products.length} results`}>
         <div className={"w-full h-full flex flex-col justify-center gap-y-4"}>
