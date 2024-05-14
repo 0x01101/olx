@@ -18,7 +18,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -28,42 +27,36 @@ import { ReadonlyURLSearchParams, redirect, RedirectType, usePathname, useSearch
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-interface SortByRecord
+class SortOptions
 {
-  name: string;
-  sortBy: ( a: ProductDTO, b: ProductDTO ) => number;
+  public static options: SortOptions[] = [];
+  
+  public static get ( key: string | null | undefined ): SortOptions | undefined
+  {
+    if ( !key ) return;
+    return SortOptions.options.find( ( option: SortOptions ): boolean => option.key === key );
+  }
+  
+  public key: string;
+  public name: string;
+  public sortCallback: ( a: ProductDTO, b: ProductDTO ) => number;
+  
+  public constructor ( key: string, name: string, sortCallback: ( a: ProductDTO, b: ProductDTO ) => number )
+  {
+    this.key = key;
+    this.name = name;
+    this.sortCallback = sortCallback;
+    
+    SortOptions.options.push( this );
+  }
 }
 
-interface SortBy
-{
-  new: SortByRecord;
-  cheap: SortByRecord;
-  expensive: SortByRecord;
-  random: SortByRecord;
-}
-
-const sortValues: string[] = ["new", "cheap", "expensive", "random"]
-
-type SortByValues = "new" | "cheap" | "expensive" | "random";
-
-const sortByTable: SortBy = {
-  cheap:     {
-    name:   "Cheapest first",
-    sortBy: ( a: ProductDTO, b: ProductDTO ): number => a.price < b.price ? -1 : 1,
-  },
-  expensive: {
-    name:   "Expensive first",
-    sortBy: ( a: ProductDTO, b: ProductDTO ): number => a.price > b.price ? -1 : 1,
-  },
-  new:       {
-    name:   "Newest first",
-    sortBy: ( a: ProductDTO, b: ProductDTO ): number => a.createdAt > b.createdAt ? -1 : 1,
-  },
-  random:    {
-    name:   "Random",
-    sortBy: (): number => Math.random() - 0.5,
-  },
-};
+new SortOptions( "new", "Newest First",
+  ( a: ProductDTO, b: ProductDTO ): number => a.createdAt.getTime() - b.createdAt.getTime() );
+new SortOptions( "cheap", "Cheapest First", ( a: ProductDTO, b: ProductDTO ): number => a.price - b.price );
+new SortOptions( "expensive", "Most Expensive First",
+  ( a: ProductDTO, b: ProductDTO ): number => b.price - a.price );
+new SortOptions( "random", "Random", (): number => Math.random() - 0.5 );
 
 interface ProductsProps
 {
@@ -82,10 +75,11 @@ export function Products ( { products, category }: ProductsProps ): JSX.Element
   const sortByString: string | null = searchParams.get( "sortBy" );
   const priceFrom: number | undefined = priceFromString ? Number( priceFromString ) : undefined;
   const priceTo: number | undefined = priceToString ? Number( priceToString ) : undefined;
+  const sortBy: SortOptions | undefined = SortOptions.get( sortByString );
   
   if ( priceFrom ) products = products.filter( ( p: ProductDTO ): boolean => p.price >= priceFrom );
   if ( priceTo ) products = products.filter( ( p: ProductDTO ): boolean => p.price <= priceTo );
-  if ( sortBy ) products = products.sort( sortByTable[ sortBy ].sortBy );
+  if ( sortBy ) products = products.sort( sortBy.sortCallback );
   
   const productsPerPage: number = 10;
   const amountOfPages: number = Math.ceil( products.length / productsPerPage );
@@ -180,14 +174,13 @@ export function Products ( { products, category }: ProductsProps ): JSX.Element
             redirect( `${pathname}?${params.toString()}`, RedirectType.push );
           }}>
             <SelectTrigger className={"w-[180px] border-primary"}>
-              <SelectValue placeholder={sortBy ? sortByTable[ sortBy ].name : "Random"} />
+              <SelectValue placeholder={sortBy?.name ?? "Random v0.-1"} />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value={"random"}>Random</SelectItem>
-                <SelectItem value={"new"}>{sortByTable[ "new" ].name}</SelectItem>
-                <SelectItem value={"cheap"}>{sortByTable[ "cheap" ].name}</SelectItem>
-                <SelectItem value={"expensive"}>{sortByTable[ "expensive" ].name}</SelectItem>
+                {SortOptions.options.map( ( option: SortOptions, i: number ) => (
+                  <SelectItem value={option.key} key={i}>{option.name}</SelectItem>
+                ) )}
               </SelectGroup>
             </SelectContent>
           </Select>
