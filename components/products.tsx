@@ -68,6 +68,8 @@ export function Products ( { category, ...other }: ProductsProps ): JSX.Element
   const priceToString: string | null = searchParams.get( "priceTo" );
   const sortByString: string | null = searchParams.get( "sortBy" );
   const searchString: string | null = searchParams.get( "search" );
+  const stateString: string | null = searchParams.get( "state" );
+  
   const priceFrom: number | undefined = priceFromString ? Number( priceFromString ) : undefined;
   const priceTo: number | undefined = priceToString ? Number( priceToString ) : undefined;
   const sortBy: SortOptions | undefined = SortOptions.get( sortByString );
@@ -80,6 +82,7 @@ export function Products ( { category, ...other }: ProductsProps ): JSX.Element
     if ( priceTo ) products = products.filter( ( p: ProductDTO ): boolean => p.price <= priceTo );
     if ( sortBy ) products = products.sort( sortBy.sortCallback );
     if ( searchRegExp ) products = products.filter( ( p: ProductDTO ): boolean => searchRegExp.test( p.name ) || searchRegExp.test( p.description ) );
+    if ( stateString ) products = products.filter( ( p: ProductDTO ): boolean => p.state.toLowerCase() === stateString );
     return products;
   } )() );
   
@@ -125,7 +128,7 @@ export function Products ( { category, ...other }: ProductsProps ): JSX.Element
             <Label>Category</Label>
             <Select onValueChange={( value ) => redirect( `/${value}?${searchParams.toString()}`, RedirectType.push )}>
               <SelectTrigger className={"w-[180px] border-primary"}>
-                <SelectValue placeholder={category?.name ?? "Every category"} />
+                <SelectValue placeholder={category?.name ?? "Every category"}/>
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -149,7 +152,7 @@ export function Products ( { category, ...other }: ProductsProps ): JSX.Element
               {
                 if ( !event.target.value ) return;
                 params.set( "priceFrom", event.target.value );
-                redirect( `${pathname}?${params.toString()}`, RedirectType.push );
+                redirect( `?${params.toString()}`, RedirectType.push );
               }}
             />
           </div>
@@ -164,9 +167,30 @@ export function Products ( { category, ...other }: ProductsProps ): JSX.Element
               {
                 if ( !event.target.value ) return;
                 params.set( "priceTo", event.target.value );
-                redirect( `${pathname}?${params.toString()}`, RedirectType.push );
+                redirect( `?${params.toString()}`, RedirectType.push );
               }}
             />
+          </div>
+          <div>
+            <Label>State</Label>
+            <Select onValueChange={( value ) =>
+            {
+              if ( value !== "every" ) params.set( "state", value );
+              else params.delete( "state" );
+              redirect( `?${params.toString()}`, RedirectType.push );
+            }}>
+              <SelectTrigger className={"w-[180px] border-primary"}>
+                <SelectValue placeholder={stateString ?? "Every State"}/>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value={"every"}>Every state</SelectItem>
+                  <SelectItem value={"new"}>New</SelectItem>
+                  <SelectItem value={"used"}>Used</SelectItem>
+                  <SelectItem value={"broken"}>Broken</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
         </div>
         <div className={"flex flex-row justify-end w-full pb-2 border-b-[1px] border-primary items-center"}>
@@ -174,10 +198,10 @@ export function Products ( { category, ...other }: ProductsProps ): JSX.Element
           <Select onValueChange={( value ) =>
           {
             params.set( "sortBy", value );
-            redirect( `${pathname}?${params.toString()}`, RedirectType.push );
+            redirect( `?${params.toString()}`, RedirectType.push );
           }}>
             <SelectTrigger className={"w-[180px] border-primary"}>
-              <SelectValue placeholder={sortBy?.name ?? "Random v0.-1"} />
+              <SelectValue placeholder={sortBy?.name ?? "Random v0.-1"}/>
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
