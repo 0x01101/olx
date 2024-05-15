@@ -15,6 +15,7 @@ import { FaUserXmark } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { cn } from "@/lib/utils";
 
 export function UserButton (): JSX.Element
 {
@@ -36,7 +37,18 @@ export function UserButton (): JSX.Element
         {user ? (
           <>
             <DropdownMenuLabel>
-              {user.email}
+              <div className={"flex flex-row space-x-2 items-center"}>
+                <Avatar>
+                  <AvatarImage src={user?.image ?? ""} />
+                  <AvatarFallback className={user ? "bg-sky-400" : "bg-red-500"}>
+                    {user ? <FaUser className={"text-white"} /> : <FaUserXmark className={"text-white"} />}
+                  </AvatarFallback>
+                </Avatar>
+                <div className={"flex flex-col"}>
+                  <p className={"text-xs"}>{user.name}</p>
+                  <p className={"text-[10px]"}>{user.email}</p>
+                </div>
+              </div>
             </DropdownMenuLabel>
             <Link
               href={`/auth/login?redirectUrl=${pathname}`}
@@ -44,7 +56,7 @@ export function UserButton (): JSX.Element
             >
               <DropdownMenuItem className={"text-gray-400"}>
                 <GearIcon className={"h-4 w-4 mr-2"}/>
-                Settings
+                My Account
               </DropdownMenuItem>
             </Link>
           <LogoutButton session={session}>
