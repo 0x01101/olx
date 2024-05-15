@@ -1,5 +1,4 @@
-import { Widget } from "@/components/main/widget";
-import { Category, Product } from "@prisma/client";
+import { Category } from "@prisma/client";
 import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { ProductDTO } from "@/lib/definitions";

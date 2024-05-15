@@ -62,10 +62,3 @@ export const ProductDTOSchema = z.object( {
   } ),
   seller:      UserDTOSchema,
 } );
-
-export const ProductFilterSchema = z.object( {
-  category:  z.string().optional(),
-  priceFrom: z.number().optional(),
-  priceTo:   z.number().optional(),
-  state:     z.enum( [ "Every", "Used", "New", "Broken" ] ).optional(),
-} );
