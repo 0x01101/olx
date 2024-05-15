@@ -167,7 +167,8 @@ export function Products ( { products, category }: ProductsProps ): JSX.Element
             />
           </div>
         </div>
-        <div className={"flex flex-row justify-end w-full pb-2 border-b-[1px] border-primary"}>
+        <div className={"flex flex-row justify-end w-full pb-2 border-b-[1px] border-primary items-center"}>
+          <p className={"mr-1"}>Sort by: </p>
           <Select onValueChange={( value ) =>
           {
             params.set( "sortBy", value );
