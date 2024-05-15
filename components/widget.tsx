@@ -1,13 +1,15 @@
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { ClassValue } from "clsx";
 
 interface WidgetProps
 {
   title?: string;
   children: ReactNode;
+  className?: ClassValue;
 }
 
-export function Widget ( { children, title }: WidgetProps ): JSX.Element
+export function Widget ( { children, title, className }: WidgetProps ): JSX.Element
 {
   return (
     <div className={cn( "w-[calc(100% - 24px)] m-[12px] bg-muted rounded-xl p-5 shadow-md1", title ? "pt-10" : "" )}>
@@ -16,7 +18,9 @@ export function Widget ( { children, title }: WidgetProps ): JSX.Element
           {title}
         </h2>
       )}
-      {children}
+      <div className={cn("w-full h-full", className)}>
+        {children}
+      </div>
     </div>
   );
 }

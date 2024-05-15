@@ -38,7 +38,7 @@ export const UserDTOSchema = z.object( {
   id:        z.string(),
   name:      z.string().optional().nullable(),
   image:     z.string().optional().nullable(),
-  role:      z.string(),
+  role:      z.enum(["USER", "ADMIN"]),
   createdAt: z.date(),
 } );
 
@@ -59,5 +59,10 @@ export const ProductDTOSchema = z.object( {
     image:     z.string().optional().nullable(),
     parent_id: z.number().optional().nullable(),
   } ),
+  images:      z.array( z.object({
+    id: z.string(),
+    url: z.string(),
+    productId: z.string(),
+  }) ),
   seller:      UserDTOSchema,
 } );
