@@ -9,9 +9,9 @@ import { Session } from "next-auth";
 export const metadata: Metadata = {
   title:        {
     template: "%s | olx.pl",
-    default:  "olx.pl",
+    default: "Jast",
   },
-  description:  "olx's clone or smth, idk",
+  description:  "Jast - Just auction service try",
   metadataBase: new URL( "https://j3rzy.dev/" ),
 };
 

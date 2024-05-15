@@ -1,23 +1,25 @@
 "use client";
 
 import { ProductDTO } from "@/lib/definitions";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
 import { PreviewableImage } from "@/components/previewable-image";
 
 export function ProductCard ( { product }: { product: ProductDTO } ): JSX.Element
 {
   return (
-    <Card className={"w-full shadow-md"}>
-      <CardHeader>
-        <div className={"w-full flex flex-col gap-y-4 items-center justify-center"}>
-          <p className={"text-muted-foreground text-sm"}>
-            {product.name}
-          </p>
+    <Card className={"w-full shadow-md p-2"}>
+      <CardContent className={"flex flex-row p-0 space-x-3"}>
+        <PreviewableImage
+          src={product.image}
+          alt={`${product.name} Image`}
+          width={150}
+          height={150}
+          className={"rounded-md"}
+        />
+        <div className={"flex flex-col"}>
+          <h3 className={"font-bold text-2xl"}>{product.name}</h3>
+          <p>{product.state}</p>
         </div>
-      </CardHeader>
-      <CardContent>
-        <PreviewableImage src={product.image} alt={`${product.name} Image`} width={100} height={100} />
       </CardContent>
     </Card>
   );

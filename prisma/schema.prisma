@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["relationJoins"]
 }
 
@@ -17,6 +17,12 @@ datasource db {
 enum UserRole {
   USER
   ADMIN
+}
+
+enum State {
+  NEW
+  USED
+  BROKEN
 }
 
 model User {
@@ -110,11 +116,12 @@ model TwoFactorConfirmation {
 }
 
 model Product {
-  id          String      @id @default(cuid())
+  id          String   @id @default(cuid())
   name        String
   description String
   price       Float
   image       String
+  state       State    @default(USED)
   category_id Int
   category    Category @relation(fields: [category_id], references: [id])
   seller_id   String

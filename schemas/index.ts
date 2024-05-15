@@ -48,6 +48,7 @@ export const ProductDTOSchema = z.object( {
   description: z.string(),
   price:       z.number(),
   image:       z.string(),
+  state: z.enum(["NEW", "USED", "BROKEN"]),
   category_id: z.number(),
   seller_id:   z.string(),
   createdAt:   z.date(),
