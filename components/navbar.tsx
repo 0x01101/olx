@@ -55,7 +55,7 @@ export default function NavBar ( { children }: NavBarProps ): JSX.Element
         </Link>
       </div>
       {children}
-      <div className={"flex gap-x-2"}>
+      <div className={"flex gap-x-4"}>
         <NotificationsButton />
         <UserButton />
       </div>
