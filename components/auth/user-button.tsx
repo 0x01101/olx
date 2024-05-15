@@ -4,12 +4,13 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaUser } from "react-icons/fa";
 import { LogoutButton } from "@/components/auth/logout-button";
-import { EnterIcon, ExitIcon } from "@radix-ui/react-icons";
+import { EnterIcon, ExitIcon, GearIcon } from "@radix-ui/react-icons";
 import { FaUserXmark } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -33,16 +34,30 @@ export function UserButton (): JSX.Element
       </DropdownMenuTrigger>
       <DropdownMenuContent className={"w-40 z-[1031]"} align={"end"}>
         {user ? (
+          <>
+            <DropdownMenuLabel>
+              {user.email}
+            </DropdownMenuLabel>
+            <Link
+              href={`/auth/login?redirectUrl=${pathname}`}
+              className={"no-underline"}
+            >
+              <DropdownMenuItem className={"text-gray-400"}>
+                <GearIcon className={"h-4 w-4 mr-2"}/>
+                Settings
+              </DropdownMenuItem>
+            </Link>
           <LogoutButton session={session}>
             <DropdownMenuItem className={"text-gray-400"}>
               <ExitIcon className={"h-4 w-4 mr-2"} />
               Log Out
             </DropdownMenuItem>
           </LogoutButton>
+          </>
         ) : (
           <Link
             href={`/auth/login?redirectUrl=${pathname}`}
-            className={"no-underline text-black"}
+            className={"no-underline"}
           >
             <DropdownMenuItem className={"text-gray-400"}>
               <EnterIcon className={"h-4 w-4 mr-2"} />
