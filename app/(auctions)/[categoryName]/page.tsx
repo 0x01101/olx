@@ -27,7 +27,9 @@ export default async function Page ( { params }: PageProps ): Promise<JSX.Elemen
   if ( !products ) notFound();
   
   return (
-    <Products category={category}
-              products={[ ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products ]} />
+    <Products
+      category={category}
+      products={[ ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products ]}
+    />
   );
 }

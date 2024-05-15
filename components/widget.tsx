@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 interface WidgetProps
 {
@@ -9,9 +10,9 @@ interface WidgetProps
 export function Widget ( { children, title }: WidgetProps ): JSX.Element
 {
   return (
-    <div className="w-[calc(100% - 24px)] m-[12px] bg-muted rounded-xl p-5 pt-10 shadow-md1">
+    <div className={cn( "w-[calc(100% - 24px)] m-[12px] bg-muted rounded-xl p-5 shadow-md1", title ? "pt-10" : "" )}>
       {title && (
-        <h2 className="text-[32px] leading-[34px] font-bold text-center text-primary mb-[56px]">
+        <h2 className={"text-[32px] leading-[34px] font-bold text-center text-primary mb-[56px]"}>
           {title}
         </h2>
       )}

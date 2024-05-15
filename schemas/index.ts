@@ -31,9 +31,7 @@ export const NewPasswordSchema = z.object( {
 } );
 
 export const SearchSchema = z.object( {
-  search: z.string().min( 1, {
-    message: "Search query is required",
-  } ),
+  search: z.string(),
 } );
 
 export const UserDTOSchema = z.object( {

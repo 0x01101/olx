@@ -13,19 +13,13 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { splitIntoChunks } from "@/lib/arrays";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Category } from "@prisma/client";
 import { getCategories } from "@/actions/fetch";
 import { ReadonlyURLSearchParams, redirect, RedirectType, usePathname, useSearchParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ProductSearchBar } from "@/components/main/product-searchbar";
 
 class SortOptions
 {
@@ -64,7 +58,7 @@ interface ProductsProps
   category?: Category | null;
 }
 
-export function Products ( { products, category }: ProductsProps ): JSX.Element
+export function Products ( { category, ...other }: ProductsProps ): JSX.Element
 {
   const pathname: string = usePathname();
   const searchParams: ReadonlyURLSearchParams = useSearchParams();
@@ -73,13 +67,21 @@ export function Products ( { products, category }: ProductsProps ): JSX.Element
   const priceFromString: string | null = searchParams.get( "priceFrom" );
   const priceToString: string | null = searchParams.get( "priceTo" );
   const sortByString: string | null = searchParams.get( "sortBy" );
+  const searchString: string | null = searchParams.get( "search" );
   const priceFrom: number | undefined = priceFromString ? Number( priceFromString ) : undefined;
   const priceTo: number | undefined = priceToString ? Number( priceToString ) : undefined;
   const sortBy: SortOptions | undefined = SortOptions.get( sortByString );
+  const searchRegExp: RegExp | undefined = searchString ? new RegExp( searchString, "gim" ) : undefined;
   
-  if ( priceFrom ) products = products.filter( ( p: ProductDTO ): boolean => p.price >= priceFrom );
-  if ( priceTo ) products = products.filter( ( p: ProductDTO ): boolean => p.price <= priceTo );
-  if ( sortBy ) products = products.sort( sortBy.sortCallback );
+  const [ products, setProducts ] = useState<ProductDTO[]>( ( () =>
+  {
+    let products: ProductDTO[] = other.products;
+    if ( priceFrom ) products = products.filter( ( p: ProductDTO ): boolean => p.price >= priceFrom );
+    if ( priceTo ) products = products.filter( ( p: ProductDTO ): boolean => p.price <= priceTo );
+    if ( sortBy ) products = products.sort( sortBy.sortCallback );
+    if ( searchRegExp ) products = products.filter( ( p: ProductDTO ): boolean => searchRegExp.test( p.name ) || searchRegExp.test( p.description ) );
+    return products;
+  } )() );
   
   const productsPerPage: number = 10;
   const amountOfPages: number = Math.ceil( products.length / productsPerPage );
@@ -187,6 +189,7 @@ export function Products ( { products, category }: ProductsProps ): JSX.Element
           </Select>
         </div>
       </Widget>
+      <ProductSearchBar/>
       <Widget title={`Found ${products.length} results`}>
         <div className={"w-full h-full flex flex-col justify-center gap-y-4"}>
           {pages[ page - 1 ]?.map( ( product: ProductDTO, index: number ) => <ProductCard

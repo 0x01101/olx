@@ -6,29 +6,23 @@ import { z } from "zod";
 import { SearchSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition } from "react";
-import { useRouter } from "next/navigation";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { ReadonlyURLSearchParams, redirect, RedirectType, usePathname, useSearchParams } from "next/navigation";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export function ProductSearchBar (): JSX.Element
 {
-  const router: AppRouterInstance = useRouter();
+  const pathname: string = usePathname();
+  const searchParams: ReadonlyURLSearchParams = useSearchParams();
+  const params: URLSearchParams = new URLSearchParams( searchParams.toString() );
   
   const [ isPending, startTransition ] = useTransition();
   
   const form = useForm<z.infer<typeof SearchSchema>>( {
     resolver:      zodResolver( SearchSchema ),
     defaultValues: {
-      search: "",
+      search: params.get( "search" ) ?? "",
     },
   } );
   
@@ -36,7 +30,9 @@ export function ProductSearchBar (): JSX.Element
   {
     startTransition( async (): Promise<void> =>
     {
-      router.push( `/offers/q-${search.trim().toLowerCase().replace( /\s+/img, "-" )}` );
+      if ( search ) params.set( "search", search.trim() );
+      else params.delete( "search" );
+      redirect( `${pathname == "/" ? "/offers" : pathname}?${params.toString()}`, RedirectType.push );
     } );
   };
   
