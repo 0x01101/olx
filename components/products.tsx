@@ -2,7 +2,7 @@
 
 import { ProductDTO } from "@/lib/definitions";
 import { ProductCard } from "@/components/product-card";
-import { Widget } from "@/components/main/widget";
+import { Widget } from "@/components/widget";
 import { useEffect, useState } from "react";
 import {
   Pagination,

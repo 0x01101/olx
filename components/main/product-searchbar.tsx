@@ -1,6 +1,6 @@
 "use client";
 
-import { Widget } from "@/components/main/widget";
+import { Widget } from "@/components/widget";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { SearchSchema } from "@/schemas";

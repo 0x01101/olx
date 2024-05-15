@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaCat } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { getCategories } from "@/actions/fetch";
-import { Widget } from "@/components/main/widget";
+import { Widget } from "@/components/widget";
 
 export default function Categories (): JSX.Element
 {
