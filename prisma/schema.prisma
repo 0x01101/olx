@@ -118,7 +118,7 @@ model TwoFactorConfirmation {
 model Product {
   id          String   @id @default(cuid())
   name        String
-  description String
+  description String @db.LongText
   price       Float
   image       String
   images      Images[]

@@ -20,6 +20,8 @@ import { addListing } from "@/actions/add-listing";
 import { Category } from "@prisma/client";
 import { getCategories } from "@/actions/fetch";
 import { Cross2Icon } from "@radix-ui/react-icons";
+import { FormSuccess } from "@/components/form-success";
+import { convertFileToBase64 } from "@/lib/file";
 
 export function ListingAddForm (): JSX.Element
 {
@@ -55,10 +57,10 @@ export function ListingAddForm (): JSX.Element
     setError( "" );
     setSuccess( "" );
     
-    console.log( values );
     startTransition( async (): Promise<void> =>
     {
-      const response: ServerResponse = await addListing( values );
+      const base64Images: string[] = await Promise.all(images.map(convertFileToBase64));
+      const response: ServerResponse = await addListing( values, base64Images );
       setError( response?.error );
       setSuccess( response?.success );
     } );
@@ -73,13 +75,16 @@ export function ListingAddForm (): JSX.Element
     const files: FileList | null = e.target.files;
     if ( !files ) return;
     const srcs: ( string | ArrayBuffer )[] = [];
+    const fileObjs: File[] = [];
     
     const loadNextFile = ( index: number ): void =>
     {
       if ( index >= files.length )
       {
-        const combined: ( string | ArrayBuffer )[] = [ ...imageSources, ...srcs ];
-        setImageSources( removeDupes<string | ArrayBuffer>( combined ) );
+        const combinedSources: ( string | ArrayBuffer )[] = [ ...imageSources, ...srcs ];
+        const combinedFiles: File[] = [ ...images, ...fileObjs ];
+        setImageSources( removeDupes<string | ArrayBuffer>( combinedSources ) );
+        setImages( removeDupes<File>( combinedFiles ) );
         return;
       }
       
@@ -95,7 +100,11 @@ export function ListingAddForm (): JSX.Element
       reader.onload = (): void =>
       {
         const result: string | ArrayBuffer | null = reader.result;
-        if ( result ) srcs.push( result );
+        if ( result )
+        {
+          srcs.push( result );
+          fileObjs.push( file );
+        }
         loadNextFile( index + 1 );
       };
     };
@@ -105,9 +114,11 @@ export function ListingAddForm (): JSX.Element
   
   const deleteImage = ( index: number ): void =>
   {
-    const updated: ( string | ArrayBuffer )[] = imageSources.filter( ( _: string | ArrayBuffer, i: number ): boolean => i !== index );
-    setImageSources( updated );
-    if ( isEmpty( updated ) ) ( document.getElementById( "file" ) as HTMLInputElement ).value = "";
+    const updatedSrc: ( string | ArrayBuffer )[] = imageSources.filter( ( _: string | ArrayBuffer, i: number ): boolean => i !== index );
+    const updatedFiles: File[] = images.filter( ( _: File, i: number ): boolean => i !== index );
+    setImageSources( updatedSrc );
+    setImages( updatedFiles );
+    if ( isEmpty( updatedSrc ) ) ( document.getElementById( "file" ) as HTMLInputElement ).value = "";
   };
   
   return (
@@ -115,7 +126,7 @@ export function ListingAddForm (): JSX.Element
       <Form {...form}>
         <form onSubmit={form.handleSubmit( onSubmit )}>
           <div className={"flex flex-row w-full"}>
-            <div className={"flex flex-col space-x-5 w-[50%] items-center p-2"}>
+            <div className={"flex flex-col space-y-5 w-[50%] items-center p-2"}>
               <Card className={"w-full"}>
                 <CardContent className={"p-3 flex flex-col space-y-3"}>
                   <h3>Info</h3>
@@ -229,7 +240,7 @@ export function ListingAddForm (): JSX.Element
                 </CardContent>
               </Card>
             </div>
-            <div className={"flex flex-col space-x-5 w-[50%] items-center p-2"}>
+            <div className={"flex flex-col space-y-5 w-[50%] items-center p-2"}>
               <Card className={"w-full"}>
                 <CardContent className={"p-3 flex flex-col space-y-3"}>
                   <div className={"flex justify-between"}>
@@ -286,15 +297,21 @@ export function ListingAddForm (): JSX.Element
                   </div>
                 </CardContent>
               </Card>
+              <Card className={"w-full mt-auto"}>
+                <CardContent className={"p-3 flex flex-col space-y-3"}>
+                  <FormSuccess message={success} />
+                  <FormMessage>{error}</FormMessage>
+                  <Button
+                    disabled={isPending}
+                    type={"submit"}
+                    className={"w-full"}
+                  >
+                    Submit
+                  </Button>
+                </CardContent>
+              </Card>
             </div>
           </div>
-          <Button
-            disabled={isPending}
-            type={"submit"}
-            className={"w-full"}
-          >
-            Submit
-          </Button>
         </form>
       </Form>
     </Widget>

@@ -70,8 +70,8 @@ export const ProductDTOSchema = z.object( {
 export const ListingAddSchema = z.object( {
   name:        z.string().min( 1, "Name is required" ),
   description: z.string().min( 1, "Description is required" ),
-  price:       z.string().min( 1, "Price is required" ),
-  images:      z.string().min(1, "Image is required" ),
-  state:       z.enum( [ "NEW", "USED" ] ).default( "USED" ),
-  category: z.string(),
+  price:       z.string().min( 1, "Price is required" ).regex( /^[1-9]\d*$/ ),
+  images:      z.string().min( 1, "Image is required" ),
+  state:       z.enum( [ "NEW", "USED", "BROKEN" ] ).default( "USED" ),
+  category:    z.string().min( 1, "Category is required" ).regex( /^[1-9]\d*$/ ),
 } );
