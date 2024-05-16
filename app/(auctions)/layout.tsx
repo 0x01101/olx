@@ -1,5 +1,4 @@
 import NavBar from "@/components/navbar";
-import Footer from "@/app/ui/elements/footer";
 import React from "react";
 import { AddListingButton } from "@/components/add-listing-button";
 
@@ -17,7 +16,6 @@ export default async function Layout ( {
       <div className={"pt-[72px] min-h-[80vh] bg-primary"}>
         {children}
       </div>
-      <Footer />
     </>
   );
 }

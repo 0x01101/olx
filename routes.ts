@@ -5,6 +5,7 @@
 export const privateRoutes: string[] = [
   "/server",
   "/account",
+  "/offer/create"
 ];
 
 /**
