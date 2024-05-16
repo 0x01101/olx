@@ -75,7 +75,15 @@ export default function ProductPage ( { product }: ProductPageProps ): JSX.Eleme
                 <div className={"flex flex-row space-x-3"}>
                   <UserAvatar user={product.seller} />
                   <div className={"flex flex-col text-sm"}>
-                    <p>{product.seller.name}</p>
+                    <p>
+                      {product.seller.role === "USER" ? <></> : (
+                        <span>
+                          [
+                          <span className={"text-red-600"}>{capitalize(product.seller.role)}</span>
+                          ]
+                        </span>
+                      )} {product.seller.name}
+                    </p>
                     <p>User since {formatDate( product.seller.createdAt )}</p>
                   </div>
                 </div>

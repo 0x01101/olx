@@ -1,11 +1,19 @@
 /**
- * An array of routes accessible to the public
+ * An array of routes not accessible to the public
  * @type {string[]}
  */
 export const privateRoutes: string[] = [
   "/server",
   "/account",
   "/offer/create"
+];
+
+/**
+ * An array of routes accessible only to admins
+ * @type {string[]}
+ */
+export const adminRoutes: string[] = [
+  "/dashboard",
 ];
 
 /**
