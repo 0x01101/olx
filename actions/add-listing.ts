@@ -11,6 +11,7 @@ import { Session } from "next-auth";
 import { ExtendedUser } from "@/next-auth";
 import { Product } from "@prisma/client";
 import path from "path";
+import { redirect } from "next/navigation";
 
 export async function addListing ( {
   name,
@@ -57,7 +58,7 @@ export async function addListing ( {
     skipDuplicates: true,
   } );
   
-  return { success: "Listing added successfully" };
+  redirect( `/offer/${product.id}` );
 }
 
 async function uploadFile ( base64Data: string, filePath: string ): Promise<void>
