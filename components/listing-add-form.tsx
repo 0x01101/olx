@@ -25,7 +25,8 @@ export function ListingAddForm (): JSX.Element
 {
   const [ error, setError ] = useState<string | undefined>( "" );
   const [ success, setSuccess ] = useState<string | undefined>( "" );
-  const [ imgsSrc, setImgsSrc ] = useState<( string | ArrayBuffer )[]>( [] );
+  const [ imageSources, setImageSources ] = useState<( string | ArrayBuffer )[]>( [] );
+  const [ images, setImages ] = useState<File[]>( [] );
   
   const [ categories, setCategories ] = useState<Category[]>( [] );
   
@@ -77,8 +78,8 @@ export function ListingAddForm (): JSX.Element
     {
       if ( index >= files.length )
       {
-        const combined: ( string | ArrayBuffer )[] = [ ...imgsSrc, ...srcs ];
-        setImgsSrc( removeDupes<string | ArrayBuffer>( combined ) );
+        const combined: ( string | ArrayBuffer )[] = [ ...imageSources, ...srcs ];
+        setImageSources( removeDupes<string | ArrayBuffer>( combined ) );
         return;
       }
       
@@ -102,11 +103,12 @@ export function ListingAddForm (): JSX.Element
     loadNextFile( 0 );
   };
   
-  const deleteImage = ( index: number ): void => {
-    const updated: (string | ArrayBuffer)[] = imgsSrc.filter( ( _: string | ArrayBuffer, i: number ): boolean => i !== index )
-    setImgsSrc( updated );
-    if (isEmpty(updated)) (document.getElementById("file") as HTMLInputElement).value = "";
-  }
+  const deleteImage = ( index: number ): void =>
+  {
+    const updated: ( string | ArrayBuffer )[] = imageSources.filter( ( _: string | ArrayBuffer, i: number ): boolean => i !== index );
+    setImageSources( updated );
+    if ( isEmpty( updated ) ) ( document.getElementById( "file" ) as HTMLInputElement ).value = "";
+  };
   
   return (
     <Widget>
@@ -232,18 +234,18 @@ export function ListingAddForm (): JSX.Element
                 <CardContent className={"p-3 flex flex-col space-y-3"}>
                   <div className={"flex justify-between"}>
                     <h3>Images</h3>
-                    <p>{imgsSrc.length} chosen</p>
+                    <p>{imageSources.length} chosen</p>
                   </div>
                   <span className={"w-full border-[1px] border-primary"} />
                   <div className={"flex flex-col space-y-3"}>
-                    {!isEmpty( imgsSrc ) && (
+                    {!isEmpty( imageSources ) && (
                       <>
                         <div className={"flex flex-row w-full"}>
-                          {imgsSrc.map( ( src: string | ArrayBuffer, index: number ) => (
+                          {imageSources.map( ( src: string | ArrayBuffer, index: number ) => (
                             <div key={index} className={"relative"}>
                               <Cross2Icon
                                 className={"absolute top-0 right-0 z-10 bg-gray-400 rounded-full cursor-pointer"}
-                                onClick={() => deleteImage(index)}
+                                onClick={() => deleteImage( index )}
                               />
                               <PreviewableImage
                                 src={src as string}
