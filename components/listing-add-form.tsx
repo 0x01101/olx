@@ -279,7 +279,7 @@ export function ListingAddForm (): JSX.Element
                           <input
                             type={"file"}
                             id={"file"}
-                            accept={"image/jpeg, image/png, image/gif"}
+                            accept={"image/jpeg"}
                             multiple
                             onChange={( event ) => onUpload( event, field )}
                             className={"hidden"}

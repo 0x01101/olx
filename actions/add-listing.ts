@@ -34,7 +34,7 @@ export async function addListing ( {
       price:       Number( price ),
       state,
       category_id: Number( category ),
-      image:       `/uploads/listing/${id}/1`,
+      image:       `/uploads/listing/${id}/1.jpg`,
       seller_id:   user.id,
     },
   } );
@@ -43,15 +43,18 @@ export async function addListing ( {
   
   for ( let image of images )
   {
-    const fileName: string = `${images.indexOf( image ) + 1}`;
+    const fileName: string = `${images.indexOf( image ) + 1}.jpg`;
     await uploadFile( image, `listing/${id}/${fileName}` );
   }
   
-  db.images.createMany( {
-    data: images.map( ( image: string, index: number ) => ( {
-      url:       `/uploads/listing/${id}/${index + 1}`,
-      productId: id,
-    } ) ),
+  const imgs = images.map( ( _: string, index: number ) => ( {
+    url:       `/uploads/listing/${id}/${index + 1}.jpg`,
+    productId: product.id,
+  } ) );
+  
+  await db.images.createMany( {
+    data:           imgs,
+    skipDuplicates: true,
   } );
   
   return { success: "Listing added successfully" };

@@ -21,14 +21,14 @@ export default async function Page ( { params }: PageProps ): Promise<JSX.Elemen
     include: {
       category: true,
       seller:   true,
-      images: true
+      images:   true,
     },
   } );
-  console.log(product);
+  
   if ( !product ) notFound();
   const productDTO: ProductDTO = ProductDTOSchema.parse( product );
   
   return (
-    <ProductPage product={productDTO}/>
+    <ProductPage product={productDTO} />
   );
 }
