@@ -1,27 +1,15 @@
-"use client";
+"use server";
 
 import Link from "next/link";
 import { Category } from "@prisma/client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaCat } from "react-icons/fa";
-import { useEffect, useState } from "react";
 import { getCategories } from "@/actions/fetch";
 import { Widget } from "@/components/widget";
 
-export default function Categories (): JSX.Element
+export default async function Categories (): Promise<JSX.Element>
 {
-  const [ categories, setCategories ] = useState<Category[]>( [] );
-  
-  useEffect( (): void =>
-  {
-    const fetchCategories = async (): Promise<void> =>
-    {
-      const result: Category[] = await getCategories();
-      setCategories( result );
-    };
-    
-    fetchCategories().then();
-  }, [] );
+  const categories: Category[] = await getCategories();
   
   return (
     <Widget title={"Categories"}>

@@ -5,6 +5,7 @@ import React from "react";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import { Session } from "next-auth";
+import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
   title:        {

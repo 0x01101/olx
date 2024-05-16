@@ -1,6 +1,7 @@
 import NavBar from "@/components/navbar";
 import React from "react";
 import { AddListingButton } from "@/components/add-listing-button";
+import { Footer } from "@/components/footer";
 
 export default async function Layout ( {
   children,
@@ -13,9 +14,10 @@ export default async function Layout ( {
       <NavBar>
         <AddListingButton />
       </NavBar>
-      <div className={"pt-[72px] min-h-[80vh] bg-primary"}>
+      <div className={"pt-[72px] min-h-[100vh] bg-primary"}>
         {children}
       </div>
+      <Footer />
     </>
   );
 }
