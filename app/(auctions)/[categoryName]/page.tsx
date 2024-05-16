@@ -30,7 +30,7 @@ export default async function Page ( { params }: PageProps ): Promise<JSX.Elemen
   return (
     <Products
       category={category}
-      products={[ ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products, ...products ]}
+      products={products}
     />
   );
 }
