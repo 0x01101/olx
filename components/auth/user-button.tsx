@@ -15,6 +15,7 @@ import { FaUserXmark } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { UserAvatar } from "@/components/auth/user-avatar";
 
 export function UserButton (): JSX.Element
 {
@@ -25,12 +26,7 @@ export function UserButton (): JSX.Element
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar>
-          <AvatarImage src={user?.image || ""} />
-          <AvatarFallback className={user ? "bg-sky-400" : "bg-red-500"}>
-            {user ? <FaUser className={"text-white"} /> : <FaUserXmark className={"text-white"} />}
-          </AvatarFallback>
-        </Avatar>
+        <UserAvatar user={user} />
       </DropdownMenuTrigger>
       <DropdownMenuContent className={"w-40 z-[1031]"} align={"end"}>
         {user ? (

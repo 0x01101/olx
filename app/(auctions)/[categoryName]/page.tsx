@@ -22,6 +22,7 @@ export default async function Page ( { params }: PageProps ): Promise<JSX.Elemen
     include: {
       category: true,
       seller:   true,
+      images:   true,
     },
   } ) ).map( ( product: ProductDTO ) => ProductDTOSchema.parse( product ) );
   if ( !products ) notFound();
