@@ -25,7 +25,7 @@ export function Footer (): JSX.Element
             <p className={"text-sm"}>{ip}</p>
           </div>
           <div>
-            <p className={"text-sm"}>Made with ❤️ by <Link href={"https://github.com/0x01101"}>0x01101</Link></p>
+            <p className={"text-sm"}>Made with ❤️ by <Link target={"_blank"} href={"https://github.com/0x01101"}>0x01101</Link></p>
           </div>
         </div>
       </div>
