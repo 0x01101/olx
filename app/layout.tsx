@@ -5,7 +5,6 @@ import React from "react";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import { Session } from "next-auth";
-import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
   title:        {
@@ -27,7 +26,7 @@ export default async function RootLayout ( {
   return (
     <SessionProvider session={session}>
       <html lang="en">
-      <body className={`${inter.className} antialiased dark`}>
+      <body className={`${inter.className} antialiased dark w-screen h-screen`}>
       {children}
       </body>
       </html>
