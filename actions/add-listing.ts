@@ -12,6 +12,7 @@ import { ExtendedUser } from "@/next-auth";
 import { Product } from "@prisma/client";
 import path from "path";
 import { redirect } from "next/navigation";
+import { messageProvider } from "@/lib/messages";
 
 export async function addListing ( {
   name,
@@ -25,7 +26,7 @@ export async function addListing ( {
   const session: Session | null = await auth();
   const user: ExtendedUser | undefined = session?.user;
   
-  if ( !user?.id ) return { error: "Unauthorized" };
+  if ( !user?.id ) return { error: messageProvider.error.noUser };
   
   const product: Product = await db.product.create( {
     data: {
@@ -40,7 +41,7 @@ export async function addListing ( {
     },
   } );
   
-  if ( !product ) return { error: "Failed to add listing" };
+  if ( !product ) return { error: messageProvider.error.generic };
   
   for ( let image of images )
   {

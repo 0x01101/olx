@@ -1,10 +1,11 @@
-import { Images, Product, UserRole } from "@prisma/client";
+import { Category, Images, Product, User, UserRole } from "@prisma/client";
 
 type Prefixed<T, Prefix extends string> = {
   [K in keyof T as `${Prefix}${string & K}`]: T[K];
 }
 
-export interface ServerResponse {
+export interface ServerResponse
+{
   success?: string;
   error?: string;
 }
@@ -22,3 +23,5 @@ export type ProductDTO = Product & {
   seller: UserDTO;
   images: Images[];
 }
+
+export type FullProduct = Product & { seller: User, category: Category, images: Images[] };

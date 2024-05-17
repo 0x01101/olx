@@ -88,7 +88,7 @@ export async function login ( values: z.infer<typeof LoginSchema>, redirectTo?: 
         case "CredentialsSignin":
           return { error: messageProvider.error.invalidCredentials };
         default:
-          return { error: messageProvider.error.genericError };
+          return { error: messageProvider.error.generic };
       }
     
     throw e;
