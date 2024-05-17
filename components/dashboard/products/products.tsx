@@ -2,7 +2,7 @@
 
 import { FullProduct, ServerResponse } from "@/lib/definitions";
 import { useState } from "react";
-import { ProductCard, ProductCreateCard } from "@/components/dashboard/product-card";
+import { ProductCard, ProductCreateCard } from "@/components/dashboard/products/product-card";
 import { deleteProduct } from "@/actions/delete";
 import { Category, Product, User } from "@prisma/client";
 import { z } from "zod";

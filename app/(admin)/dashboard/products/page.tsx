@@ -1,7 +1,7 @@
 import { Widget } from "@/components/widget";
 import { db } from "@/lib/db";
 import { FullProduct } from "@/lib/definitions";
-import { Products } from "@/components/dashboard/products";
+import { Products } from "@/components/dashboard/products/products";
 import { Category, User } from "@prisma/client";
 
 export default async function Page (): Promise<JSX.Element>
