@@ -303,3 +303,12 @@ export function ProductCard ( {
     </div>
   );
 }
+
+export function CreateProductCard (): JSX.Element
+{
+  return (
+    <div className={"bg-popover rounded-md p-2 flex w-[225px] shadow-md items-center justify-center"}>
+      fsdfs
+    </div>
+  )
+}
