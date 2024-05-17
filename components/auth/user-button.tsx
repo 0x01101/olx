@@ -10,12 +10,13 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaUser } from "react-icons/fa";
 import { LogoutButton } from "@/components/auth/logout-button";
-import { EnterIcon, ExitIcon, GearIcon } from "@radix-ui/react-icons";
+import { DashboardIcon, EnterIcon, ExitIcon, GearIcon } from "@radix-ui/react-icons";
 import { FaUserXmark } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { UserAvatar } from "@/components/auth/user-avatar";
+import { UserRole } from "@prisma/client";
 
 export function UserButton (): JSX.Element
 {
@@ -45,8 +46,19 @@ export function UserButton (): JSX.Element
                 </div>
               </div>
             </DropdownMenuLabel>
+            {user?.role === UserRole.ADMIN && (
+              <Link
+                href={`/dashboard`}
+                className={"no-underline"}
+              >
+                <DropdownMenuItem className={"text-gray-400"}>
+                  <DashboardIcon className={"h-4 w-4 mr-2"}/>
+                  Dashboard
+                </DropdownMenuItem>
+              </Link>
+            )}
             <Link
-              href={`/auth/login?redirectUrl=${pathname}`}
+              href={`/account`}
               className={"no-underline"}
             >
               <DropdownMenuItem className={"text-gray-400"}>
