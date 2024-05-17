@@ -6,7 +6,7 @@
 - Top-notch security features (example above)
 - RegExp based search
 - \<2 years load times
-- Unintuitive UI
+- Unintuitive, unresponsive UI
 - Barely working login system
 - Chance to get copyright struck by OLX
 ## How to run:
