@@ -1,5 +1,14 @@
 # Fucking spaghetti code
 <img src="assets/images/Security.png" alt="Security"></img>
+## Features:
+- At least one unintended exploit
+- Unmaintainable spaghetti code
+- Top-notch security features (example above)
+- RegExp based search
+- \<2 years load times
+- Unintuitive UI
+- Barely working login system
+- Chance to get copyright struck by OLX
 ## How to run:
 1. Clone the repository
 2. `cd` into cloned repository
