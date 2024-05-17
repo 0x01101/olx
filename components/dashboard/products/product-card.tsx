@@ -97,7 +97,7 @@ export function ProductCard ( {
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
                 This action cannot be undone. This will permanently delete this
-                product and remove its data from servers.
+                product and remove its data.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

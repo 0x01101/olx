@@ -84,3 +84,7 @@ export const SimpleListingUpdateSchema = z.object( {
   category:    z.string().min( 1, "Category is required" ).regex( /^[1-9]\d*$/ ),
   seller_id:   z.string().min( 1, "Seller is required" ),
 } );
+
+export const SimpleCategoryUpdateSchema = z.object( {
+  name: z.string().min( 1, "Name is required" ),
+} );

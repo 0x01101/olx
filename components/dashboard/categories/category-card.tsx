@@ -9,9 +9,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Cross2Icon, Link1Icon } from "@radix-ui/react-icons";
+import { Cross2Icon, DashIcon, Link1Icon } from "@radix-ui/react-icons";
 import { FullCategory } from "@/lib/definitions";
 import Link from "next/link";
+import { useState, useTransition } from "react";
 
 interface CategoryCardProps
 {
@@ -21,6 +22,10 @@ interface CategoryCardProps
 
 export function CategoryCard ( { category, deleteHandler }: CategoryCardProps ): JSX.Element
 {
+  const [ folded, setFolded ] = useState<boolean>( false );
+  const [ isPending, startTransition ] = useTransition();
+  const [ changed, setChanged ] = useState<string[]>( [] );
+  
   return (
     <div className={"bg-popover rounded-md p-2 flex flex-col w-[225px] shadow-md items-center space-y-2"}>
       <div className={"flex flex-row-reverse mb-1 w-full"}>
@@ -39,26 +44,34 @@ export function CategoryCard ( { category, deleteHandler }: CategoryCardProps ):
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={() => deleteHandler(category)}>
+                <AlertDialogAction onClick={() => deleteHandler( category )}>
                   Continue
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
         )}
+        <DashIcon
+          className={"w-5 h-5 bg-orange-600 rounded-full cursor-pointer"}
+          onClick={() => setFolded( !folded )}
+        />
         <div className="mr-auto">
           <Link href={`/${category.name.toLowerCase()}`}>
             <Link1Icon className={"w-5 h-5 bg-blue-600 rounded-full cursor-pointer"} />
           </Link>
         </div>
       </div>
-      <div className={"flex w-[200px] h-[200px] justify-center items-center"}>
-        {category.image ?(<>
-        </>) : (<>
-          No Image
-        </>)}
-      </div>
-      {category.name}
+      {!folded && (
+        <>
+          <div className={"flex w-[200px] h-[200px] justify-center items-center"}>
+            {category.image ? ( <>
+            </> ) : ( <>
+              No Image
+            </> )}
+          </div>
+          {category.name}
+        </>
+      )}
     </div>
   );
 }
