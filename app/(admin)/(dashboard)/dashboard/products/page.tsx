@@ -1,8 +1,8 @@
 import { Widget } from "@/components/widget";
 import { db } from "@/lib/db";
-import { ProductCard } from "@/components/dashboard/product-card";
 import { FullProduct } from "@/lib/definitions";
 import { Products } from "@/components/dashboard/products";
+import { Category, User } from "@prisma/client";
 
 export default async function Page (): Promise<JSX.Element>
 {
@@ -13,10 +13,12 @@ export default async function Page (): Promise<JSX.Element>
       images:   true,
     },
   } );
+  const categories: Category[] = await db.category.findMany();
+  const users: User[] = await db.user.findMany();
   
   return (
     <Widget title={"Products"}>
-      <Products products={products} />
+      <Products products={products} categories={categories} users={users} />
     </Widget>
   );
 }

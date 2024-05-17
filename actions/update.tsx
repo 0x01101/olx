@@ -1,26 +1,40 @@
 "use server";
 
-import { ServerResponse } from "@/lib/definitions";
+import { FullProduct, ServerResponse } from "@/lib/definitions";
 import { Product, UserRole } from "@prisma/client";
 import { messageProvider } from "@/lib/messages";
 import { ExtendedUser } from "@/next-auth";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { z } from "zod";
+import { SimpleListingUpdateSchema } from "@/schemas";
 
-export async function updateProduct ( product: Product ): Promise<ServerResponse & { updated?: Product }>
+export async function updateProduct ( data: z.infer<typeof SimpleListingUpdateSchema> & {
+  id: string
+} ): Promise<ServerResponse & {
+  updated?: FullProduct
+}>
 {
   const user: ExtendedUser | undefined = ( await auth() )?.user;
   if ( !user ) return { error: messageProvider.error.noUser };
-  if ( user.role !== UserRole.ADMIN || user.id !== product.seller_id )
+  if ( user.role !== UserRole.ADMIN && user.id !== data.seller_id )
     return { error: messageProvider.error.noPermissions };
   
-  // TODO: Add check if user is admin to not allow normal user to change product's seller
-  const updated: Product = await db.product.update( {
-    where: { id: product.id },
-    data:  {
-      ...product
+  let { category, ...cleanData } = data;
+  
+  const updated: FullProduct = await db.product.update( {
+    where: { id: data.id },
+    data: {
+      ...cleanData,
+      category_id: Number( category ),
+      price:       Number( data.price ),
+    },
+    include: {
+      category: true,
+      images:   true,
+      seller:   true,
     },
   } );
   
-  return { success: messageProvider.success.productUpdated };
+  return { updated, success: messageProvider.success.productUpdated };
 }

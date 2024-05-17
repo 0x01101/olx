@@ -75,3 +75,12 @@ export const ListingAddSchema = z.object( {
   state:       z.enum( [ "NEW", "USED", "BROKEN" ] ).default( "USED" ),
   category:    z.string().min( 1, "Category is required" ).regex( /^[1-9]\d*$/ ),
 } );
+
+export const SimpleListingUpdateSchema = z.object( {
+  name:        z.string().min( 1, "Name is required" ),
+  description: z.string().min( 1, "Description is required" ),
+  price:       z.string().min( 1, "Price is required" ).regex( /^[1-9]\d*$/ ),
+  state:       z.enum( [ "NEW", "USED", "BROKEN" ] ).default( "USED" ),
+  category:    z.string().min( 1, "Category is required" ).regex( /^[1-9]\d*$/ ),
+  seller_id:   z.string().min( 1, "Seller is required" ),
+} );

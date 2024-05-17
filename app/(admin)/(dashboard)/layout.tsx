@@ -18,7 +18,7 @@ export default async function RootLayout ( {
 }> ): Promise<JSX.Element>
 {
   return (
-    <div className={"h-full bg-primary overflow-hidden flex"}>
+    <div className={"min-h-screen bg-primary flex"}>
       <SideBar />
       <div className={"w-full h-full"}>
         {children}
