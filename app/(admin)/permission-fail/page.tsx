@@ -1,7 +1,5 @@
 import { IoArrowBack } from "react-icons/io5";
 import Link from "next/link";
-import ReactPlayer from "react-player";
-import { RickRoll } from "@/components/rick-roll";
 
 export default async function Page (): Promise<JSX.Element>
 {
