@@ -25,3 +25,5 @@ export type ProductDTO = Product & {
 }
 
 export type FullProduct = Product & { seller: User, category: Category, images: Images[] };
+
+export type FullCategory = Category & { Product: Product[] };

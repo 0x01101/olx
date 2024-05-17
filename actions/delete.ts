@@ -30,3 +30,22 @@ export async function deleteProduct ( { id }: { id: string } ): Promise<ServerRe
   
   return { success: messageProvider.success.productDeleted };
 }
+
+export async function deleteCategory ( { id }: { id: number } ): Promise<ServerResponse>
+{
+  const user: ExtendedUser | undefined = ( await auth() )?.user;
+  if ( !user ) return { error: messageProvider.error.noUser };
+  if ( user.role !== UserRole.ADMIN ) return { error: messageProvider.error.noPermissions };
+  
+  await db.product.deleteMany( {
+    where: {
+      category_id: id,
+    },
+  } );
+  
+  await db.category.delete( {
+    where: { id },
+  } );
+  
+  return { success: messageProvider.success.categoryDeleted };
+}

@@ -22,7 +22,8 @@
     "loggedIn" : "Logged in",
     "passwordUpdated" : "Password updated",
     "resetEmailSent" : "Password reset email sent",
-    "productDeleted": "Product deleted successfully.",
-    "productUpdated": "Product updated successfully."
+    "productDeleted" : "Product deleted successfully.",
+    "productUpdated" : "Product updated successfully.",
+    "categoryDeleted" : "Category deleted successfully."
   }
 }
