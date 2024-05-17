@@ -2,15 +2,14 @@ import NextAuth from "next-auth";
 import authConfig from "@/auth.config";
 import { adminRoutes, apiAuthPrefix, authRoutes, DEFAULT_LOGIN_REDIRECT, privateRoutes } from "@/routes";
 import { NextURL } from "next/dist/server/web/next-url";
-import { ExtendedUser } from "@/next-auth";
+import { auth as Auth } from "@/auth";
 import { UserRole } from "@prisma/client";
 
 const { auth } = NextAuth( authConfig );
 
-export default auth( ( req ): undefined | Response =>
+export default auth( async ( req ): Promise<undefined | Response> =>
 {
   const { nextUrl }: { nextUrl: NextURL } = req;
-  const user: ExtendedUser | undefined = req.auth?.user;
   const isLoggedIn: boolean = !!req.auth;
   
   const isApiAuthRoute: boolean = nextUrl.pathname.startsWith( apiAuthPrefix );
@@ -25,7 +24,8 @@ export default auth( ( req ): undefined | Response =>
     return;
   }
   if ( !isLoggedIn && isPrivateRoute ) return Response.redirect( new URL( "/auth/login", nextUrl ) );
-  if ( isAdminRoute && user?.role !== UserRole.ADMIN ) return Response.redirect( new URL( "/permission-fail", nextUrl ) );
+  if ( isAdminRoute && isLoggedIn && ( await Auth() )?.user?.role !== UserRole.ADMIN )
+    return Response.redirect( new URL( "/permission-fail", nextUrl ) );
 } );
 
 export const config: { matcher: string[] } = {
