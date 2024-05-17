@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import Link from "next/link";
 import { useState } from "react";
-import Image from "next/image";
 import { PreviewableImage } from "@/components/previewable-image";
 
 interface ProductCardProps
@@ -66,6 +65,7 @@ export function ProductCard ( { product, deleteHandler }: ProductCardProps ): JS
             height={200}
             className={"rounded"}
           />
+          <h3 className={"text-xl"}>{product.name}</h3>
         </>
       )}
     </div>

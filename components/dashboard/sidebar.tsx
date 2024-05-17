@@ -5,6 +5,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { dosis } from "@/lib/fonts";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface EntryProps
 {
@@ -31,10 +32,16 @@ export function SideBar (): JSX.Element
 
 function Entry ( { children, href }: EntryProps ): JSX.Element
 {
+  const pathname: string = usePathname();
+  const path: string = `/dashboard/${href}`
+  
   return (
     <Link
-      className={"w-full bg-popover rounded-md p-2 text-center hover:scale-110 transition-all"}
-      href={`/dashboard/${href}`}
+      className={cn(
+        "w-full rounded-md p-2 text-center hover:scale-110 transition-all",
+        pathname === path ? "bg-emerald-700" : "bg-popover"
+      )}
+      href={path}
     >
       {children}
     </Link>
