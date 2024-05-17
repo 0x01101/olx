@@ -1,7 +1,7 @@
 "use client";
 
 import { FullProduct } from "@/lib/definitions";
-import { Cross2Icon } from "@radix-ui/react-icons";
+import { Cross2Icon, DashIcon, Link1Icon } from "@radix-ui/react-icons";
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel,
   AlertDialogContent,
@@ -9,6 +9,10 @@ import {
   AlertDialogHeader, AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import Link from "next/link";
+import { useState } from "react";
+import Image from "next/image";
+import { PreviewableImage } from "@/components/previewable-image";
 
 interface ProductCardProps
 {
@@ -18,12 +22,14 @@ interface ProductCardProps
 
 export function ProductCard ( { product, deleteHandler }: ProductCardProps ): JSX.Element
 {
+  const [ folded, setFolded ] = useState<boolean>( false );
+  
   return (
-    <div className={"bg-popover rounded-md p-2 flex flex-col w-[225px] shadow-md"}>
-      <div className={"flex flex-row-reverse"}>
-        <AlertDialog>
+    <div className={"bg-popover rounded-md p-2 flex flex-col w-[225px] shadow-md items-center space-y-2"}>
+      <div className={"flex flex-row-reverse mb-1 w-full"}>
+        {deleteHandler !== undefined && ( <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Cross2Icon className={"w-5 h-5 bg-red-600 rounded-full cursor-pointer"} />
+            <Cross2Icon className={"w-5 h-5 bg-red-600 rounded-full cursor-pointer ml-1"} />
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
@@ -35,15 +41,33 @@ export function ProductCard ( { product, deleteHandler }: ProductCardProps ): JS
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={() => deleteHandler ? deleteHandler( product ) : undefined}
-              >
+              <AlertDialogAction onClick={() => deleteHandler( product )}>
                 Continue
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
-        </AlertDialog>
+        </AlertDialog> )}
+        <DashIcon
+          className={"w-5 h-5 bg-orange-600 rounded-full cursor-pointer"}
+          onClick={() => setFolded( !folded )}
+        />
+        <div className="mr-auto">
+          <Link href={`/offer/${product.id}`}>
+            <Link1Icon className={"w-5 h-5 bg-blue-600 rounded-full cursor-pointer"} />
+          </Link>
+        </div>
       </div>
+      {!folded && (
+        <>
+          <PreviewableImage
+            src={product.image}
+            alt={`${product.name}'s Image'`}
+            width={200}
+            height={200}
+            className={"rounded"}
+          />
+        </>
+      )}
     </div>
   );
 }

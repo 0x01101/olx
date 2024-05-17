@@ -24,7 +24,7 @@ export function Products ( { products: ps }: ProductsProps ): JSX.Element
   return (
     <div
       style={{ gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))" }}
-      className={"grid w-full h-full items-stretch gap-4"}
+      className={"grid w-full h-full items-start gap-4"}
     >
       {products.map( ( product: FullProduct, index: number ): JSX.Element => (
         <ProductCard key={index} product={product} deleteHandler={deleteCallback} />
