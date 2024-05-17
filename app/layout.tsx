@@ -8,7 +8,7 @@ import { Session } from "next-auth";
 
 export const metadata: Metadata = {
   title:        {
-    template: "%s | olx.pl",
+    template: "%s | Jast",
     default: "Jast",
   },
   description:  "Jast - Just auction service try",

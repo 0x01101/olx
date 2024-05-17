@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import React from "react";
+import { SideBar } from "@/components/dashboard/sidebar";
 
 export const metadata: Metadata = {
   title:        {
@@ -17,8 +18,11 @@ export default async function RootLayout ( {
 }> ): Promise<JSX.Element>
 {
   return (
-    <div className={"h-full flex flex-col bg-primary"}>
-      {children}
+    <div className={"h-full bg-primary overflow-hidden flex"}>
+      <SideBar />
+      <div className={"w-full h-full"}>
+        {children}
+      </div>
     </div>
   );
 }
