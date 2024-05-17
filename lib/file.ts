@@ -1,3 +1,5 @@
+"use server";
+
 import * as fs from "fs";
 import path from "path";
 
@@ -12,7 +14,7 @@ export async function convertFileToBase64 ( file: File ): Promise<string>
   } );
 }
 
-export function rmrf ( dirPath: string ): void
+export async function rmrf ( dirPath: string ): Promise<void>
 {
   if ( !fs.existsSync( dirPath ) ) return;
   fs.readdirSync( dirPath ).forEach( ( file: string ): void =>
