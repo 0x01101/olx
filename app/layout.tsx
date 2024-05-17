@@ -1,17 +1,18 @@
-import "./ui/css/global.css";
-import { inter } from "@/app/ui/fonts";
+import "./globals.css";
+import { inter } from "@/lib/fonts";
 import { Metadata } from "next";
 import React from "react";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import { Session } from "next-auth";
+import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
   title:        {
     template: "%s | olx.pl",
-    default:  "olx.pl",
+    default: "Jast",
   },
-  description:  "olx's clone or smth, idk",
+  description:  "Jast - Just auction service try",
   metadataBase: new URL( "https://j3rzy.dev/" ),
 };
 
@@ -26,7 +27,7 @@ export default async function RootLayout ( {
   return (
     <SessionProvider session={session}>
       <html lang="en">
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${inter.className} antialiased dark`}>
       {children}
       </body>
       </html>

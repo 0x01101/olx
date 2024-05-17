@@ -10,14 +10,7 @@ import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 
 import { LoginSchema } from "@/schemas";
 import { CardWrapper } from "@/components/auth/card-wrapper";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
@@ -29,6 +22,7 @@ export function LoginForm (): JSX.Element
 {
   const searchParams: ReadonlyURLSearchParams = useSearchParams();
   const urlError: string = searchParams.get( "error" ) === "OAuthAccountNotLinked" ? "Email already in use with different provider" : "";
+  const redirectUrl: string | null = searchParams.get( "redirectUrl" );
   
   const [ showTwoFactor, setShowTwoFactor ] = useState<boolean>( false );
   const [ error, setError ] = useState<string | undefined>( "" );
@@ -50,7 +44,7 @@ export function LoginForm (): JSX.Element
     
     startTransition( async (): Promise<void> =>
     {
-      const response: ServerResponse & { twoFactor?: boolean } = await login( values );
+      const response: ServerResponse & { twoFactor?: boolean } = await login( values, redirectUrl );
       setError( response?.error );
       setSuccess( response?.success );
       

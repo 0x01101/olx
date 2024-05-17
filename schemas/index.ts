@@ -29,3 +29,49 @@ export const NewPasswordSchema = z.object( {
     message: "Minimum 6 characters required",
   } ),
 } );
+
+export const SearchSchema = z.object( {
+  search: z.string(),
+} );
+
+export const UserDTOSchema = z.object( {
+  id:        z.string(),
+  name:      z.string().optional().nullable(),
+  image:     z.string().optional().nullable(),
+  role:      z.enum( [ "USER", "ADMIN" ] ),
+  createdAt: z.date(),
+} );
+
+export const ProductDTOSchema = z.object( {
+  id:          z.string(),
+  name:        z.string(),
+  description: z.string(),
+  price:       z.number(),
+  image:       z.string(),
+  state:       z.enum( [ "NEW", "USED", "BROKEN" ] ),
+  category_id: z.number(),
+  seller_id:   z.string(),
+  createdAt:   z.date(),
+  updatedAt:   z.date(),
+  category:    z.object( {
+    id:        z.number(),
+    name:      z.string(),
+    image:     z.string().optional().nullable(),
+    parent_id: z.number().optional().nullable(),
+  } ),
+  images:      z.array( z.object( {
+    id:        z.string(),
+    url:       z.string(),
+    productId: z.string(),
+  } ) ),
+  seller:      UserDTOSchema,
+} );
+
+export const ListingAddSchema = z.object( {
+  name:        z.string().min( 1, "Name is required" ),
+  description: z.string().min( 1, "Description is required" ),
+  price:       z.string().min( 1, "Price is required" ).regex( /^[1-9]\d*$/ ),
+  images:      z.string().min( 1, "Image is required" ),
+  state:       z.enum( [ "NEW", "USED", "BROKEN" ] ).default( "USED" ),
+  category:    z.string().min( 1, "Category is required" ).regex( /^[1-9]\d*$/ ),
+} );

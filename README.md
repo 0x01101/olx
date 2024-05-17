@@ -17,7 +17,7 @@
 db.$queryRaw<Type>`QUERY`;
 ```
 **How to add field to user to retrieve it using `useSession()`:**<br>
-`@/auth.ts`:
+`@/session.ts`:
 ```ts
 async session ( { token, session }: { token: JWT, session: { user: AdapterUser } & AdapterSession & Session } )
 {
@@ -37,7 +37,7 @@ async jwt ( { token }: { token: JWT } ): Promise<JWT>
   ...
 },
 ```
-`@/next-auth.d.ts`:
+`@/next-session.d.ts`:
 ```ts
 export type ExtendedUser = DefaultSession["user"] & {
   ...
@@ -49,7 +49,7 @@ export type ExtendedUser = DefaultSession["user"] & {
 
 ...
 
-declare module "@auth/core/jwt"
+declare module "@session/core/jwt"
 {
   interface JWT
   {
