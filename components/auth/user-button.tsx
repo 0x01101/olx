@@ -29,7 +29,7 @@ export function UserButton (): JSX.Element
       <DropdownMenuTrigger>
         <UserAvatar user={user} />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className={"w-40 z-[1031]"} align={"end"}>
+      <DropdownMenuContent className={"w-[255px] z-[1031]"} align={"end"}>
         {user ? (
           <>
             <DropdownMenuLabel>
