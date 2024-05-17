@@ -8,6 +8,11 @@ const nextConfig = {
       pathname: "/images/**",
     }, ]
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "1Gb"
+    }
+  }
 };
 
 export default nextConfig;
