@@ -32,12 +32,13 @@ interface EntryProps
 {
   children: React.ReactNode;
   href: string;
+  corePath: string;
 }
 
-export function Entry ( { children, href }: EntryProps ): JSX.Element
+export function Entry ( { children, href, corePath }: EntryProps ): JSX.Element
 {
   const pathname: string = usePathname();
-  const path: string = `/dashboard/${href}`;
+  const path: string = `${corePath}/${href}`;
   
   return (
     <Link

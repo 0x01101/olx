@@ -61,8 +61,16 @@ export const {
       
       return session;
     },
-    async jwt ( { token }: { token: JWT } ): Promise<JWT>
+    async jwt (
+      { token, trigger, session }:
+        { token: JWT, trigger?: "signIn" | "update" | "signUp", session?: any },
+    ): Promise<JWT>
     {
+      if ( trigger === "update" )
+      {
+        console.log( session );
+      }
+      
       if ( !token.sub )
         return token;
       

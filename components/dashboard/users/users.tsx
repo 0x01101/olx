@@ -9,6 +9,7 @@ import { ServerResponse } from "@/lib/definitions";
 import { z } from "zod";
 import { SimpleUserUpdateSchema } from "@/schemas";
 import { updateUser } from "@/actions/update";
+import { useSession } from "next-auth/react";
 
 interface UsersProps
 {
@@ -17,12 +18,15 @@ interface UsersProps
 
 export function Users ( { users: us }: UsersProps ): JSX.Element
 {
+  const session = useSession();
+  
   const [ users, setUsers ] = useState<User[]>( us );
   
   const deleteCallback = async ( { id }: { id: string } ): Promise<void> =>
   {
     const response: ServerResponse = await deleteUser( { id } );
     if ( response.success ) setUsers( users.filter( ( user: User ): boolean => user.id !== id ) );
+    await session.update();
   };
   
   const updateCallback = async ( user: z.infer<typeof SimpleUserUpdateSchema> & { id: string } ): Promise<void> =>
@@ -30,6 +34,7 @@ export function Users ( { users: us }: UsersProps ): JSX.Element
     const { updated }: ServerResponse & { updated?: User } = await updateUser( user );
     if ( updated )
       setUsers( users.map( ( u: User ): User => u.id === user.id ? updated : u ) );
+    await session.update();
   };
   
   return (
