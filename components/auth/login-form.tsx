@@ -17,9 +17,12 @@ import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import Link from "next/link";
 import { ServerResponse } from "@/lib/definitions";
+import { useSession } from "next-auth/react";
 
 export function LoginForm (): JSX.Element
 {
+  const { update } = useSession();
+  
   const searchParams: ReadonlyURLSearchParams = useSearchParams();
   const urlError: string = searchParams.get( "error" ) === "OAuthAccountNotLinked" ? "Email already in use with different provider" : "";
   const redirectUrl: string | null = searchParams.get( "redirectUrl" );

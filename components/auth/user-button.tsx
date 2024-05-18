@@ -90,7 +90,7 @@ export function UserButton ( { variant }: UserButtonProps ): JSX.Element
                 My Account
               </DropdownMenuItem>
             </Link>
-            <LogoutButton session={session}>
+            <LogoutButton>
               <DropdownMenuItem className={"text-gray-400"}>
                 <ExitIcon className={"h-4 w-4 mr-2"} />
                 Log Out

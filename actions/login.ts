@@ -14,8 +14,12 @@ import { ServerResponse } from "@/lib/definitions";
 import { getTwoFactorTokenByEMail } from "@/data/two-factor-token";
 import { db } from "@/lib/db";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
+import { UpdateSession } from "next-auth/react";
 
-export async function login ( values: z.infer<typeof LoginSchema>, redirectTo?: string | null ): Promise<ServerResponse & { twoFactor?: boolean }>
+export async function login (
+  values: z.infer<typeof LoginSchema>,
+  redirectTo?: string | null,
+): Promise<ServerResponse & { twoFactor?: boolean }>
 {
   const validatedFields = LoginSchema.safeParse( values );
   
