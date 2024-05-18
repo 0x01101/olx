@@ -35,6 +35,9 @@ export function SideBar (): JSX.Element
       <Entry href={"categories"}>
         Categories
       </Entry>
+      <Entry href={"users"}>
+        Users
+      </Entry>
       <div className="flex-grow" />
       <UserButton variant={"info"} />
     </Widget>

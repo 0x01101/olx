@@ -1,13 +1,13 @@
 "use server";
 
 import { FullCategory, FullProduct, ServerResponse } from "@/lib/definitions";
-import { Product, UserRole } from "@prisma/client";
+import { Product, User, UserRole } from "@prisma/client";
 import { messageProvider } from "@/lib/messages";
 import { ExtendedUser } from "@/next-auth";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { z } from "zod";
-import { SimpleCategoryUpdateSchema, SimpleListingUpdateSchema } from "@/schemas";
+import { SimpleCategoryUpdateSchema, SimpleListingUpdateSchema, SimpleUserUpdateSchema } from "@/schemas";
 
 export async function updateProduct ( data: z.infer<typeof SimpleListingUpdateSchema> & {
   id: string
@@ -56,4 +56,21 @@ export async function updateCategory ( { id, name, image }: z.infer<typeof Simpl
   } );
   
   return { updated, success: messageProvider.success.categoryUpdated };
+}
+
+export async function updateUser ( { id, ...data }: z.infer<typeof SimpleUserUpdateSchema> & {
+  id: string
+} ): Promise<ServerResponse & { updated?: User }>
+{
+  const user: ExtendedUser | undefined = ( await auth() )?.user;
+  if ( !user ) return { error: messageProvider.error.noUser };
+  if ( user.role !== UserRole.ADMIN && user.id !== id )
+    return { error: messageProvider.error.noPermissions };
+  
+  const updated: User = await db.user.update( {
+    where: { id },
+    data,
+  } );
+  
+  return { updated, success: messageProvider.success.userUpdated };
 }

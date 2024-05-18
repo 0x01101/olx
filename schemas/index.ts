@@ -88,3 +88,10 @@ export const SimpleListingUpdateSchema = z.object( {
 export const SimpleCategoryUpdateSchema = z.object( {
   name:  z.string().min( 1, "Name is required" ),
 } );
+
+export const SimpleUserUpdateSchema = z.object( {
+  name: z.string().optional(),
+  email: z.string().optional(),
+  role: z.enum( [ "USER", "ADMIN" ] ),
+  isTwoFactorEnabled: z.boolean(),
+})

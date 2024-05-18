@@ -26,6 +26,8 @@
     "productUpdated" : "Product updated successfully.",
     "categoryDeleted" : "Category deleted successfully.",
     "categoryUpdated" : "Category updated successfully.",
-    "categoryCreated" : "Category created successfully."
+    "categoryCreated" : "Category created successfully.",
+    "userDeleted" : "User deleted successfully.",
+    "userUpdated": "User updated successfully."
   }
 }

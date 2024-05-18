@@ -49,3 +49,21 @@ export async function deleteCategory ( { id }: { id: number } ): Promise<ServerR
   
   return { success: messageProvider.success.categoryDeleted };
 }
+
+export async function deleteUser ( { id }: { id: string } ): Promise<ServerResponse>
+{
+  const user: ExtendedUser | undefined = ( await auth() )?.user;
+  if ( !user ) return { error: messageProvider.error.noUser };
+  if ( user.role !== UserRole.ADMIN && user.id !== id )
+    return { error: messageProvider.error.noPermissions };
+  
+  await db.account.delete( {
+    where: { userId: id },
+  } );
+  
+  await db.user.delete( {
+    where: { id },
+  } );
+  
+  return { success: messageProvider.success.userDeleted };
+}
