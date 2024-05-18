@@ -10,8 +10,8 @@ grant all privileges on olx.* to funnyuser@'%';
 create or replace table category
 (
   id        int auto_increment primary key,
-  name      varchar(191) not null,
-  image     longtext null,
+  name      varchar(255) not null,
+  image     longtext     null,
   parent_id int          null,
   constraint category_name_key unique (name),
   constraint category_parent_id_fkey
@@ -25,9 +25,9 @@ create or replace index category_parent_id_idx
 
 create or replace table passwordresettoken
 (
-  id      varchar(191) not null,
-  email   varchar(191) not null,
-  token   varchar(191) not null,
+  id      varchar(255) not null,
+  email   varchar(255) not null,
+  token   varchar(255) not null,
   expires datetime(3)  not null,
   primary key (id),
   constraint passwordresettoken_email_token_key
@@ -39,9 +39,9 @@ create or replace table passwordresettoken
 
 create or replace table twofactortoken
 (
-  id      varchar(191) not null,
-  email   varchar(191) not null,
-  token   varchar(191) not null,
+  id      varchar(255) not null,
+  email   varchar(255) not null,
+  token   varchar(255) not null,
   expires datetime(3)  not null,
   primary key (id),
   constraint twofactortoken_email_token_key
@@ -53,13 +53,13 @@ create or replace table twofactortoken
 
 create or replace table user
 (
-  id                 varchar(191)                                        not null,
-  name               varchar(191)                                        null,
-  username           varchar(191)                                        null,
-  email              varchar(191)                                        null,
+  id                 varchar(255)                                        not null,
+  name               varchar(255)                                        null,
+  username           varchar(255)                                        null,
+  email              varchar(255)                                        null,
   emailverified      datetime(3)                                         null,
-  image              varchar(191)                                        null,
-  password           varchar(191)                                        null,
+  image              longtext                                            null,
+  password           varchar(255)                                        null,
   role               enum ('USER', 'ADMIN') default 'USER'               not null,
   istwofactorenabled tinyint(1)             default 0                    not null,
   createdat          datetime(3)            default current_timestamp(3) not null,
@@ -74,18 +74,18 @@ create or replace table user
 
 create or replace table account
 (
-  id                       varchar(191)                             not null,
-  userid                   varchar(191)                             not null,
-  type                     varchar(191)                             not null,
-  provider                 varchar(191)                             not null,
-  provideraccountid        varchar(191)                             not null,
+  id                       varchar(255)                             not null,
+  userid                   varchar(255)                             not null,
+  type                     varchar(255)                             not null,
+  provider                 varchar(255)                             not null,
+  provideraccountid        varchar(255)                             not null,
   refresh_token            text                                     null,
   access_token             text                                     null,
   expires_at               int                                      null,
-  token_type               varchar(191)                             null,
-  scope                    varchar(191)                             null,
+  token_type               varchar(255)                             null,
+  scope                    varchar(255)                             null,
   id_token                 text                                     null,
-  session_state            varchar(191)                             null,
+  session_state            varchar(255)                             null,
   refresh_token_expires_in int                                      null,
   createdat                datetime(3) default current_timestamp(3) not null,
   updatedat                datetime(3)                              not null,
@@ -105,10 +105,10 @@ create or replace index account_userid_idx
 
 create or replace table notifications
 (
-  id        varchar(191)                             not null,
-  userid    varchar(191)                             not null,
-  title     varchar(191)                             not null,
-  message   varchar(191)                             not null,
+  id        varchar(255)                             not null,
+  userid    varchar(255)                             not null,
+  title     varchar(255)                             not null,
+  message   varchar(255)                             not null,
   `read`    tinyint(1)  default 0                    not null,
   createdat datetime(3) default current_timestamp(3) not null,
   updatedat datetime(3)                              not null,
@@ -121,15 +121,15 @@ create or replace table notifications
 
 create or replace table product
 (
-  id          varchar(191)                                                not null,
-  name        varchar(191)                                                not null,
+  id          varchar(255)                                                not null,
+  name        varchar(255)                                                not null,
   description longtext                                                    not null,
   price       double                                                      not null,
-  image       varchar(191)                                                not null,
+  image       varchar(255)                                                not null,
   category_id int                                                         not null,
   createdat   datetime(3)                    default current_timestamp(3) not null,
   updatedat   datetime(3)                                                 not null,
-  seller_id   varchar(191)                                                not null,
+  seller_id   varchar(255)                                                not null,
   state       enum ('NEW', 'USED', 'BROKEN') default 'USED'               not null,
   primary key (id),
   constraint product_category_id_fkey
@@ -143,9 +143,9 @@ create or replace table product
 
 create or replace table images
 (
-  id        varchar(191) not null,
-  productid varchar(191) not null,
-  url       longtext not null,
+  id        varchar(255) not null,
+  productid varchar(255) not null,
+  url       longtext     not null,
   primary key (id),
   constraint images_productid_fkey
     foreign key (productid) references product (id)
@@ -155,8 +155,8 @@ create or replace table images
 
 create or replace table twofactorconfirmation
 (
-  id     varchar(191) not null,
-  userid varchar(191) not null,
+  id     varchar(255) not null,
+  userid varchar(255) not null,
   primary key (id),
   constraint twofactorconfirmation_userid_key
     unique (userid),
@@ -168,9 +168,9 @@ create or replace table twofactorconfirmation
 
 create or replace table verificationtoken
 (
-  id      varchar(191) not null,
-  email   varchar(191) not null,
-  token   varchar(191) not null,
+  id      varchar(255) not null,
+  email   varchar(255) not null,
+  token   varchar(255) not null,
   expires datetime(3)  not null,
   primary key (id),
   constraint verificationtoken_email_token_key

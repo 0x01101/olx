@@ -7,7 +7,7 @@ import { UserCard } from "@/components/dashboard/users/user-card";
 import { deleteUser } from "@/actions/delete";
 import { ServerResponse } from "@/lib/definitions";
 import { z } from "zod";
-import { SimpleUserUpdateSchema } from "@/schemas";
+import { Admin_UserUpdateSchema } from "@/schemas";
 import { updateUser } from "@/actions/update";
 import { useSession } from "next-auth/react";
 
@@ -29,7 +29,7 @@ export function Users ( { users: us }: UsersProps ): JSX.Element
     await session.update();
   };
   
-  const updateCallback = async ( user: z.infer<typeof SimpleUserUpdateSchema> & { id: string } ): Promise<void> =>
+  const updateCallback = async ( user: z.infer<typeof Admin_UserUpdateSchema> & { id: string } ): Promise<void> =>
   {
     const { updated }: ServerResponse & { updated?: User } = await updateUser( user );
     if ( updated )

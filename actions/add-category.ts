@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { SimpleCategoryUpdateSchema } from "@/schemas";
+import { Admin_CategoryUpdateSchema } from "@/schemas";
 import { FullCategory, ServerResponse } from "@/lib/definitions";
 import { db } from "@/lib/db";
 import { ExtendedUser } from "@/next-auth";
@@ -9,7 +9,7 @@ import { auth } from "@/auth";
 import { messageProvider } from "@/lib/messages";
 import { UserRole } from "@prisma/client";
 
-export async function addCategory ( { image, name }: z.infer<typeof SimpleCategoryUpdateSchema> & {
+export async function addCategory ( { image, name }: z.infer<typeof Admin_CategoryUpdateSchema> & {
   image?: string | null
 } ): Promise<ServerResponse & { category?: FullCategory }>
 {

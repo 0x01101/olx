@@ -15,7 +15,7 @@ import { UserAvatar } from "@/components/auth/user-avatar";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { SimpleUserUpdateSchema } from "@/schemas";
+import { Admin_UserUpdateSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import isEqual from "react-fast-compare";
 import { Input } from "@/components/ui/input";
@@ -31,7 +31,7 @@ interface UserCardProps
 {
   user: User;
   deleteHandler?: ( user: { id: string } ) => void;
-  editHandler?: ( user: z.infer<typeof SimpleUserUpdateSchema> & { id: string } ) => void;
+  editHandler?: ( user: z.infer<typeof Admin_UserUpdateSchema> & { id: string } ) => void;
 }
 
 export function UserCard ( { user, deleteHandler, editHandler }: UserCardProps ): JSX.Element
@@ -49,8 +49,8 @@ export function UserCard ( { user, deleteHandler, editHandler }: UserCardProps )
     isTwoFactorEnabled: user.isTwoFactorEnabled,
   } ), [ user ] );
   
-  const form = useForm<z.infer<typeof SimpleUserUpdateSchema>>( {
-    resolver: zodResolver( SimpleUserUpdateSchema ),
+  const form = useForm<z.infer<typeof Admin_UserUpdateSchema>>( {
+    resolver: zodResolver( Admin_UserUpdateSchema ),
     defaultValues,
   } );
   
@@ -68,7 +68,7 @@ export function UserCard ( { user, deleteHandler, editHandler }: UserCardProps )
       setChanged( changedFields );
   }, [ formValues, defaultValues, changed ] );
   
-  const onSubmit = async ( values: z.infer<typeof SimpleUserUpdateSchema> ): Promise<void> =>
+  const onSubmit = async ( values: z.infer<typeof Admin_UserUpdateSchema> ): Promise<void> =>
   {
     startTransition( async (): Promise<void> =>
     {
@@ -138,7 +138,7 @@ export function UserCard ( { user, deleteHandler, editHandler }: UserCardProps )
                         {...field}
                         disabled={isPending}
                         readOnly={editHandler === undefined}
-                        className={changed.includes( field.name ) ? "border-emerald-700" : ""}
+                        className={changed.includes( field.name ) ? "border-emerald-700 focus-visible:ring-emerald-700" : "border-primary"}
                       />
                     </FormControl>
                   </FormItem>
@@ -155,7 +155,7 @@ export function UserCard ( { user, deleteHandler, editHandler }: UserCardProps )
                         {...field}
                         disabled={isPending}
                         readOnly={editHandler === undefined}
-                        className={changed.includes( field.name ) ? "border-emerald-700" : ""}
+                        className={changed.includes( field.name ) ? "border-emerald-700 focus-visible:ring-emerald-700" : "border-primary"}
                       />
                     </FormControl>
                   </FormItem>
@@ -173,7 +173,7 @@ export function UserCard ( { user, deleteHandler, editHandler }: UserCardProps )
                         defaultValue={field.value}
                         disabled={editHandler === undefined}
                       >
-                        <SelectTrigger className={changed.includes( field.name ) ? "border-emerald-700" : ""}>
+                        <SelectTrigger className={changed.includes( field.name ) ? "border-emerald-700 focus-visible:ring-emerald-700" : "border-primary"}>
                           <SelectValue placeholder={"Role"} />
                         </SelectTrigger>
                         <SelectContent>
@@ -203,7 +203,7 @@ export function UserCard ( { user, deleteHandler, editHandler }: UserCardProps )
                         defaultValue={field.value ? "1" : "0"}
                         disabled={editHandler === undefined}
                       >
-                        <SelectTrigger className={changed.includes( field.name ) ? "border-emerald-700" : ""}>
+                        <SelectTrigger className={changed.includes( field.name ) ? "border-emerald-700 focus-visible:ring-emerald-700" : "border-primary"}>
                           <SelectValue placeholder={"2FA Enabled"} />
                         </SelectTrigger>
                         <SelectContent>

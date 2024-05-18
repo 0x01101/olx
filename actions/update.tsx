@@ -7,9 +7,9 @@ import { ExtendedUser } from "@/next-auth";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { z } from "zod";
-import { SimpleCategoryUpdateSchema, SimpleListingUpdateSchema, SimpleUserUpdateSchema } from "@/schemas";
+import { Admin_CategoryUpdateSchema, Admin_ListingUpdateSchema, Admin_UserUpdateSchema } from "@/schemas";
 
-export async function updateProduct ( data: z.infer<typeof SimpleListingUpdateSchema> & {
+export async function updateProduct ( data: z.infer<typeof Admin_ListingUpdateSchema> & {
   id: string
 } ): Promise<ServerResponse & {
   updated?: FullProduct
@@ -39,7 +39,7 @@ export async function updateProduct ( data: z.infer<typeof SimpleListingUpdateSc
   return { updated, success: messageProvider.success.productUpdated };
 }
 
-export async function updateCategory ( { id, name, image }: z.infer<typeof SimpleCategoryUpdateSchema> & {
+export async function updateCategory ( { id, name, image }: z.infer<typeof Admin_CategoryUpdateSchema> & {
   id: number
   image?: string | null
 } ): Promise<ServerResponse & { updated?: FullCategory }>
@@ -58,7 +58,7 @@ export async function updateCategory ( { id, name, image }: z.infer<typeof Simpl
   return { updated, success: messageProvider.success.categoryUpdated };
 }
 
-export async function updateUser ( { id, ...data }: z.infer<typeof SimpleUserUpdateSchema> & {
+export async function updateUser ( { id, ...data }: z.infer<typeof Admin_UserUpdateSchema> & {
   id: string
 } ): Promise<ServerResponse & { updated?: User }>
 {

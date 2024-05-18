@@ -6,7 +6,7 @@ import { ProductCard } from "@/components/dashboard/products/product-card";
 import { deleteProduct } from "@/actions/delete";
 import { Category, Product, User } from "@prisma/client";
 import { z } from "zod";
-import { SimpleListingUpdateSchema } from "@/schemas";
+import { Admin_ListingUpdateSchema } from "@/schemas";
 import { updateProduct } from "@/actions/update";
 import { ProductCreateCard } from "@/components/dashboard/products/product-create-card";
 
@@ -28,7 +28,7 @@ export function Products ( { products: ps, categories, users }: ProductsProps ):
       setProducts( products.filter( ( product: FullProduct ): boolean => product.id !== id ) );
   };
   
-  const updateCallback = async ( product: z.infer<typeof SimpleListingUpdateSchema> & { id: string } ): Promise<void> =>
+  const updateCallback = async ( product: z.infer<typeof Admin_ListingUpdateSchema> & { id: string } ): Promise<void> =>
   {
     const { updated }: ServerResponse & { updated?: FullProduct } = await updateProduct( product );
     if ( updated )

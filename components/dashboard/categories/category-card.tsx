@@ -16,7 +16,7 @@ import React, { useCallback, useEffect, useMemo, useState, useTransition } from 
 import { isEmpty } from "@/lib/arrays";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { SimpleCategoryUpdateSchema } from "@/schemas";
+import { Admin_CategoryUpdateSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -30,7 +30,7 @@ interface CategoryCardProps
   imageSrc?: string | null;
   onImageUpload?: ( id: number, src: string | null ) => void;
   deleteHandler?: ( category: { id: number } ) => void;
-  editHandler?: ( category: z.infer<typeof SimpleCategoryUpdateSchema> & {
+  editHandler?: ( category: z.infer<typeof Admin_CategoryUpdateSchema> & {
     id: number,
     image?: string | null
   } ) => void;
@@ -52,8 +52,8 @@ export function CategoryCard ( {
     name: category.name,
   } ), [ category ] );
   
-  const form = useForm<z.infer<typeof SimpleCategoryUpdateSchema>>( {
-    resolver: zodResolver( SimpleCategoryUpdateSchema ),
+  const form = useForm<z.infer<typeof Admin_CategoryUpdateSchema>>( {
+    resolver: zodResolver( Admin_CategoryUpdateSchema ),
     defaultValues,
   } );
   
@@ -91,7 +91,7 @@ export function CategoryCard ( {
     }
   }, [ category.id, onImageUpload ] );
   
-  const onSubmit = async ( values: z.infer<typeof SimpleCategoryUpdateSchema> ): Promise<void> =>
+  const onSubmit = async ( values: z.infer<typeof Admin_CategoryUpdateSchema> ): Promise<void> =>
   {
     startTransition( async (): Promise<void> =>
     {
@@ -192,7 +192,7 @@ export function CategoryCard ( {
                         {...field}
                         disabled={isPending}
                         readOnly={!editHandler}
-                        className={changed.includes( field.name ) ? "border-emerald-700" : ""}
+                        className={changed.includes( field.name ) ? "border-emerald-700 focus-visible:ring-emerald-700" : "border-primary"}
                       />
                     </FormControl>
                   </FormItem>

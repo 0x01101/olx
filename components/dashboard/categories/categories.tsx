@@ -5,7 +5,7 @@ import { CategoryCard } from "@/components/dashboard/categories/category-card";
 import { FullCategory, ServerResponse } from "@/lib/definitions";
 import { deleteCategory } from "@/actions/delete";
 import { z } from "zod";
-import { SimpleCategoryUpdateSchema } from "@/schemas";
+import { Admin_CategoryUpdateSchema } from "@/schemas";
 import { updateCategory } from "@/actions/update";
 import { CategoryCreateCard } from "@/components/dashboard/categories/category-create-card";
 import { addCategory } from "@/actions/add-category";
@@ -38,7 +38,7 @@ export function Categories ( { categories: cats }: CategoriesProps ): JSX.Elemen
       setCategories( categories.filter( ( category: FullCategory ): boolean => category.id !== id ) );
   };
   
-  const updateCallback = async ( category: z.infer<typeof SimpleCategoryUpdateSchema> & {
+  const updateCallback = async ( category: z.infer<typeof Admin_CategoryUpdateSchema> & {
     id: number
     image?: string | null
   } ): Promise<void> =>
@@ -48,7 +48,7 @@ export function Categories ( { categories: cats }: CategoriesProps ): JSX.Elemen
       setCategories( categories.map( ( c: FullCategory ): FullCategory => c.id === category.id ? updated : c ) );
   };
   
-  const createCallback = async ( category: z.infer<typeof SimpleCategoryUpdateSchema> & {
+  const createCallback = async ( category: z.infer<typeof Admin_CategoryUpdateSchema> & {
     image?: string | null
   } ): Promise<void> =>
   {

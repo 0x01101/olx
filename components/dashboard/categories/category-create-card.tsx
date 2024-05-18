@@ -2,7 +2,7 @@
 
 import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons";
 import { z } from "zod";
-import { SimpleCategoryUpdateSchema } from "@/schemas";
+import { Admin_CategoryUpdateSchema } from "@/schemas";
 import { DialogHeader } from "next/dist/client/components/react-dev-overlay/internal/components/Dialog";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 
 interface CategoryCreateCardProps
 {
-  createHandler?: ( category: z.infer<typeof SimpleCategoryUpdateSchema> & {
+  createHandler?: ( category: z.infer<typeof Admin_CategoryUpdateSchema> & {
     image?: string | null
   } ) => void;
 }
@@ -25,11 +25,11 @@ export function CategoryCreateCard ( { createHandler }: CategoryCreateCardProps 
   const [ image, setImage ] = useState<string | null>( null );
   const [ isPending, startTransition ] = useTransition();
   
-  const form = useForm<z.infer<typeof SimpleCategoryUpdateSchema>>( {
-    resolver: zodResolver( SimpleCategoryUpdateSchema ),
+  const form = useForm<z.infer<typeof Admin_CategoryUpdateSchema>>( {
+    resolver: zodResolver( Admin_CategoryUpdateSchema ),
   } );
   
-  const onSubmit = async ( values: z.infer<typeof SimpleCategoryUpdateSchema> ) =>
+  const onSubmit = async ( values: z.infer<typeof Admin_CategoryUpdateSchema> ) =>
   {
     startTransition( () =>
     {

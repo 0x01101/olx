@@ -18,7 +18,7 @@ import { useEffect, useMemo, useState, useTransition } from "react";
 import { PreviewableImage } from "@/components/previewable-image";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { SimpleListingUpdateSchema } from "@/schemas";
+import { Admin_ListingUpdateSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Category, User } from "@prisma/client";
@@ -38,7 +38,7 @@ interface ProductCardProps
   categories?: Category[];
   users?: User[];
   deleteHandler?: ( product: { id: string } ) => void;
-  editHandler?: ( product: z.infer<typeof SimpleListingUpdateSchema> & { id: string } ) => void;
+  editHandler?: ( product: z.infer<typeof Admin_ListingUpdateSchema> & { id: string } ) => void;
 }
 
 export function ProductCard ( {
@@ -62,8 +62,8 @@ export function ProductCard ( {
     seller_id:   product.seller_id,
   } ), [ product ] );
   
-  const form = useForm<z.infer<typeof SimpleListingUpdateSchema>>( {
-    resolver:      zodResolver( SimpleListingUpdateSchema ),
+  const form = useForm<z.infer<typeof Admin_ListingUpdateSchema>>( {
+    resolver:      zodResolver( Admin_ListingUpdateSchema ),
     defaultValues,
   } );
   
@@ -81,7 +81,7 @@ export function ProductCard ( {
       setChanged( changedFields );
   }, [ formValues, defaultValues, changed ] );
   
-  const onSubmit = async ( values: z.infer<typeof SimpleListingUpdateSchema> ): Promise<void> =>
+  const onSubmit = async ( values: z.infer<typeof Admin_ListingUpdateSchema> ): Promise<void> =>
   {
     startTransition( async (): Promise<void> =>
     {
@@ -147,7 +147,7 @@ export function ProductCard ( {
                         {...field}
                         disabled={isPending}
                         readOnly={editHandler === undefined}
-                        className={changed.includes( field.name ) ? "border-emerald-700" : ""}
+                        className={changed.includes( field.name ) ? "border-emerald-700 focus-visible:ring-emerald-700" : "border-primary"}
                       />
                     </FormControl>
                   </FormItem>
@@ -165,7 +165,7 @@ export function ProductCard ( {
                         type={"number"}
                         disabled={isPending}
                         readOnly={editHandler === undefined}
-                        className={changed.includes( field.name ) ? "border-emerald-700" : ""}
+                        className={changed.includes( field.name ) ? "border-emerald-700 focus-visible:ring-emerald-700" : "border-primary"}
                       />
                     </FormControl>
                   </FormItem>
@@ -182,7 +182,7 @@ export function ProductCard ( {
                         {...field}
                         disabled={isPending}
                         readOnly={editHandler === undefined}
-                        className={changed.includes( field.name ) ? "border-emerald-700" : ""}
+                        className={changed.includes( field.name ) ? "border-emerald-700 focus-visible:ring-emerald-700" : "border-primary"}
                       />
                     </FormControl>
                   </FormItem>
@@ -200,7 +200,7 @@ export function ProductCard ( {
                         defaultValue={field.value}
                         disabled={editHandler === undefined}
                       >
-                        <SelectTrigger className={changed.includes( field.name ) ? "border-emerald-700" : ""}>
+                        <SelectTrigger className={changed.includes( field.name ) ? "border-emerald-700 focus-visible:ring-emerald-700" : "border-primary"}>
                           <SelectValue placeholder={"State"} />
                         </SelectTrigger>
                         <SelectContent>
@@ -231,7 +231,7 @@ export function ProductCard ( {
                           defaultValue={field.value}
                           disabled={editHandler === undefined}
                         >
-                          <SelectTrigger className={changed.includes( field.name ) ? "border-emerald-700" : ""}>
+                          <SelectTrigger className={changed.includes( field.name ) ? "border-emerald-700 focus-visible:ring-emerald-700" : "border-primary"}>
                             <SelectValue placeholder={"Category"} />
                           </SelectTrigger>
                           <SelectContent>
@@ -264,7 +264,7 @@ export function ProductCard ( {
                           disabled={editHandler === undefined}
                         >
                           <SelectTrigger
-                            className={cn( "h-[50px]", changed.includes( field.name ) ? "border-emerald-700" : "" )}
+                            className={cn( "h-[50px]", changed.includes( field.name ) ? "border-emerald-700 focus-visible:ring-emerald-700" : "border-primary" )}
                           >
                             {/* Yes, it should be "User", not "Seller" */}
                             <SelectValue placeholder={"User"} />
