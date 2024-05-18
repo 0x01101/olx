@@ -1,6 +1,10 @@
 import { Metadata } from "next";
 import React from "react";
-import { SideBar } from "@/components/dashboard/sidebar";
+import { Entry, SideBar } from "@/components/dashboard/sidebar";
+import Link from "next/link";
+import { DashboardIcon } from "@radix-ui/react-icons";
+import { cn } from "@/lib/utils";
+import { dosis } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title:        {
@@ -19,8 +23,25 @@ export default async function RootLayout ( {
 {
   return (
     <div className={"min-h-screen bg-primary flex"}>
-      <SideBar />
-      <div className={"w-full h-full"}>
+      <SideBar>
+        <Link
+          href={"/dashboard"}
+          className={"w-full bg-primary rounded-md p-2 flex flex-row space-x-2 text-center items-center justify-center"}
+        >
+          <DashboardIcon className={"w-6 h-6"} />
+          <p className={cn( "font-bold text-2xl text-center", dosis.className )}>Dashboard</p>
+        </Link>
+        <Entry href={"products"}>
+          Products
+        </Entry>
+        <Entry href={"categories"}>
+          Categories
+        </Entry>
+        <Entry href={"users"}>
+          Users
+        </Entry>
+      </SideBar>
+      <div className={"w-full h-full ml-[200px]"}>
         {children}
       </div>
     </div>
