@@ -56,7 +56,10 @@ export function Categories ( { categories: cats }: CategoriesProps ): JSX.Elemen
     if ( response.category )
     {
       setCategories( [ ...categories, response.category ] );
-      setImages( prev => ( { ...prev, [ response.category.id ]: response.category.image } ) );
+      setImages( prev => ( {
+        ...prev,
+        ...( response.category ? ( { [ response.category.id ]: response.category.image } ) : ( {} ) ), // To get rid of WebStorm crying about TS18048: `response.category` is possibly `undefined`
+      } ) );
     }
   };
   
