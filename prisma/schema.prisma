@@ -79,7 +79,7 @@ model VerificationToken {
 model Category {
   id        Int        @id @default(autoincrement())
   name      String     @unique
-  image     String?
+  image     String?    @db.LongText
   parent_id Int?
   parent    Category?  @relation("CategoryToCategory", fields: [parent_id], references: [id])
   children  Category[] @relation("CategoryToCategory")
@@ -118,7 +118,7 @@ model TwoFactorConfirmation {
 model Product {
   id          String   @id @default(cuid())
   name        String
-  description String @db.LongText
+  description String   @db.LongText
   price       Float
   image       String
   images      Images[]
@@ -135,7 +135,7 @@ model Product {
 model Images {
   id        String  @id @default(cuid())
   productId String
-  url       String
+  url       String  @db.LongText
   product   Product @relation(fields: [productId], references: [id])
 }
 

@@ -4,6 +4,9 @@ import { useState } from "react";
 import { CategoryCard } from "@/components/dashboard/categories/category-card";
 import { FullCategory, ServerResponse } from "@/lib/definitions";
 import { deleteCategory } from "@/actions/delete";
+import { z } from "zod";
+import { SimpleCategoryUpdateSchema } from "@/schemas";
+import { updateCategory } from "@/actions/update";
 
 interface CategoriesProps
 {
@@ -13,6 +16,16 @@ interface CategoriesProps
 export function Categories ( { categories: cats }: CategoriesProps ): JSX.Element
 {
   const [ categories, setCategories ] = useState<FullCategory[]>( cats );
+  const [ images, setImages ] = useState<Record<number, string | null>>( {
+    ...cats.reduce( ( acc: Record<number, string | null>, category: FullCategory ): Record<number, string | null> => {
+      acc[ category.id ] = category.image;
+      return acc;
+    }, {} ),
+  } );
+  
+  const handleImageUpload = (id: number, src: string | null) => {
+    setImages((prev) => ({ ...prev, [id]: src }));
+  };
   
   const deleteCallback = async ( { id }: { id: number } ): Promise<void> =>
   {
@@ -21,14 +34,31 @@ export function Categories ( { categories: cats }: CategoriesProps ): JSX.Elemen
       setCategories( categories.filter( ( category: FullCategory ): boolean => category.id !== id ) );
   };
   
+  const updateCallback = async ( category: z.infer<typeof SimpleCategoryUpdateSchema> & {
+    id: number
+    image?: string | null
+  } ): Promise<void> =>
+  {
+    const { updated }: ServerResponse & { updated?: FullCategory } = await updateCategory( category );
+    if ( updated )
+      setCategories( categories.map( ( c: FullCategory ): FullCategory => c.id === category.id ? updated : c ) );
+  };
+  
   return (
     <div
       style={{ gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))" }}
       className={"grid w-full h-full items-start gap-4"}
     >
-      {categories.map( ( category: FullCategory, index: number ) => (
-        <CategoryCard key={index} category={category} deleteHandler={deleteCallback} />
-      ) )}
+      {categories.map((category: FullCategory) => (
+        <CategoryCard
+          key={category.id}
+          category={category}
+          imageSrc={images[category.id]}
+          onImageUpload={handleImageUpload}
+          deleteHandler={deleteCallback}
+          editHandler={updateCallback}
+        />
+      ))}
     </div>
   );
 }

@@ -11,7 +11,7 @@ create or replace table category
 (
   id        int auto_increment primary key,
   name      varchar(191) not null,
-  image     varchar(191) null,
+  image     longtext null,
   parent_id int          null,
   constraint category_name_key unique (name),
   constraint category_parent_id_fkey
@@ -145,7 +145,7 @@ create or replace table images
 (
   id        varchar(191) not null,
   productid varchar(191) not null,
-  url       varchar(191) not null,
+  url       longtext not null,
   primary key (id),
   constraint images_productid_fkey
     foreign key (productid) references product (id)

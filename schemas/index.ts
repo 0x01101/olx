@@ -86,5 +86,5 @@ export const SimpleListingUpdateSchema = z.object( {
 } );
 
 export const SimpleCategoryUpdateSchema = z.object( {
-  name: z.string().min( 1, "Name is required" ),
+  name:  z.string().min( 1, "Name is required" ),
 } );

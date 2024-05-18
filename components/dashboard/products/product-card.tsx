@@ -60,7 +60,7 @@ export function ProductCard ( {
   
   const form = useForm<z.infer<typeof SimpleListingUpdateSchema>>( {
     resolver:      zodResolver( SimpleListingUpdateSchema ),
-    defaultValues: defaultValues,
+    defaultValues,
   } );
   
   const formValues = form.watch();
@@ -90,7 +90,7 @@ export function ProductCard ( {
       <div className={"flex flex-row-reverse mb-1 w-full"}>
         {deleteHandler !== undefined && ( <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Cross2Icon className={"w-5 h-5 bg-red-600 rounded-full cursor-pointer ml-1"} />
+            <Cross2Icon className={"w-5 h-5 bg-red-600 text-red-600 hover:text-white transition-all rounded-full cursor-pointer ml-1"} />
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
@@ -109,12 +109,12 @@ export function ProductCard ( {
           </AlertDialogContent>
         </AlertDialog> )}
         <DashIcon
-          className={"w-5 h-5 bg-orange-600 rounded-full cursor-pointer"}
+          className={"w-5 h-5 bg-orange-600 text-orange-600 hover:text-white transition-all rounded-full cursor-pointer"}
           onClick={() => setFolded( !folded )}
         />
         <div className="mr-auto">
           <Link href={`/offer/${product.id}`}>
-            <Link1Icon className={"w-5 h-5 bg-blue-600 rounded-full cursor-pointer"} />
+            <Link1Icon className={"w-5 h-5 bg-blue-600 text-blue-600 hover:text-white transition-all rounded-full cursor-pointer"} />
           </Link>
         </div>
       </div>

@@ -7,6 +7,7 @@ import { dosis } from "@/lib/fonts";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { DashboardIcon } from "@radix-ui/react-icons";
+import { UserButton } from "@/components/auth/user-button";
 
 interface EntryProps
 {
@@ -34,6 +35,8 @@ export function SideBar (): JSX.Element
       <Entry href={"categories"}>
         Categories
       </Entry>
+      <div className="flex-grow" />
+      <UserButton variant={"info"} />
     </Widget>
   );
 }

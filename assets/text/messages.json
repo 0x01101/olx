@@ -24,6 +24,7 @@
     "resetEmailSent" : "Password reset email sent",
     "productDeleted" : "Product deleted successfully.",
     "productUpdated" : "Product updated successfully.",
-    "categoryDeleted" : "Category deleted successfully."
+    "categoryDeleted" : "Category deleted successfully.",
+    "categoryUpdated" : "Category updated successfully."
   }
 }
