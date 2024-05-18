@@ -7,6 +7,8 @@ import { deleteCategory } from "@/actions/delete";
 import { z } from "zod";
 import { SimpleCategoryUpdateSchema } from "@/schemas";
 import { updateCategory } from "@/actions/update";
+import { CategoryCreateCard } from "@/components/dashboard/categories/category-create-card";
+import { addCategory } from "@/actions/add-category";
 
 interface CategoriesProps
 {
@@ -17,14 +19,16 @@ export function Categories ( { categories: cats }: CategoriesProps ): JSX.Elemen
 {
   const [ categories, setCategories ] = useState<FullCategory[]>( cats );
   const [ images, setImages ] = useState<Record<number, string | null>>( {
-    ...cats.reduce( ( acc: Record<number, string | null>, category: FullCategory ): Record<number, string | null> => {
+    ...cats.reduce( ( acc: Record<number, string | null>, category: FullCategory ): Record<number, string | null> =>
+    {
       acc[ category.id ] = category.image;
       return acc;
     }, {} ),
   } );
   
-  const handleImageUpload = (id: number, src: string | null) => {
-    setImages((prev) => ({ ...prev, [id]: src }));
+  const handleImageUpload = ( id: number, src: string | null ) =>
+  {
+    setImages( ( prev ) => ( { ...prev, [ id ]: src } ) );
   };
   
   const deleteCallback = async ( { id }: { id: number } ): Promise<void> =>
@@ -44,21 +48,34 @@ export function Categories ( { categories: cats }: CategoriesProps ): JSX.Elemen
       setCategories( categories.map( ( c: FullCategory ): FullCategory => c.id === category.id ? updated : c ) );
   };
   
+  const createCallback = async ( category: z.infer<typeof SimpleCategoryUpdateSchema> & {
+    image?: string | null
+  } ): Promise<void> =>
+  {
+    const response: ServerResponse & { category?: FullCategory } = await addCategory( category );
+    if ( response.category )
+    {
+      setCategories( [ ...categories, response.category ] );
+      setImages( prev => ( { ...prev, [ response.category.id ]: response.category.image } ) );
+    }
+  };
+  
   return (
     <div
       style={{ gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))" }}
       className={"grid w-full h-full items-start gap-4"}
     >
-      {categories.map((category: FullCategory) => (
+      {categories.map( ( category: FullCategory ) => (
         <CategoryCard
           key={category.id}
           category={category}
-          imageSrc={images[category.id]}
+          imageSrc={images[ category.id ]}
           onImageUpload={handleImageUpload}
           deleteHandler={deleteCallback}
           editHandler={updateCallback}
         />
-      ))}
+      ) )}
+      <CategoryCreateCard createHandler={createCallback} />
     </div>
   );
 }

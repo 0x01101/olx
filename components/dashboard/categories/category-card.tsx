@@ -164,7 +164,7 @@ export function CategoryCard ( {
                       alt={"Image"}
                       width={200}
                       height={200}
-                      className={"rounded-md max-w-[200px] max-h-[200px]"}
+                      className={"rounded-md w-[200px] h-[200px]"}
                     />
                   </div>
                 ) : (

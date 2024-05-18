@@ -25,7 +25,8 @@
     "productDeleted" : "Poof! Product deleted successfully.",
     "productUpdated" : "Product updated successfully. It's all shiny and new!",
     "categoryDeleted" : "Category deleted successfully. It's gone, like magic.",
-    "categoryUpdated" : "Category updated successfully. You're on fire!"
+    "categoryUpdated" : "Category updated successfully. You're on fire!",
+    "categoryCreated" : "Category created successfully."
   },
 
   "misc" : {

@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import { PlusIcon } from "@radix-ui/react-icons";
 

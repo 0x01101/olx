@@ -1,6 +1,5 @@
 "use server";
 
-import * as fs from "fs";
 import { ServerResponse } from "@/lib/definitions";
 import { z } from "zod";
 import { ListingAddSchema } from "@/schemas";
@@ -10,7 +9,6 @@ import { auth } from "@/auth";
 import { Session } from "next-auth";
 import { ExtendedUser } from "@/next-auth";
 import { Product } from "@prisma/client";
-import path from "path";
 import { redirect } from "next/navigation";
 import { messageProvider } from "@/lib/messages";
 import { uploadFile } from "@/actions/upload";
