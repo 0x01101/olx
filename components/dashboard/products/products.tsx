@@ -2,12 +2,13 @@
 
 import { FullProduct, ServerResponse } from "@/lib/definitions";
 import { useState } from "react";
-import { ProductCard, ProductCreateCard } from "@/components/dashboard/products/product-card";
+import { ProductCard } from "@/components/dashboard/products/product-card";
 import { deleteProduct } from "@/actions/delete";
 import { Category, Product, User } from "@prisma/client";
 import { z } from "zod";
 import { SimpleListingUpdateSchema } from "@/schemas";
 import { updateProduct } from "@/actions/update";
+import { ProductCreateCard } from "@/components/dashboard/products/product-create-card";
 
 interface ProductsProps
 {

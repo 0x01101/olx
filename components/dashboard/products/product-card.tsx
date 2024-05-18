@@ -1,12 +1,16 @@
 "use client";
 
 import { FullProduct } from "@/lib/definitions";
-import { Cross2Icon, DashIcon, Link1Icon, PlusIcon } from "@radix-ui/react-icons";
+import { Cross2Icon, DashIcon, Link1Icon } from "@radix-ui/react-icons";
 import {
-  AlertDialog, AlertDialogAction, AlertDialogCancel,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription, AlertDialogFooter,
-  AlertDialogHeader, AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import Link from "next/link";
@@ -302,17 +306,4 @@ export function ProductCard ( {
       )}
     </div>
   );
-}
-
-export function ProductCreateCard (): JSX.Element
-{
-  return (
-    <div className={"bg-popover rounded-md p-2 flex w-[225px] shadow-md items-center justify-center self-stretch"}>
-      <Link href={"/offer/create"}>
-        <div className={"flex w-[150px] h-[150px] bg-emerald-600 rounded-3xl items-center justify-center"}>
-          <PlusIcon className={"w-16 h-16"} />
-        </div>
-      </Link>
-    </div>
-  )
 }
