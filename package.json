@@ -43,7 +43,7 @@
     "zod": "^3.23.6"
   },
   "scripts": {
-    "dev": "concurrently \"node assets/misc/cs/aW5kZXg.js\" \"next dev\"",
+    "dev": "concurrently \"node middleware-conf.js\" \"next dev\"",
     "build": "next build",
     "lint": "next lint",
     "pushtodb": "npx prisma db push",
