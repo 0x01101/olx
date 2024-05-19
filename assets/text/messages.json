@@ -1,24 +1,33 @@
 {
   "error" : {
-    "parseError" : "Invalid fields",
+    "TwoFactorCodeExpired" : "2FA code has expired",
+    "emailDoesntExist" : "Email does not exist",
+    "emailInUse" : "Email already in use",
+    "expiredToken" : "Token has expired",
+    "generic" : "Something went wrong",
+    "invalid2FAToken" : "Invalid 2FA code",
     "invalidCredentials" : "Invalid credentials",
     "invalidToken" : "Invalid token",
-    "expiredToken" : "Token has expired",
-    "emailDoesntExist" : "Email does not exist",
-    "genericError" : "Something went wrong",
-    "noToken" : "Missing token",
     "noPasswordField" : "This user does not use credentials",
-    "reusePassword" : "Cannot use the same password",
-    "emailInUse" : "Email already in use",
-    "invalid2FAToken" : "Invalid 2FA code",
-    "TwoFactorCodeExpired" : "2FA code has expired"
+    "noPermissions" : "Not enough permissions",
+    "noToken" : "Missing token",
+    "noUser" : "Not authorized",
+    "parseError" : "Invalid fields",
+    "reusePassword" : "Cannot use the same password"
   },
 
   "success" : {
     "confirmationEmailSent" : "Confirmation email sent",
+    "emailVerified" : "Email verified",
     "loggedIn" : "Logged in",
     "passwordUpdated" : "Password updated",
-    "emailVerified" : "Email verified",
-    "resetEmailSent" : "Password reset email sent"
+    "resetEmailSent" : "Password reset email sent",
+    "productDeleted" : "Product deleted successfully.",
+    "productUpdated" : "Product updated successfully.",
+    "categoryDeleted" : "Category deleted successfully.",
+    "categoryUpdated" : "Category updated successfully.",
+    "categoryCreated" : "Category created successfully.",
+    "userDeleted" : "User deleted successfully.",
+    "userUpdated": "User updated successfully."
   }
 }

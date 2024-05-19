@@ -7,6 +7,7 @@ import { AdapterSession, AdapterUser } from "@auth/core/adapters";
 import { getUserById } from "@/data/user";
 import { TwoFactorConfirmation, User } from "@prisma/client";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
+import { UserUpdateSchema } from "@/schemas";
 
 export const {
   handlers: { GET, POST },
@@ -61,7 +62,10 @@ export const {
       
       return session;
     },
-    async jwt ( { token }: { token: JWT } ): Promise<JWT>
+    async jwt (
+      { token, trigger, session }:
+        { token: JWT, trigger?: "signIn" | "update" | "signUp", session?: any },
+    ): Promise<JWT>
     {
       if ( !token.sub )
         return token;
@@ -70,6 +74,21 @@ export const {
       
       if ( !existingUser )
         return token;
+      
+      if ( trigger === "update" )
+      {
+        const { success, data } = UserUpdateSchema.safeParse( session );
+        if ( success )
+        {
+          let validData = { image: data?.image !== undefined ? data?.image : null, ...data };
+          await db.user.update( {
+            where: { id: existingUser.id },
+            data:  validData,
+          } );
+          
+          token = { ...token, ...validData, picture: validData.image }; // WhY aRe ThErE tWo kEyS fOr ThE pRoFiLe PiCtUrE?
+        }
+      }
       
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
       token.role = existingUser.role;

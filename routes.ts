@@ -1,11 +1,19 @@
 /**
- * An array of routes accessible to the public
+ * An array of routes not accessible to the public
  * @type {string[]}
  */
-export const publicRoutes: string[] = [
-  "/",
-  "/auth/new-verification",
-  // TODO: Add category names here too (fetch them from db)
+export const privateRoutes: string[] = [
+  "/server",
+  "/account",
+  "/offer/create"
+];
+
+/**
+ * An array of routes accessible only to admins
+ * @type {string[]}
+ */
+export const adminRoutes: string[] = [
+  "/dashboard",
 ];
 
 /**
@@ -17,11 +25,11 @@ export const authRoutes: string[] = [
   "/auth/register",
   "/auth/error",
   "/auth/reset",
-  "/auth/new-password"
+  "/auth/new-password",
 ];
 
 /**
- * The prefix to api auth routes
+ * The prefix to api session routes
  * @type {string}
  */
 export const apiAuthPrefix: string = "/api/auth";

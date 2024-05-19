@@ -14,8 +14,12 @@ import { ServerResponse } from "@/lib/definitions";
 import { getTwoFactorTokenByEMail } from "@/data/two-factor-token";
 import { db } from "@/lib/db";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
+import { UpdateSession } from "next-auth/react";
 
-export async function login ( values: z.infer<typeof LoginSchema> ): Promise<ServerResponse & { twoFactor?: boolean }>
+export async function login (
+  values: z.infer<typeof LoginSchema>,
+  redirectTo?: string | null,
+): Promise<ServerResponse & { twoFactor?: boolean }>
 {
   const validatedFields = LoginSchema.safeParse( values );
   
@@ -77,7 +81,7 @@ export async function login ( values: z.infer<typeof LoginSchema> ): Promise<Ser
     await signIn( "credentials", {
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      redirectTo: redirectTo || DEFAULT_LOGIN_REDIRECT,
     } );
   }
   catch ( e: any )
@@ -88,7 +92,7 @@ export async function login ( values: z.infer<typeof LoginSchema> ): Promise<Ser
         case "CredentialsSignin":
           return { error: messageProvider.error.invalidCredentials };
         default:
-          return { error: messageProvider.error.genericError };
+          return { error: messageProvider.error.generic };
       }
     
     throw e;

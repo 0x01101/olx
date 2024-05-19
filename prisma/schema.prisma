@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -18,22 +19,29 @@ enum UserRole {
   ADMIN
 }
 
+enum State {
+  NEW
+  USED
+  BROKEN
+}
+
 model User {
   id                    String                 @id @default(cuid())
   name                  String?
   username              String?                @unique
   email                 String?                @unique
   emailVerified         DateTime?
-  image                 String?
+  image                 String? @db.LongText
   password              String?
   role                  UserRole               @default(USER)
   Account               Account?
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Product   Product[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  Product       Product[]
+  Notifications Notifications[]
 }
 
 model Account {
@@ -71,7 +79,7 @@ model VerificationToken {
 model Category {
   id        Int        @id @default(autoincrement())
   name      String     @unique
-  image     String?
+  image     String?    @db.LongText
   parent_id Int?
   parent    Category?  @relation("CategoryToCategory", fields: [parent_id], references: [id])
   children  Category[] @relation("CategoryToCategory")
@@ -108,11 +116,13 @@ model TwoFactorConfirmation {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(cuid())
   name        String
-  description String
+  description String   @db.LongText
   price       Float
   image       String
+  images      Images[]
+  state       State    @default(USED)
   category_id Int
   category    Category @relation(fields: [category_id], references: [id])
   seller_id   String
@@ -120,4 +130,22 @@ model Product {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Images {
+  id        String  @id @default(cuid())
+  productId String
+  url       String  @db.LongText
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Notifications {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
 }
