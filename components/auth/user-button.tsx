@@ -10,14 +10,20 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FaUser } from "react-icons/fa";
 import { LogoutButton } from "@/components/auth/logout-button";
-import { EnterIcon, ExitIcon, GearIcon } from "@radix-ui/react-icons";
+import { DashboardIcon, EnterIcon, ExitIcon, GearIcon } from "@radix-ui/react-icons";
 import { FaUserXmark } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { UserAvatar } from "@/components/auth/user-avatar";
+import { UserRole } from "@prisma/client";
 
-export function UserButton (): JSX.Element
+interface UserButtonProps
+{
+  variant?: "avatar" | "info";
+}
+
+export function UserButton ( { variant }: UserButtonProps ): JSX.Element
 {
   const pathname: string = usePathname();
   const session = useSession();
@@ -26,9 +32,28 @@ export function UserButton (): JSX.Element
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <UserAvatar user={user} />
+        {( (): JSX.Element =>
+        {
+          switch ( variant )
+          {
+            case "avatar":
+              return <UserAvatar user={user} />;
+            case "info":
+              return (
+                <div className={"flex flex-row space-x-2 justify-center items-center p-0 w-full"}>
+                  <UserAvatar user={user} />
+                  <div className={"flex flex-col text-xs"}>
+                    <p className={"font-bold"}>{user?.name}</p>
+                    <p>{user?.email}</p>
+                  </div>
+                </div>
+              )
+            default:
+              return <UserAvatar user={user} />;
+          }
+        } )()}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className={"w-40 z-[1031]"} align={"end"}>
+      <DropdownMenuContent className={"w-[255px] z-[1031]"} align={"end"}>
         {user ? (
           <>
             <DropdownMenuLabel>
@@ -45,21 +70,32 @@ export function UserButton (): JSX.Element
                 </div>
               </div>
             </DropdownMenuLabel>
+            {user?.role === UserRole.ADMIN && (
+              <Link
+                href={`/dashboard`}
+                className={"no-underline"}
+              >
+                <DropdownMenuItem className={"text-gray-400"}>
+                  <DashboardIcon className={"h-4 w-4 mr-2"} />
+                  Dashboard
+                </DropdownMenuItem>
+              </Link>
+            )}
             <Link
-              href={`/auth/login?redirectUrl=${pathname}`}
+              href={`/account`}
               className={"no-underline"}
             >
               <DropdownMenuItem className={"text-gray-400"}>
-                <GearIcon className={"h-4 w-4 mr-2"}/>
+                <GearIcon className={"h-4 w-4 mr-2"} />
                 My Account
               </DropdownMenuItem>
             </Link>
-          <LogoutButton session={session}>
-            <DropdownMenuItem className={"text-gray-400"}>
-              <ExitIcon className={"h-4 w-4 mr-2"} />
-              Log Out
-            </DropdownMenuItem>
-          </LogoutButton>
+            <LogoutButton>
+              <DropdownMenuItem className={"text-gray-400"}>
+                <ExitIcon className={"h-4 w-4 mr-2"} />
+                Log Out
+              </DropdownMenuItem>
+            </LogoutButton>
           </>
         ) : (
           <Link

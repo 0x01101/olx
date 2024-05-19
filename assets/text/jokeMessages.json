@@ -1,4 +1,36 @@
 {
+  "error" : {
+    "TwoFactorCodeExpired" : "Oops! Your 2FA code took a nap and never woke up.",
+    "emailDoesntExist" : "Are you sure you typed that right? We can't find that email.",
+    "emailInUse" : "That email's already taken. How about another one?",
+    "expiredToken" : "This token's time is up. Like, really up.",
+    "generic" : "Something went wrong. Probably gremlins.",
+    "invalid2FAToken" : "That 2FA code is faker than a three-dollar bill.",
+    "invalidCredentials" : "Nope, those credentials aren't cutting it.",
+    "invalidToken" : "This token is as fake as a unicorn in a pet store.",
+    "noPasswordField" : "This user is too cool for passwords.",
+    "noPermissions" : "Nice try, but you don't have the superpowers for this.",
+    "noToken" : "Hey, where's your token? It's missing!",
+    "noUser" : "Sorry, you don't have the VIP pass for this.",
+    "parseError" : "Something's off with your fields. Did you spill coffee on them?",
+    "reusePassword" : "Recycling is great, but not for passwords."
+  },
+
+  "success" : {
+    "confirmationEmailSent" : "Check your inbox! A confirmation email is on its way.",
+    "emailVerified" : "Boom! Your email is now officially verified.",
+    "loggedIn" : "Welcome back! You've logged in successfully.",
+    "passwordUpdated" : "Password updated! Now it's stronger, faster, better.",
+    "resetEmailSent" : "Password reset email sent! It's time for a fresh start.",
+    "productDeleted" : "Poof! Product deleted successfully.",
+    "productUpdated" : "Product updated successfully. It's all shiny and new!",
+    "categoryDeleted" : "Category deleted successfully. It's gone, like magic.",
+    "categoryUpdated" : "Category updated successfully. You're on fire!",
+    "categoryCreated" : "Category created successfully.",
+    "userDeleted" : "User deleted successfully.",
+    "userUpdated": "User updated successfully."
+  },
+
   "misc" : {
     "passwordAlreadyInUse" : "This password is already used by %, try something different"
   }

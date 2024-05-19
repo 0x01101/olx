@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { dosis } from "@/lib/fonts";
 import { UserButton } from "@/components/auth/user-button";
-import { Button } from "@/components/ui/button";
 import { NotificationsButton } from "@/components/notifications-button";
 
 interface NavBarProps

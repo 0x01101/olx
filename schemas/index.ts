@@ -75,3 +75,30 @@ export const ListingAddSchema = z.object( {
   state:       z.enum( [ "NEW", "USED", "BROKEN" ] ).default( "USED" ),
   category:    z.string().min( 1, "Category is required" ).regex( /^[1-9]\d*$/ ),
 } );
+
+export const Admin_ListingUpdateSchema = z.object( {
+  name:        z.string().min( 1, "Name is required" ),
+  description: z.string().min( 1, "Description is required" ),
+  price:       z.string().min( 1, "Price is required" ).regex( /^[1-9]\d*$/ ),
+  state:       z.enum( [ "NEW", "USED", "BROKEN" ] ).default( "USED" ),
+  category:    z.string().min( 1, "Category is required" ).regex( /^[1-9]\d*$/ ),
+  seller_id:   z.string().min( 1, "Seller is required" ),
+} );
+
+export const Admin_CategoryUpdateSchema = z.object( {
+  name:  z.string().min( 1, "Name is required" ),
+} );
+
+export const Admin_UserUpdateSchema = z.object( {
+  name: z.string().optional(),
+  email: z.string().optional(),
+  role: z.enum( [ "USER", "ADMIN" ] ),
+  isTwoFactorEnabled: z.boolean(),
+})
+
+export const UserUpdateSchema = z.object( {
+  name: z.string().min( 1, "Name is required" ),
+  email: z.string().min( 1, "Email is required" ).email(),
+  image: z.string().optional(),
+  isTwoFactorEnabled: z.boolean(),
+});

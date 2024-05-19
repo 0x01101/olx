@@ -5,11 +5,12 @@ import { RegisterSchema } from "@/schemas";
 import { compare, hash } from "bcryptjs";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
-import { User, VerificationToken } from "@prisma/client";
+import { User, UserRole, VerificationToken } from "@prisma/client";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
 import { ServerResponse } from "@/lib/definitions";
 import { jokeFeatures, messageProvider } from "@/lib/messages";
+import { isEmpty } from "@/lib/arrays";
 
 export async function register ( values: z.infer<typeof RegisterSchema> ): Promise<ServerResponse>
 {
@@ -21,9 +22,11 @@ export async function register ( values: z.infer<typeof RegisterSchema> ): Promi
   const { email, password, name }: { email: string, password: string, name: string } = validatedFields.data;
   const hashedPassword: string = await hash( password, 10 );
   
+  const users: User[] = await db.user.findMany();
+  let shouldBeAdmin: boolean = isEmpty( users );
+  
   if ( jokeFeatures )
   {
-    const users: User[] = await db.user.findMany();
     const reusedPassword: User | undefined = users.find( async ( { password }: {
       password: string | null
     } ): Promise<boolean | undefined> =>
@@ -40,7 +43,14 @@ export async function register ( values: z.infer<typeof RegisterSchema> ): Promi
   if ( existingUser )
     return { error: messageProvider.error.emailInUse };
   
-  await db.user.create( { data: { email, password: hashedPassword, name } } );
+  await db.user.create( {
+    data: {
+      email,
+      password: hashedPassword,
+      name,
+      role:     shouldBeAdmin ? UserRole.ADMIN : UserRole.USER,
+    },
+  } );
   
   const verificationToken: VerificationToken = await generateVerificationToken( email );
   
