@@ -18,6 +18,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { isEmpty } from "@/lib/arrays";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export function UserDashboard (): JSX.Element
 {
@@ -185,29 +186,17 @@ export function UserDashboard (): JSX.Element
                 control={form.control}
                 name={"isTwoFactorEnabled"}
                 render={( { field } ) => (
-                  <FormItem>
-                    <FormLabel>2FA Enabled</FormLabel>
+                  <FormItem className={"flex flex-row items-center space-y-0 space-x-2"}>
                     <FormControl>
-                      <Select
-                        onValueChange={( value ) => field.onChange( value === "1" )}
-                        defaultValue={field.value ? "1" : "0"}
-                      >
-                        <SelectTrigger
-                          className={changed.includes( field.name ) ? "border-emerald-700 focus-visible:ring-emerald-700" : "border-primary"}>
-                          <SelectValue placeholder={"2FA Enabled"} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem value={"1"}>
-                              Enabled
-                            </SelectItem>
-                            <SelectItem value={"0"}>
-                              Disabled
-                            </SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        className={
+                          changed.includes( field.name ) ? "border-emerald-700 focus-visible:ring-emerald-700 data-[state=checked]:bg-emerald-700" : "border-primary"
+                        }
+                      />
                     </FormControl>
+                    <FormLabel className={"space-y-1"}>2FA Enabled</FormLabel>
                     <FormMessage />
                   </FormItem>
                 )}
