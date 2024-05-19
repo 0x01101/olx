@@ -80,12 +80,13 @@ export const {
         const { success, data } = UserUpdateSchema.safeParse( session );
         if ( success )
         {
+          let validData = { image: data?.image !== undefined ? data?.image : null, ...data };
           await db.user.update( {
             where: { id: existingUser.id },
-            data,
+            data:  validData,
           } );
           
-          Object.assign(token, data);
+          token = { ...token, ...validData, picture: validData.image }; // WhY aRe ThErE tWo kEyS fOr ThE pRoFiLe PiCtUrE?
         }
       }
       
