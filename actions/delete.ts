@@ -6,8 +6,8 @@ import { ExtendedUser } from "@/next-auth";
 import { Product, UserRole } from "@prisma/client";
 import { messageProvider } from "@/lib/messages";
 import { db } from "@/lib/db";
-import { rmrf } from "@/lib/file";
 import path from "path";
+import { rmrf } from "@/actions/rm-rf";
 
 export async function deleteProduct ( { id }: { id: string } ): Promise<ServerResponse>
 {
