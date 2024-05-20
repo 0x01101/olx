@@ -6,7 +6,14 @@ const nextConfig = {
       hostname: "j3rzy.dev",
       port: "",
       pathname: "/images/**",
-    }, ]
+    },
+      {
+        protocol: "https",
+        hostname: "*",
+        port: "",
+        pathname: "/**",
+      }
+    ]
   },
   experimental: {
     serverActions: {
